@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "spacetraders"
+version = "0.1.1"
+description = "Python API for Space Traders"
+authors = ["Marco Ceppi <marco@ceppi.net>"]
+license = "Apache-2.0"
+readme = "README.md"
+packages = [{include = "spacetraders"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+httpx = "^0.24.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+isort = "^5.12.0"
+pytest = "^7.3.1"
+openapi-python-client = "^0.14.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,5 @@
+project_name_override: spacetraders
+package_name_override: spacetraders
+post_hooks:
+  - "isort ."
+  - "black ."
