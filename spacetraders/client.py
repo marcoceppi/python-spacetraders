@@ -94,5 +94,16 @@ class AuthenticatedClient(Client):
         auth_header_value = f"{self.prefix} {self.token}" if self.prefix else self.token
         return {self.auth_header_name: auth_header_value, **self.headers}
 
+
+class AsyncClient(Client):
+    """An async Client for unsecured endpoints"""
+
+    def __getattr__(self, attr):
+        return self._build_api_stub(attr, "asyncio_detailed")
+
+
+class AuthenticatedAsyncClient(AuthenticatedClient):
+    """An async Client which has been authenticated for use on secured endpoints"""
+
     def __getattr__(self, attr):
         return self._build_api_stub(attr, "asyncio_detailed")
