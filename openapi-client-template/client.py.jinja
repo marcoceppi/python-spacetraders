@@ -8,10 +8,10 @@ import attr
 class APIStub:
     """ A module importer that traverses the api directory based on getattr """
 
-    def __init__(self, client, mod, exec):
+    def __init__(self, client, mod, exec_mode):
         self._module = mod
         self._client = client
-        self._exec_mode = exec
+        self._exec_mode = exec_mode
 
     def __getattr__(self, attr):
         if not hasattr(self._module, attr):
