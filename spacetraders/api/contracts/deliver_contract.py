@@ -23,7 +23,7 @@ def _get_kwargs(
     headers: Dict[str, str] = _client.get_headers()
     cookies: Dict[str, Any] = _client.get_cookies()
 
-    json_json_body = json_body.dict()
+    json_json_body = json_body.dict(by_alias=True)
 
     return {
         "method": "post",
@@ -82,7 +82,7 @@ def sync_detailed(
         Response[DeliverContractResponse200]
     """
 
-    json_body = DeliverContractJsonBody(**json_body)
+    json_body = DeliverContractJsonBody.parse_obj(json_body)
 
     kwargs = _get_kwargs(
         contract_id=contract_id,
@@ -149,7 +149,7 @@ async def asyncio_detailed(
         Response[DeliverContractResponse200]
     """
 
-    json_body = DeliverContractJsonBody(**json_body)
+    json_body = DeliverContractJsonBody.parse_obj(json_body)
 
     kwargs = _get_kwargs(
         contract_id=contract_id,

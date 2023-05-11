@@ -20,7 +20,7 @@ def _get_kwargs(
     headers: Dict[str, str] = _client.get_headers()
     cookies: Dict[str, Any] = _client.get_cookies()
 
-    json_json_body = json_body.dict()
+    json_json_body = json_body.dict(by_alias=True)
 
     return {
         "method": "post",
@@ -99,7 +99,7 @@ def sync_detailed(
         Response[RegisterResponse201]
     """
 
-    json_body = RegisterJsonBody(**json_body)
+    json_body = RegisterJsonBody.parse_obj(json_body)
 
     kwargs = _get_kwargs(
         _client=_client,
@@ -204,7 +204,7 @@ async def asyncio_detailed(
         Response[RegisterResponse201]
     """
 
-    json_body = RegisterJsonBody(**json_body)
+    json_body = RegisterJsonBody.parse_obj(json_body)
 
     kwargs = _get_kwargs(
         _client=_client,

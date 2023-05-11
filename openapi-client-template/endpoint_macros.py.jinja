@@ -59,7 +59,7 @@ params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
     {% set destination = "json_" + property.python_name %}
     {% import "property_templates/" + property.template as prop_template %}
     {% if prop_template.transform %}
-{{ prop_template.transform(property, property.python_name, destination, transform_method="dict") }}
+{{ prop_template.transform(property, property.python_name, destination) }}
     {% else %}
 {{ destination }} = {{ property.python_name }}
     {% endif %}
@@ -188,7 +188,7 @@ form_data = {{ endpoint.form_data.get_type_string() }}(**form_data)
 multipart_data = {{ endpoint.multipart_data.get_type_string() }}(**multipart_data)
 {% endif %}
 {% if endpoint.json_body %}
-json_body = {{ endpoint.json_body.get_type_string() }}(**json_body)
+json_body = {{ endpoint.json_body.get_type_string() }}.parse_obj(json_body)
 {% endif %}
 {% endmacro %}
 
