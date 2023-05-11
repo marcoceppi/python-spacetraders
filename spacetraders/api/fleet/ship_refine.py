@@ -42,8 +42,7 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[ShipRefineShipRefine200Response]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = ShipRefineShipRefine200Response.update_forward_refs()
-        ShipRefineShipRefine200Response(**response.json())
+        response_200 = ShipRefineShipRefine200Response(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:

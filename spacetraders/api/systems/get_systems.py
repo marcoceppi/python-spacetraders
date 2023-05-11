@@ -42,8 +42,7 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[GetSystemsResponse200]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = GetSystemsResponse200.update_forward_refs()
-        GetSystemsResponse200(**response.json())
+        response_200 = GetSystemsResponse200(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:

@@ -40,8 +40,7 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[SellCargoSellCargo201Response]:
     if response.status_code == HTTPStatus.CREATED:
-        response_201 = SellCargoSellCargo201Response.update_forward_refs()
-        SellCargoSellCargo201Response(**response.json())
+        response_201 = SellCargoSellCargo201Response(**response.json())
 
         return response_201
     if client.raise_on_unexpected_status:

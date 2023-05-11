@@ -40,8 +40,7 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[WarpShipResponse200]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = WarpShipResponse200.update_forward_refs()
-        WarpShipResponse200(**response.json())
+        response_200 = WarpShipResponse200(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:

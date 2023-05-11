@@ -44,8 +44,7 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[TransferCargoTransferCargo200Response]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = TransferCargoTransferCargo200Response.update_forward_refs()
-        TransferCargoTransferCargo200Response(**response.json())
+        response_200 = TransferCargoTransferCargo200Response(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:

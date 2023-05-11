@@ -37,8 +37,7 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[RegisterResponse201]:
     if response.status_code == HTTPStatus.CREATED:
-        response_201 = RegisterResponse201.update_forward_refs()
-        RegisterResponse201(**response.json())
+        response_201 = RegisterResponse201(**response.json())
 
         return response_201
     if client.raise_on_unexpected_status:

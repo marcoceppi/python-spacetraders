@@ -35,8 +35,7 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[RefuelShipResponse200]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = RefuelShipResponse200.update_forward_refs()
-        RefuelShipResponse200(**response.json())
+        response_200 = RefuelShipResponse200(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:

@@ -35,8 +35,7 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[DockShipDockShip200Response]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = DockShipDockShip200Response.update_forward_refs()
-        DockShipDockShip200Response(**response.json())
+        response_200 = DockShipDockShip200Response(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:

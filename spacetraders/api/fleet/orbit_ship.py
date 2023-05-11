@@ -35,8 +35,7 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[OrbitShipOrbitShip200Response]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = OrbitShipOrbitShip200Response.update_forward_refs()
-        OrbitShipOrbitShip200Response(**response.json())
+        response_200 = OrbitShipOrbitShip200Response(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
