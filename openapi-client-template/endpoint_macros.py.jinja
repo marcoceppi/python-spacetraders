@@ -59,7 +59,7 @@ params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
     {% set destination = "json_" + property.python_name %}
     {% import "property_templates/" + property.template as prop_template %}
     {% if prop_template.transform %}
-{{ prop_template.transform(property, property.python_name, destination, transform_method="dict") }}
+{{ prop_template.transform(property, property.python_name, destination) }}
     {% else %}
 {{ destination }} = {{ property.python_name }}
     {% endif %}

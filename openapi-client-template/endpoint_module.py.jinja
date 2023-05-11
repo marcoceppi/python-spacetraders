@@ -48,7 +48,7 @@ def _get_kwargs(
         "timeout": _client.get_timeout(),
         "follow_redirects": _client.follow_redirects,
         {% if endpoint.form_body %}
-        "data": form_data.to_dict(),
+        "data": form_data.dict(by_alias=True),
         {% elif endpoint.multipart_body %}
         "files": {{ "multipart_" + endpoint.multipart_body.python_name }},
         {% elif endpoint.json_body %}
