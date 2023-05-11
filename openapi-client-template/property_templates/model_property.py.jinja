@@ -1,5 +1,4 @@
 {% macro construct_function(property, source) %}
-{{ property.class_info.name }}.update_forward_refs()
 {{ property.class_info.name }}(**{{ source }})
 {% endmacro %}
 
