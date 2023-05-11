@@ -13,54 +13,25 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.create_chart_response_201_data import CreateChartResponse201Data
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.create_chart_response_201_data import CreateChartResponse201Data
-
 
 T = TypeVar("T", bound="CreateChartResponse201")
 
 
-@attr.s(auto_attribs=True)
-class CreateChartResponse201:
+class CreateChartResponse201(BaseModel):
     """
     Attributes:
         data (CreateChartResponse201Data):
     """
 
-    data: "CreateChartResponse201Data"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: "CreateChartResponse201Data" = Field(alias="data")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.create_chart_response_201_data import CreateChartResponse201Data
-
-        data = self.data.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "data": data,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.create_chart_response_201_data import CreateChartResponse201Data
-
-        d = src_dict.copy()
-        data = CreateChartResponse201Data.from_dict(d.pop("data"))
-
-        create_chart_response_201 = cls(
-            data=data,
-        )
-
-        create_chart_response_201.additional_properties = d
-        return create_chart_response_201
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

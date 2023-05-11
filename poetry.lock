@@ -418,7 +418,7 @@ testing = ["pytest", "pytest-benchmark"]
 name = "pydantic"
 version = "1.10.7"
 description = "Data validation and settings management using python type hints"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -626,7 +626,7 @@ test = ["black (>=22.3.0,<23.0.0)", "coverage (>=6.2,<7.0)", "isort (>=5.0.6,<6.
 name = "typing-extensions"
 version = "4.5.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -637,4 +637,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "93d6f4b6505c6f1cfbf220a132db41ed09b937720c54950afe5f8674613fcc85"
+content-hash = "76e71fd4f353b3713a99d23790fff509c9c981ebc48ab082d0f3501a0e33b38c"

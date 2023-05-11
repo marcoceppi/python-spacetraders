@@ -14,18 +14,15 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.ship_fuel_consumed import ShipFuelConsumed
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.ship_fuel_consumed import ShipFuelConsumed
-
 
 T = TypeVar("T", bound="ShipFuel")
 
 
-@attr.s(auto_attribs=True)
-class ShipFuel:
+class ShipFuel(BaseModel):
     """Details of the ship's fuel tanks including how much fuel was consumed during the last transit or action.
 
     Attributes:
@@ -34,57 +31,13 @@ class ShipFuel:
         consumed (Union[Unset, ShipFuelConsumed]):
     """
 
-    current: int
-    capacity: int
+    current: int = Field(alias="current")
+    capacity: int = Field(alias="capacity")
     consumed: Union[Unset, "ShipFuelConsumed"] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.ship_fuel_consumed import ShipFuelConsumed
-
-        current = self.current
-        capacity = self.capacity
-        consumed: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.consumed, Unset):
-            consumed = self.consumed.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "current": current,
-                "capacity": capacity,
-            }
-        )
-        if consumed is not UNSET:
-            field_dict["consumed"] = consumed
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.ship_fuel_consumed import ShipFuelConsumed
-
-        d = src_dict.copy()
-        current = d.pop("current")
-
-        capacity = d.pop("capacity")
-
-        _consumed = d.pop("consumed", UNSET)
-        consumed: Union[Unset, ShipFuelConsumed]
-        if isinstance(_consumed, Unset):
-            consumed = UNSET
-        else:
-            consumed = ShipFuelConsumed.from_dict(_consumed)
-
-        ship_fuel = cls(
-            current=current,
-            capacity=capacity,
-            consumed=consumed,
-        )
-
-        ship_fuel.additional_properties = d
-        return ship_fuel
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

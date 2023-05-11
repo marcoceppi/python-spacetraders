@@ -12,6 +12,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.ship_crew_rotation import ShipCrewRotation
 from ..types import UNSET, Unset
@@ -19,8 +20,7 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="ShipCrew")
 
 
-@attr.s(auto_attribs=True)
-class ShipCrew:
+class ShipCrew(BaseModel):
     """The ship's crew service and maintain the ship's systems and equipment.
 
     Attributes:
@@ -35,64 +35,16 @@ class ShipCrew:
             civilized waypoint.
     """
 
-    current: int
-    required: int
-    capacity: int
-    morale: int
-    wages: int
+    current: int = Field(alias="current")
+    required: int = Field(alias="required")
+    capacity: int = Field(alias="capacity")
+    morale: int = Field(alias="morale")
+    wages: int = Field(alias="wages")
     rotation: ShipCrewRotation = ShipCrewRotation.STRICT
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        current = self.current
-        required = self.required
-        capacity = self.capacity
-        rotation = self.rotation.value
-
-        morale = self.morale
-        wages = self.wages
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "current": current,
-                "required": required,
-                "capacity": capacity,
-                "rotation": rotation,
-                "morale": morale,
-                "wages": wages,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        current = d.pop("current")
-
-        required = d.pop("required")
-
-        capacity = d.pop("capacity")
-
-        rotation = ShipCrewRotation(d.pop("rotation"))
-
-        morale = d.pop("morale")
-
-        wages = d.pop("wages")
-
-        ship_crew = cls(
-            current=current,
-            required=required,
-            capacity=capacity,
-            rotation=rotation,
-            morale=morale,
-            wages=wages,
-        )
-
-        ship_crew.additional_properties = d
-        return ship_crew
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

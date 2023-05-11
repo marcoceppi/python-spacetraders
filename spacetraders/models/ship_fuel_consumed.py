@@ -15,53 +15,26 @@ from typing import (
 
 import attr
 from dateutil.parser import isoparse
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ShipFuelConsumed")
 
 
-@attr.s(auto_attribs=True)
-class ShipFuelConsumed:
+class ShipFuelConsumed(BaseModel):
     """
     Attributes:
         amount (int): The amount of fuel consumed by the most recent transit or action.
         timestamp (datetime.datetime): The time at which the fuel was consumed.
     """
 
-    amount: int
-    timestamp: datetime.datetime
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    amount: int = Field(alias="amount")
+    timestamp: datetime.datetime = Field(alias="timestamp")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        amount = self.amount
-        timestamp = self.timestamp.isoformat()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "amount": amount,
-                "timestamp": timestamp,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        amount = d.pop("amount")
-
-        timestamp = isoparse(d.pop("timestamp"))
-
-        ship_fuel_consumed = cls(
-            amount=amount,
-            timestamp=timestamp,
-        )
-
-        ship_fuel_consumed.additional_properties = d
-        return ship_fuel_consumed
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

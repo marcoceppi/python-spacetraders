@@ -12,6 +12,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.waypoint_type import WaypointType
 from ..types import UNSET, Unset
@@ -19,8 +20,7 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="SystemWaypoint")
 
 
-@attr.s(auto_attribs=True)
-class SystemWaypoint:
+class SystemWaypoint(BaseModel):
     """
     Attributes:
         symbol (str):
@@ -29,52 +29,14 @@ class SystemWaypoint:
         y (int):
     """
 
-    symbol: str
-    type: WaypointType
-    x: int
-    y: int
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    symbol: str = Field(alias="symbol")
+    type: WaypointType = Field(alias="type")
+    x: int = Field(alias="x")
+    y: int = Field(alias="y")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        symbol = self.symbol
-        type = self.type.value
-
-        x = self.x
-        y = self.y
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "symbol": symbol,
-                "type": type,
-                "x": x,
-                "y": y,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        symbol = d.pop("symbol")
-
-        type = WaypointType(d.pop("type"))
-
-        x = d.pop("x")
-
-        y = d.pop("y")
-
-        system_waypoint = cls(
-            symbol=symbol,
-            type=type,
-            x=x,
-            y=y,
-        )
-
-        system_waypoint.additional_properties = d
-        return system_waypoint
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

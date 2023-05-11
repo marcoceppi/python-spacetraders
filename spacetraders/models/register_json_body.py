@@ -12,6 +12,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.register_json_body_faction import RegisterJsonBodyFaction
 from ..types import UNSET, Unset
@@ -19,48 +20,19 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="RegisterJsonBody")
 
 
-@attr.s(auto_attribs=True)
-class RegisterJsonBody:
+class RegisterJsonBody(BaseModel):
     """
     Attributes:
         faction (RegisterJsonBodyFaction): The faction you choose determines your headquarters.
         symbol (str): How other agents will see your ships and information. Example: BADGER.
     """
 
-    faction: RegisterJsonBodyFaction
-    symbol: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    faction: RegisterJsonBodyFaction = Field(alias="faction")
+    symbol: str = Field(alias="symbol")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        faction = self.faction.value
-
-        symbol = self.symbol
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "faction": faction,
-                "symbol": symbol,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        faction = RegisterJsonBodyFaction(d.pop("faction"))
-
-        symbol = d.pop("symbol")
-
-        register_json_body = cls(
-            faction=faction,
-            symbol=symbol,
-        )
-
-        register_json_body.additional_properties = d
-        return register_json_body
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

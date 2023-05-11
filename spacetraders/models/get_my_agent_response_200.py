@@ -13,54 +13,25 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.agent import Agent
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.agent import Agent
-
 
 T = TypeVar("T", bound="GetMyAgentResponse200")
 
 
-@attr.s(auto_attribs=True)
-class GetMyAgentResponse200:
+class GetMyAgentResponse200(BaseModel):
     """
     Attributes:
         data (Agent):
     """
 
-    data: "Agent"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: "Agent" = Field(alias="data")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.agent import Agent
-
-        data = self.data.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "data": data,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.agent import Agent
-
-        d = src_dict.copy()
-        data = Agent.from_dict(d.pop("data"))
-
-        get_my_agent_response_200 = cls(
-            data=data,
-        )
-
-        get_my_agent_response_200.additional_properties = d
-        return get_my_agent_response_200
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

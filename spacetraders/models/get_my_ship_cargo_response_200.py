@@ -13,54 +13,25 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.ship_cargo import ShipCargo
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.ship_cargo import ShipCargo
-
 
 T = TypeVar("T", bound="GetMyShipCargoResponse200")
 
 
-@attr.s(auto_attribs=True)
-class GetMyShipCargoResponse200:
+class GetMyShipCargoResponse200(BaseModel):
     """
     Attributes:
         data (ShipCargo):
     """
 
-    data: "ShipCargo"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: "ShipCargo" = Field(alias="data")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.ship_cargo import ShipCargo
-
-        data = self.data.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "data": data,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.ship_cargo import ShipCargo
-
-        d = src_dict.copy()
-        data = ShipCargo.from_dict(d.pop("data"))
-
-        get_my_ship_cargo_response_200 = cls(
-            data=data,
-        )
-
-        get_my_ship_cargo_response_200.additional_properties = d
-        return get_my_ship_cargo_response_200
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

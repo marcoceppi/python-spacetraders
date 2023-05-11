@@ -1,0 +1,149 @@
+from typing import Any, Dict, Type, TypeVar, Tuple, Optional, BinaryIO, TextIO, TYPE_CHECKING
+
+{% if model.additional_properties %}
+from typing import List
+
+{% endif %}
+
+import attr
+{% if model.is_multipart_body %}
+import json
+{% endif %}
+
+from pydantic import BaseModel, Field
+
+from ..types import UNSET, Unset
+
+{% for relative in model.relative_imports %}
+{{ relative }}
+{% endfor %}
+
+{% for lazy_import in model.lazy_imports %}
+{{ lazy_import }}
+{% endfor %}
+
+
+{% if model.additional_properties %}
+{% set additional_property_type = 'Any' if model.additional_properties == True else model.additional_properties.get_type_string(quoted=not model.additional_properties.is_base_type) %}
+{% endif %}
+
+{% set class_name = model.class_info.name %}
+{% set module_name = model.class_info.module_name %}
+
+{% from "helpers.jinja" import safe_docstring %}
+
+T = TypeVar("T", bound="{{ class_name }}")
+
+{% macro class_docstring_content(model) %}
+    {% if model.title %}{{ model.title | wordwrap(116) }}
+
+    {% endif -%}
+    {%- if model.description %}{{ model.description | wordwrap(116) }}
+
+    {% endif %}
+    {% if not model.title and not model.description %}
+    {# Leave extra space so that a section doesn't start on the first line #}
+
+    {% endif %}
+    {% if model.example %}
+    Example:
+        {{ model.example | string | wordwrap(112) | indent(12) }}
+
+    {% endif %}
+    {% if model.required_properties or model.optional_properties %}
+    Attributes:
+    {% for property in model.required_properties + model.optional_properties %}
+        {{ property.to_docstring() | wordwrap(112) | indent(12) }}
+    {% endfor %}{% endif %}
+{% endmacro %}
+
+class {{ class_name }}(BaseModel):
+    {{ safe_docstring(class_docstring_content(model)) | indent(4) }}
+
+    {% for property in model.required_properties + model.optional_properties %}
+    {% if property.default is none and property.required %}
+    {{ property.to_string() }} = Field(alias="{{ property.name }}")
+    {% endif %}
+    {% endfor %}
+    {% for property in model.required_properties + model.optional_properties %}
+    {% if property.default is not none or not property.required %}
+    {{ property.to_string() }}
+    {% endif %}
+    {% endfor %}
+    {% if model.additional_properties %}
+    additional_properties: Dict[str, {{ additional_property_type }}] = {}
+    {% endif %}
+
+{% macro _to_dict(multipart=False) %}
+{% for property in model.required_properties + model.optional_properties %}
+{% import "property_templates/" + property.template as prop_template %}
+{% if prop_template.transform %}
+{{ prop_template.transform(property, "self." + property.python_name, property.python_name, multipart=multipart) }}
+{% elif multipart %}
+{{ property.python_name }} = self.{{ property.python_name }} if isinstance(self.{{ property.python_name }}, Unset) else (None, str(self.{{ property.python_name }}).encode(), "text/plain")
+{% else %}
+{{ property.python_name }} = self.{{ property.python_name }}
+{% endif %}
+{% endfor %}
+
+field_dict: Dict[str, Any] = {}
+{% if model.additional_properties %}
+{% if model.additional_properties.template %}{# Can be a bool instead of an object #}
+    {% import "property_templates/" + model.additional_properties.template as prop_template %}
+{% else %}
+    {% set prop_template = None %}
+{% endif %}
+{% if prop_template and prop_template.transform %}
+for prop_name, prop in self.additional_properties.items():
+    {{ prop_template.transform(model.additional_properties, "prop", "field_dict[prop_name]", multipart=multipart, declare_type=false) | indent(4) }}
+{% elif multipart %}
+field_dict.update({
+    key: (None, str(value).encode(), "text/plain")
+    for key, value in self.additional_properties.items()
+})
+{% else %}
+field_dict.update(self.additional_properties)
+{% endif %}
+{% endif %}
+field_dict.update({
+    {% for property in model.required_properties + model.optional_properties %}
+    {% if property.required %}
+    "{{ property.name }}": {{ property.python_name }},
+    {% endif %}
+    {% endfor %}
+})
+{% for property in model.optional_properties %}
+{% if not property.required %}
+if {{ property.python_name }} is not UNSET:
+    field_dict["{{ property.name }}"] = {{ property.python_name }}
+{% endif %}
+{% endfor %}
+
+return field_dict
+{% endmacro %}
+
+{% if model.is_multipart_body %}
+    def to_multipart(self) -> Dict[str, Any]:
+        {{ _to_dict(multipart=True) | indent(8) }}
+{% endif %}
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    {% if model.additional_properties %}
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> {{ additional_property_type }}:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: {{ additional_property_type }}) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+    {% endif %}

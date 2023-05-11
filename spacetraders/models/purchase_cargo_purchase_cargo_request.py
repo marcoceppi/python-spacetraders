@@ -12,53 +12,26 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="PurchaseCargoPurchaseCargoRequest")
 
 
-@attr.s(auto_attribs=True)
-class PurchaseCargoPurchaseCargoRequest:
+class PurchaseCargoPurchaseCargoRequest(BaseModel):
     """
     Attributes:
         symbol (str):
         units (int):
     """
 
-    symbol: str
-    units: int
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    symbol: str = Field(alias="symbol")
+    units: int = Field(alias="units")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        symbol = self.symbol
-        units = self.units
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "symbol": symbol,
-                "units": units,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        symbol = d.pop("symbol")
-
-        units = d.pop("units")
-
-        purchase_cargo_purchase_cargo_request = cls(
-            symbol=symbol,
-            units=units,
-        )
-
-        purchase_cargo_purchase_cargo_request.additional_properties = d
-        return purchase_cargo_purchase_cargo_request
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

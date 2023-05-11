@@ -13,6 +13,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.ship_role import ShipRole
 from ..types import UNSET, Unset
@@ -20,8 +21,7 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="ShipRegistration")
 
 
-@attr.s(auto_attribs=True)
-class ShipRegistration:
+class ShipRegistration(BaseModel):
     """The public registration information of the ship
 
     Attributes:
@@ -30,47 +30,13 @@ class ShipRegistration:
         faction_symbol (Union[Unset, str]): The symbol of the faction the ship is registered with
     """
 
-    name: str
-    role: ShipRole
+    name: str = Field(alias="name")
+    role: ShipRole = Field(alias="role")
     faction_symbol: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        name = self.name
-        role = self.role.value
-
-        faction_symbol = self.faction_symbol
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "name": name,
-                "role": role,
-            }
-        )
-        if faction_symbol is not UNSET:
-            field_dict["factionSymbol"] = faction_symbol
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        name = d.pop("name")
-
-        role = ShipRole(d.pop("role"))
-
-        faction_symbol = d.pop("factionSymbol", UNSET)
-
-        ship_registration = cls(
-            name=name,
-            role=role,
-            faction_symbol=faction_symbol,
-        )
-
-        ship_registration.additional_properties = d
-        return ship_registration
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

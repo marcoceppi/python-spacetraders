@@ -12,46 +12,24 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="NavigateShipJsonBody")
 
 
-@attr.s(auto_attribs=True)
-class NavigateShipJsonBody:
+class NavigateShipJsonBody(BaseModel):
     """
     Attributes:
         waypoint_symbol (str): The target destination.
     """
 
-    waypoint_symbol: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    waypoint_symbol: str = Field(alias="waypointSymbol")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        waypoint_symbol = self.waypoint_symbol
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "waypointSymbol": waypoint_symbol,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        waypoint_symbol = d.pop("waypointSymbol")
-
-        navigate_ship_json_body = cls(
-            waypoint_symbol=waypoint_symbol,
-        )
-
-        navigate_ship_json_body.additional_properties = d
-        return navigate_ship_json_body
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

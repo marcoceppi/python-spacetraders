@@ -12,46 +12,24 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="SystemFaction")
 
 
-@attr.s(auto_attribs=True)
-class SystemFaction:
+class SystemFaction(BaseModel):
     """
     Attributes:
         symbol (str):
     """
 
-    symbol: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    symbol: str = Field(alias="symbol")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        symbol = self.symbol
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "symbol": symbol,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        symbol = d.pop("symbol")
-
-        system_faction = cls(
-            symbol=symbol,
-        )
-
-        system_faction.additional_properties = d
-        return system_faction
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

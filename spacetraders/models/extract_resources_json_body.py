@@ -14,18 +14,15 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.survey import Survey
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.survey import Survey
-
 
 T = TypeVar("T", bound="ExtractResourcesJsonBody")
 
 
-@attr.s(auto_attribs=True)
-class ExtractResourcesJsonBody:
+class ExtractResourcesJsonBody(BaseModel):
     """
     Attributes:
         survey (Union[Unset, Survey]): A resource survey of a waypoint, detailing a specific extraction location and the
@@ -33,41 +30,10 @@ class ExtractResourcesJsonBody:
     """
 
     survey: Union[Unset, "Survey"] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.survey import Survey
-
-        survey: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.survey, Unset):
-            survey = self.survey.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if survey is not UNSET:
-            field_dict["survey"] = survey
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.survey import Survey
-
-        d = src_dict.copy()
-        _survey = d.pop("survey", UNSET)
-        survey: Union[Unset, Survey]
-        if isinstance(_survey, Unset):
-            survey = UNSET
-        else:
-            survey = Survey.from_dict(_survey)
-
-        extract_resources_json_body = cls(
-            survey=survey,
-        )
-
-        extract_resources_json_body.additional_properties = d
-        return extract_resources_json_body
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

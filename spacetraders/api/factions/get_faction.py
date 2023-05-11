@@ -12,22 +12,22 @@ from ...types import UNSET, Response
 def _get_kwargs(
     faction_symbol: str = "CGR",
     *,
-    client: Client,
+    _client: Client,
 ) -> Dict[str, Any]:
     url = "{}/factions/{factionSymbol}".format(
-        client.base_url, factionSymbol=faction_symbol
+        _client.base_url, factionSymbol=faction_symbol
     )
 
-    headers: Dict[str, str] = client.get_headers()
-    cookies: Dict[str, Any] = client.get_cookies()
+    headers: Dict[str, str] = _client.get_headers()
+    cookies: Dict[str, Any] = _client.get_cookies()
 
     return {
         "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
-        "timeout": client.get_timeout(),
-        "follow_redirects": client.follow_redirects,
+        "timeout": _client.get_timeout(),
+        "follow_redirects": _client.follow_redirects,
     }
 
 
@@ -35,7 +35,8 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[GetFactionResponse200]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = GetFactionResponse200.from_dict(response.json())
+        response_200 = GetFactionResponse200.update_forward_refs()
+        GetFactionResponse200(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -58,7 +59,7 @@ def _build_response(
 def sync_detailed(
     faction_symbol: str = "CGR",
     *,
-    client: Client,
+    _client: Client,
 ) -> Response[GetFactionResponse200]:
     """Get Faction
 
@@ -77,21 +78,21 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         faction_symbol=faction_symbol,
-        client=client,
+        _client=_client,
     )
 
     response = httpx.request(
-        verify=client.verify_ssl,
+        verify=_client.verify_ssl,
         **kwargs,
     )
 
-    return _build_response(client=client, response=response)
+    return _build_response(client=_client, response=response)
 
 
 def sync(
     faction_symbol: str = "CGR",
     *,
-    client: Client,
+    _client: Client,
 ) -> Optional[GetFactionResponse200]:
     """Get Faction
 
@@ -110,14 +111,14 @@ def sync(
 
     return sync_detailed(
         faction_symbol=faction_symbol,
-        client=client,
+        _client=_client,
     ).parsed
 
 
 async def asyncio_detailed(
     faction_symbol: str = "CGR",
     *,
-    client: Client,
+    _client: Client,
 ) -> Response[GetFactionResponse200]:
     """Get Faction
 
@@ -136,19 +137,19 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         faction_symbol=faction_symbol,
-        client=client,
+        _client=_client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
+    async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
+        response = await c.request(**kwargs)
 
-    return _build_response(client=client, response=response)
+    return _build_response(client=_client, response=response)
 
 
 async def asyncio(
     faction_symbol: str = "CGR",
     *,
-    client: Client,
+    _client: Client,
 ) -> Optional[GetFactionResponse200]:
     """Get Faction
 
@@ -168,6 +169,6 @@ async def asyncio(
     return (
         await asyncio_detailed(
             faction_symbol=faction_symbol,
-            client=client,
+            _client=_client,
         )
     ).parsed

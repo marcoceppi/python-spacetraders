@@ -22,7 +22,7 @@ class APIStub:
         if not hasattr(imp, self._exec_mode):
             return APIStub(client=self._client, mod=imp, exec=self._exec_mode)
 
-        return partial(getattr(imp, self._exec_mode), client=self._client)
+        return partial(getattr(imp, self._exec_mode), _client=self._client)
 
 
 @attr.s(auto_attribs=True)

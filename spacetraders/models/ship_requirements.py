@@ -13,14 +13,14 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ShipRequirements")
 
 
-@attr.s(auto_attribs=True)
-class ShipRequirements:
+class ShipRequirements(BaseModel):
     """The requirements for installation on a ship
 
     Attributes:
@@ -32,42 +32,10 @@ class ShipRequirements:
     power: Union[Unset, int] = UNSET
     crew: Union[Unset, int] = UNSET
     slots: Union[Unset, int] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        power = self.power
-        crew = self.crew
-        slots = self.slots
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if power is not UNSET:
-            field_dict["power"] = power
-        if crew is not UNSET:
-            field_dict["crew"] = crew
-        if slots is not UNSET:
-            field_dict["slots"] = slots
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        power = d.pop("power", UNSET)
-
-        crew = d.pop("crew", UNSET)
-
-        slots = d.pop("slots", UNSET)
-
-        ship_requirements = cls(
-            power=power,
-            crew=crew,
-            slots=slots,
-        )
-
-        ship_requirements.additional_properties = d
-        return ship_requirements
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

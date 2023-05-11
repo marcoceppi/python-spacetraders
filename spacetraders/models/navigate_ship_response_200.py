@@ -13,54 +13,25 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.navigate_ship_response_200_data import NavigateShipResponse200Data
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.navigate_ship_response_200_data import NavigateShipResponse200Data
-
 
 T = TypeVar("T", bound="NavigateShipResponse200")
 
 
-@attr.s(auto_attribs=True)
-class NavigateShipResponse200:
+class NavigateShipResponse200(BaseModel):
     """
     Attributes:
         data (NavigateShipResponse200Data):
     """
 
-    data: "NavigateShipResponse200Data"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: "NavigateShipResponse200Data" = Field(alias="data")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.navigate_ship_response_200_data import NavigateShipResponse200Data
-
-        data = self.data.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "data": data,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.navigate_ship_response_200_data import NavigateShipResponse200Data
-
-        d = src_dict.copy()
-        data = NavigateShipResponse200Data.from_dict(d.pop("data"))
-
-        navigate_ship_response_200 = cls(
-            data=data,
-        )
-
-        navigate_ship_response_200.additional_properties = d
-        return navigate_ship_response_200
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

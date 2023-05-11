@@ -13,65 +13,28 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.chart import Chart
+from ..models.waypoint import Waypoint
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.chart import Chart
-    from ..models.waypoint import Waypoint
-
 
 T = TypeVar("T", bound="CreateChartResponse201Data")
 
 
-@attr.s(auto_attribs=True)
-class CreateChartResponse201Data:
+class CreateChartResponse201Data(BaseModel):
     """
     Attributes:
         chart (Chart): The chart of a system or waypoint, which makes the location visible to other agents.
         waypoint (Waypoint): A waypoint is a location that ships can travel to such as a Planet, Moon or Space Station.
     """
 
-    chart: "Chart"
-    waypoint: "Waypoint"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    chart: "Chart" = Field(alias="chart")
+    waypoint: "Waypoint" = Field(alias="waypoint")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.chart import Chart
-        from ..models.waypoint import Waypoint
-
-        chart = self.chart.to_dict()
-
-        waypoint = self.waypoint.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "chart": chart,
-                "waypoint": waypoint,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.chart import Chart
-        from ..models.waypoint import Waypoint
-
-        d = src_dict.copy()
-        chart = Chart.from_dict(d.pop("chart"))
-
-        waypoint = Waypoint.from_dict(d.pop("waypoint"))
-
-        create_chart_response_201_data = cls(
-            chart=chart,
-            waypoint=waypoint,
-        )
-
-        create_chart_response_201_data.additional_properties = d
-        return create_chart_response_201_data
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

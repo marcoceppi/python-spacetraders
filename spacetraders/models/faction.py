@@ -13,18 +13,15 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.faction_trait import FactionTrait
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.faction_trait import FactionTrait
-
 
 T = TypeVar("T", bound="Faction")
 
 
-@attr.s(auto_attribs=True)
-class Faction:
+class Faction(BaseModel):
     """
     Attributes:
         symbol (str):
@@ -34,70 +31,15 @@ class Faction:
         traits (List['FactionTrait']):
     """
 
-    symbol: str
-    name: str
-    description: str
-    headquarters: str
-    traits: List["FactionTrait"]
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    symbol: str = Field(alias="symbol")
+    name: str = Field(alias="name")
+    description: str = Field(alias="description")
+    headquarters: str = Field(alias="headquarters")
+    traits: List["FactionTrait"] = Field(alias="traits")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.faction_trait import FactionTrait
-
-        symbol = self.symbol
-        name = self.name
-        description = self.description
-        headquarters = self.headquarters
-        traits = []
-        for traits_item_data in self.traits:
-            traits_item = traits_item_data.to_dict()
-
-            traits.append(traits_item)
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "symbol": symbol,
-                "name": name,
-                "description": description,
-                "headquarters": headquarters,
-                "traits": traits,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.faction_trait import FactionTrait
-
-        d = src_dict.copy()
-        symbol = d.pop("symbol")
-
-        name = d.pop("name")
-
-        description = d.pop("description")
-
-        headquarters = d.pop("headquarters")
-
-        traits = []
-        _traits = d.pop("traits")
-        for traits_item_data in _traits:
-            traits_item = FactionTrait.from_dict(traits_item_data)
-
-            traits.append(traits_item)
-
-        faction = cls(
-            symbol=symbol,
-            name=name,
-            description=description,
-            headquarters=headquarters,
-            traits=traits,
-        )
-
-        faction.additional_properties = d
-        return faction
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

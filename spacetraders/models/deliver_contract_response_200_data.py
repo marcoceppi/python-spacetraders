@@ -13,65 +13,28 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.contract import Contract
+from ..models.ship_cargo import ShipCargo
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.contract import Contract
-    from ..models.ship_cargo import ShipCargo
-
 
 T = TypeVar("T", bound="DeliverContractResponse200Data")
 
 
-@attr.s(auto_attribs=True)
-class DeliverContractResponse200Data:
+class DeliverContractResponse200Data(BaseModel):
     """
     Attributes:
         contract (Contract):
         cargo (ShipCargo):
     """
 
-    contract: "Contract"
-    cargo: "ShipCargo"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    contract: "Contract" = Field(alias="contract")
+    cargo: "ShipCargo" = Field(alias="cargo")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.contract import Contract
-        from ..models.ship_cargo import ShipCargo
-
-        contract = self.contract.to_dict()
-
-        cargo = self.cargo.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "contract": contract,
-                "cargo": cargo,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.contract import Contract
-        from ..models.ship_cargo import ShipCargo
-
-        d = src_dict.copy()
-        contract = Contract.from_dict(d.pop("contract"))
-
-        cargo = ShipCargo.from_dict(d.pop("cargo"))
-
-        deliver_contract_response_200_data = cls(
-            contract=contract,
-            cargo=cargo,
-        )
-
-        deliver_contract_response_200_data.additional_properties = d
-        return deliver_contract_response_200_data
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

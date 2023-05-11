@@ -12,14 +12,14 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ContractDeliverGood")
 
 
-@attr.s(auto_attribs=True)
-class ContractDeliverGood:
+class ContractDeliverGood(BaseModel):
     """The details of a delivery contract. Includes the type of good, units needed, and the destination.
 
     Attributes:
@@ -29,51 +29,14 @@ class ContractDeliverGood:
         units_fulfilled (int): The number of units fulfilled on this contract.
     """
 
-    trade_symbol: str
-    destination_symbol: str
-    units_required: int
-    units_fulfilled: int
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    trade_symbol: str = Field(alias="tradeSymbol")
+    destination_symbol: str = Field(alias="destinationSymbol")
+    units_required: int = Field(alias="unitsRequired")
+    units_fulfilled: int = Field(alias="unitsFulfilled")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        trade_symbol = self.trade_symbol
-        destination_symbol = self.destination_symbol
-        units_required = self.units_required
-        units_fulfilled = self.units_fulfilled
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "tradeSymbol": trade_symbol,
-                "destinationSymbol": destination_symbol,
-                "unitsRequired": units_required,
-                "unitsFulfilled": units_fulfilled,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        trade_symbol = d.pop("tradeSymbol")
-
-        destination_symbol = d.pop("destinationSymbol")
-
-        units_required = d.pop("unitsRequired")
-
-        units_fulfilled = d.pop("unitsFulfilled")
-
-        contract_deliver_good = cls(
-            trade_symbol=trade_symbol,
-            destination_symbol=destination_symbol,
-            units_required=units_required,
-            units_fulfilled=units_fulfilled,
-        )
-
-        contract_deliver_good.additional_properties = d
-        return contract_deliver_good
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

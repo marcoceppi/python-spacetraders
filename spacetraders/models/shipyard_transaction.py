@@ -15,14 +15,14 @@ from typing import (
 
 import attr
 from dateutil.parser import isoparse
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ShipyardTransaction")
 
 
-@attr.s(auto_attribs=True)
-class ShipyardTransaction:
+class ShipyardTransaction(BaseModel):
     """
     Attributes:
         waypoint_symbol (str): The symbol of the waypoint where the transaction took place.
@@ -32,57 +32,15 @@ class ShipyardTransaction:
         timestamp (datetime.datetime): The timestamp of the transaction.
     """
 
-    waypoint_symbol: str
-    ship_symbol: str
-    price: int
-    agent_symbol: str
-    timestamp: datetime.datetime
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    waypoint_symbol: str = Field(alias="waypointSymbol")
+    ship_symbol: str = Field(alias="shipSymbol")
+    price: int = Field(alias="price")
+    agent_symbol: str = Field(alias="agentSymbol")
+    timestamp: datetime.datetime = Field(alias="timestamp")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        waypoint_symbol = self.waypoint_symbol
-        ship_symbol = self.ship_symbol
-        price = self.price
-        agent_symbol = self.agent_symbol
-        timestamp = self.timestamp.isoformat()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "waypointSymbol": waypoint_symbol,
-                "shipSymbol": ship_symbol,
-                "price": price,
-                "agentSymbol": agent_symbol,
-                "timestamp": timestamp,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        waypoint_symbol = d.pop("waypointSymbol")
-
-        ship_symbol = d.pop("shipSymbol")
-
-        price = d.pop("price")
-
-        agent_symbol = d.pop("agentSymbol")
-
-        timestamp = isoparse(d.pop("timestamp"))
-
-        shipyard_transaction = cls(
-            waypoint_symbol=waypoint_symbol,
-            ship_symbol=ship_symbol,
-            price=price,
-            agent_symbol=agent_symbol,
-            timestamp=timestamp,
-        )
-
-        shipyard_transaction.additional_properties = d
-        return shipyard_transaction
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

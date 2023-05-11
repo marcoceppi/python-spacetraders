@@ -10,6 +10,7 @@ packages = [{include = "spacetraders"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 httpx = "^0.24.0"
+pydantic = "^1.10.7"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"

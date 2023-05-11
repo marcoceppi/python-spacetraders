@@ -15,19 +15,16 @@ from typing import (
 
 import attr
 from dateutil.parser import isoparse
+from pydantic import BaseModel, Field
 
+from ..models.contract_terms import ContractTerms
 from ..models.contract_type import ContractType
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.contract_terms import ContractTerms
-
 
 T = TypeVar("T", bound="Contract")
 
 
-@attr.s(auto_attribs=True)
-class Contract:
+class Contract(BaseModel):
     """
     Attributes:
         id (str):
@@ -39,75 +36,17 @@ class Contract:
         expiration (datetime.datetime): The time at which the contract expires
     """
 
-    id: str
-    faction_symbol: str
-    type: ContractType
-    terms: "ContractTerms"
-    expiration: datetime.datetime
+    id: str = Field(alias="id")
+    faction_symbol: str = Field(alias="factionSymbol")
+    type: ContractType = Field(alias="type")
+    terms: "ContractTerms" = Field(alias="terms")
+    expiration: datetime.datetime = Field(alias="expiration")
     accepted: bool = False
     fulfilled: bool = False
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.contract_terms import ContractTerms
-
-        id = self.id
-        faction_symbol = self.faction_symbol
-        type = self.type.value
-
-        terms = self.terms.to_dict()
-
-        accepted = self.accepted
-        fulfilled = self.fulfilled
-        expiration = self.expiration.isoformat()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "id": id,
-                "factionSymbol": faction_symbol,
-                "type": type,
-                "terms": terms,
-                "accepted": accepted,
-                "fulfilled": fulfilled,
-                "expiration": expiration,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.contract_terms import ContractTerms
-
-        d = src_dict.copy()
-        id = d.pop("id")
-
-        faction_symbol = d.pop("factionSymbol")
-
-        type = ContractType(d.pop("type"))
-
-        terms = ContractTerms.from_dict(d.pop("terms"))
-
-        accepted = d.pop("accepted")
-
-        fulfilled = d.pop("fulfilled")
-
-        expiration = isoparse(d.pop("expiration"))
-
-        contract = cls(
-            id=id,
-            faction_symbol=faction_symbol,
-            type=type,
-            terms=terms,
-            accepted=accepted,
-            fulfilled=fulfilled,
-            expiration=expiration,
-        )
-
-        contract.additional_properties = d
-        return contract
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

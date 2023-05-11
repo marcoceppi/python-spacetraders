@@ -13,18 +13,15 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.ship_cargo_item import ShipCargoItem
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.ship_cargo_item import ShipCargoItem
-
 
 T = TypeVar("T", bound="ShipCargo")
 
 
-@attr.s(auto_attribs=True)
-class ShipCargo:
+class ShipCargo(BaseModel):
     """
     Attributes:
         capacity (int): The max number of items that can be stored in the cargo hold.
@@ -32,58 +29,13 @@ class ShipCargo:
         inventory (List['ShipCargoItem']): The items currently in the cargo hold.
     """
 
-    capacity: int
-    units: int
-    inventory: List["ShipCargoItem"]
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    capacity: int = Field(alias="capacity")
+    units: int = Field(alias="units")
+    inventory: List["ShipCargoItem"] = Field(alias="inventory")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.ship_cargo_item import ShipCargoItem
-
-        capacity = self.capacity
-        units = self.units
-        inventory = []
-        for inventory_item_data in self.inventory:
-            inventory_item = inventory_item_data.to_dict()
-
-            inventory.append(inventory_item)
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "capacity": capacity,
-                "units": units,
-                "inventory": inventory,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.ship_cargo_item import ShipCargoItem
-
-        d = src_dict.copy()
-        capacity = d.pop("capacity")
-
-        units = d.pop("units")
-
-        inventory = []
-        _inventory = d.pop("inventory")
-        for inventory_item_data in _inventory:
-            inventory_item = ShipCargoItem.from_dict(inventory_item_data)
-
-            inventory.append(inventory_item)
-
-        ship_cargo = cls(
-            capacity=capacity,
-            units=units,
-            inventory=inventory,
-        )
-
-        ship_cargo.additional_properties = d
-        return ship_cargo
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:
