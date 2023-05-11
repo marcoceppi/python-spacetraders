@@ -188,7 +188,7 @@ form_data = {{ endpoint.form_data.get_type_string() }}(**form_data)
 multipart_data = {{ endpoint.multipart_data.get_type_string() }}(**multipart_data)
 {% endif %}
 {% if endpoint.json_body %}
-json_body = {{ endpoint.json_body.get_type_string() }}(**json_body)
+json_body = {{ endpoint.json_body.get_type_string() }}.parse_obj(json_body)
 {% endif %}
 {% endmacro %}
 
