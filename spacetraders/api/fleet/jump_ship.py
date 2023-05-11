@@ -23,7 +23,7 @@ def _get_kwargs(
     headers: Dict[str, str] = _client.get_headers()
     cookies: Dict[str, Any] = _client.get_cookies()
 
-    json_json_body = json_body.dict()
+    json_json_body = json_body.dict(by_alias=True)
 
     return {
         "method": "post",
@@ -83,7 +83,7 @@ def sync_detailed(
         Response[JumpShipResponse200]
     """
 
-    json_body = JumpShipJsonBody(**json_body)
+    json_body = JumpShipJsonBody.parse_obj(json_body)
 
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,
@@ -152,7 +152,7 @@ async def asyncio_detailed(
         Response[JumpShipResponse200]
     """
 
-    json_body = JumpShipJsonBody(**json_body)
+    json_body = JumpShipJsonBody.parse_obj(json_body)
 
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,

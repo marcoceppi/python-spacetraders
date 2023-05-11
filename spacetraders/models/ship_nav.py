@@ -45,6 +45,7 @@ class ShipNav(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+        allow_population_by_field_name = True
 
     @property
     def additional_keys(self) -> List[str]:
