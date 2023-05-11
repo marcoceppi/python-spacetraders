@@ -12,46 +12,24 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="JumpShipJsonBody")
 
 
-@attr.s(auto_attribs=True)
-class JumpShipJsonBody:
+class JumpShipJsonBody(BaseModel):
     """
     Attributes:
         system_symbol (str): The system symbol to jump to.
     """
 
-    system_symbol: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    system_symbol: str = Field(alias="systemSymbol")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        system_symbol = self.system_symbol
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "systemSymbol": system_symbol,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        system_symbol = d.pop("systemSymbol")
-
-        jump_ship_json_body = cls(
-            system_symbol=system_symbol,
-        )
-
-        jump_ship_json_body.additional_properties = d
-        return jump_ship_json_body
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

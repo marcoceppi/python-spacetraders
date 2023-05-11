@@ -14,22 +14,19 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.chart import Chart
+from ..models.waypoint_faction import WaypointFaction
+from ..models.waypoint_orbital import WaypointOrbital
+from ..models.waypoint_trait import WaypointTrait
 from ..models.waypoint_type import WaypointType
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.chart import Chart
-    from ..models.waypoint_faction import WaypointFaction
-    from ..models.waypoint_orbital import WaypointOrbital
-    from ..models.waypoint_trait import WaypointTrait
-
 
 T = TypeVar("T", bound="Waypoint")
 
 
-@attr.s(auto_attribs=True)
-class Waypoint:
+class Waypoint(BaseModel):
     """A waypoint is a location that ships can travel to such as a Planet, Moon or Space Station.
 
     Attributes:
@@ -45,129 +42,19 @@ class Waypoint:
             agents.
     """
 
-    symbol: str
-    type: WaypointType
-    system_symbol: str
-    x: int
-    y: int
-    orbitals: List["WaypointOrbital"]
-    traits: List["WaypointTrait"]
+    symbol: str = Field(alias="symbol")
+    type: WaypointType = Field(alias="type")
+    system_symbol: str = Field(alias="systemSymbol")
+    x: int = Field(alias="x")
+    y: int = Field(alias="y")
+    orbitals: List["WaypointOrbital"] = Field(alias="orbitals")
+    traits: List["WaypointTrait"] = Field(alias="traits")
     faction: Union[Unset, "WaypointFaction"] = UNSET
     chart: Union[Unset, "Chart"] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.chart import Chart
-        from ..models.waypoint_faction import WaypointFaction
-        from ..models.waypoint_orbital import WaypointOrbital
-        from ..models.waypoint_trait import WaypointTrait
-
-        symbol = self.symbol
-        type = self.type.value
-
-        system_symbol = self.system_symbol
-        x = self.x
-        y = self.y
-        orbitals = []
-        for orbitals_item_data in self.orbitals:
-            orbitals_item = orbitals_item_data.to_dict()
-
-            orbitals.append(orbitals_item)
-
-        traits = []
-        for traits_item_data in self.traits:
-            traits_item = traits_item_data.to_dict()
-
-            traits.append(traits_item)
-
-        faction: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.faction, Unset):
-            faction = self.faction.to_dict()
-
-        chart: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.chart, Unset):
-            chart = self.chart.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "symbol": symbol,
-                "type": type,
-                "systemSymbol": system_symbol,
-                "x": x,
-                "y": y,
-                "orbitals": orbitals,
-                "traits": traits,
-            }
-        )
-        if faction is not UNSET:
-            field_dict["faction"] = faction
-        if chart is not UNSET:
-            field_dict["chart"] = chart
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.chart import Chart
-        from ..models.waypoint_faction import WaypointFaction
-        from ..models.waypoint_orbital import WaypointOrbital
-        from ..models.waypoint_trait import WaypointTrait
-
-        d = src_dict.copy()
-        symbol = d.pop("symbol")
-
-        type = WaypointType(d.pop("type"))
-
-        system_symbol = d.pop("systemSymbol")
-
-        x = d.pop("x")
-
-        y = d.pop("y")
-
-        orbitals = []
-        _orbitals = d.pop("orbitals")
-        for orbitals_item_data in _orbitals:
-            orbitals_item = WaypointOrbital.from_dict(orbitals_item_data)
-
-            orbitals.append(orbitals_item)
-
-        traits = []
-        _traits = d.pop("traits")
-        for traits_item_data in _traits:
-            traits_item = WaypointTrait.from_dict(traits_item_data)
-
-            traits.append(traits_item)
-
-        _faction = d.pop("faction", UNSET)
-        faction: Union[Unset, WaypointFaction]
-        if isinstance(_faction, Unset):
-            faction = UNSET
-        else:
-            faction = WaypointFaction.from_dict(_faction)
-
-        _chart = d.pop("chart", UNSET)
-        chart: Union[Unset, Chart]
-        if isinstance(_chart, Unset):
-            chart = UNSET
-        else:
-            chart = Chart.from_dict(_chart)
-
-        waypoint = cls(
-            symbol=symbol,
-            type=type,
-            system_symbol=system_symbol,
-            x=x,
-            y=y,
-            orbitals=orbitals,
-            traits=traits,
-            faction=faction,
-            chart=chart,
-        )
-
-        waypoint.additional_properties = d
-        return waypoint
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

@@ -12,6 +12,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.waypoint_trait_symbol import WaypointTraitSymbol
 from ..types import UNSET, Unset
@@ -19,8 +20,7 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="WaypointTrait")
 
 
-@attr.s(auto_attribs=True)
-class WaypointTrait:
+class WaypointTrait(BaseModel):
     """
     Attributes:
         symbol (WaypointTraitSymbol): The unique identifier of the trait.
@@ -28,46 +28,13 @@ class WaypointTrait:
         description (str): A description of the trait.
     """
 
-    symbol: WaypointTraitSymbol
-    name: str
-    description: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    symbol: WaypointTraitSymbol = Field(alias="symbol")
+    name: str = Field(alias="name")
+    description: str = Field(alias="description")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        symbol = self.symbol.value
-
-        name = self.name
-        description = self.description
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "symbol": symbol,
-                "name": name,
-                "description": description,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        symbol = WaypointTraitSymbol(d.pop("symbol"))
-
-        name = d.pop("name")
-
-        description = d.pop("description")
-
-        waypoint_trait = cls(
-            symbol=symbol,
-            name=name,
-            description=description,
-        )
-
-        waypoint_trait.additional_properties = d
-        return waypoint_trait
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

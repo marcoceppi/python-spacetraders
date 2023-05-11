@@ -11,20 +11,20 @@ from ...types import UNSET, Response
 
 def _get_kwargs(
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Dict[str, Any]:
-    url = "{}/my/agent".format(client.base_url)
+    url = "{}/my/agent".format(_client.base_url)
 
-    headers: Dict[str, str] = client.get_headers()
-    cookies: Dict[str, Any] = client.get_cookies()
+    headers: Dict[str, str] = _client.get_headers()
+    cookies: Dict[str, Any] = _client.get_cookies()
 
     return {
         "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
-        "timeout": client.get_timeout(),
-        "follow_redirects": client.follow_redirects,
+        "timeout": _client.get_timeout(),
+        "follow_redirects": _client.follow_redirects,
     }
 
 
@@ -32,7 +32,8 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[GetMyAgentResponse200]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = GetMyAgentResponse200.from_dict(response.json())
+        response_200 = GetMyAgentResponse200.update_forward_refs()
+        GetMyAgentResponse200(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -54,7 +55,7 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Response[GetMyAgentResponse200]:
     """My Agent Details
 
@@ -69,20 +70,20 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
-        client=client,
+        _client=_client,
     )
 
     response = httpx.request(
-        verify=client.verify_ssl,
+        verify=_client.verify_ssl,
         **kwargs,
     )
 
-    return _build_response(client=client, response=response)
+    return _build_response(client=_client, response=response)
 
 
 def sync(
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Optional[GetMyAgentResponse200]:
     """My Agent Details
 
@@ -97,13 +98,13 @@ def sync(
     """
 
     return sync_detailed(
-        client=client,
+        _client=_client,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Response[GetMyAgentResponse200]:
     """My Agent Details
 
@@ -118,18 +119,18 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
-        client=client,
+        _client=_client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
+    async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
+        response = await c.request(**kwargs)
 
-    return _build_response(client=client, response=response)
+    return _build_response(client=_client, response=response)
 
 
 async def asyncio(
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Optional[GetMyAgentResponse200]:
     """My Agent Details
 
@@ -145,6 +146,6 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
-            client=client,
+            _client=_client,
         )
     ).parsed

@@ -15,6 +15,7 @@ from typing import (
 
 import attr
 from dateutil.parser import isoparse
+from pydantic import BaseModel, Field
 
 from ..models.market_transaction_type import MarketTransactionType
 from ..types import UNSET, Unset
@@ -22,8 +23,7 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="MarketTransaction")
 
 
-@attr.s(auto_attribs=True)
-class MarketTransaction:
+class MarketTransaction(BaseModel):
     """
     Attributes:
         waypoint_symbol (str): The symbol of the waypoint where the transaction took place.
@@ -36,76 +36,18 @@ class MarketTransaction:
         timestamp (datetime.datetime): The timestamp of the transaction.
     """
 
-    waypoint_symbol: str
-    ship_symbol: str
-    trade_symbol: str
-    type: MarketTransactionType
-    units: int
-    price_per_unit: int
-    total_price: int
-    timestamp: datetime.datetime
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    waypoint_symbol: str = Field(alias="waypointSymbol")
+    ship_symbol: str = Field(alias="shipSymbol")
+    trade_symbol: str = Field(alias="tradeSymbol")
+    type: MarketTransactionType = Field(alias="type")
+    units: int = Field(alias="units")
+    price_per_unit: int = Field(alias="pricePerUnit")
+    total_price: int = Field(alias="totalPrice")
+    timestamp: datetime.datetime = Field(alias="timestamp")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        waypoint_symbol = self.waypoint_symbol
-        ship_symbol = self.ship_symbol
-        trade_symbol = self.trade_symbol
-        type = self.type.value
-
-        units = self.units
-        price_per_unit = self.price_per_unit
-        total_price = self.total_price
-        timestamp = self.timestamp.isoformat()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "waypointSymbol": waypoint_symbol,
-                "shipSymbol": ship_symbol,
-                "tradeSymbol": trade_symbol,
-                "type": type,
-                "units": units,
-                "pricePerUnit": price_per_unit,
-                "totalPrice": total_price,
-                "timestamp": timestamp,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        waypoint_symbol = d.pop("waypointSymbol")
-
-        ship_symbol = d.pop("shipSymbol")
-
-        trade_symbol = d.pop("tradeSymbol")
-
-        type = MarketTransactionType(d.pop("type"))
-
-        units = d.pop("units")
-
-        price_per_unit = d.pop("pricePerUnit")
-
-        total_price = d.pop("totalPrice")
-
-        timestamp = isoparse(d.pop("timestamp"))
-
-        market_transaction = cls(
-            waypoint_symbol=waypoint_symbol,
-            ship_symbol=ship_symbol,
-            trade_symbol=trade_symbol,
-            type=type,
-            units=units,
-            price_per_unit=price_per_unit,
-            total_price=total_price,
-            timestamp=timestamp,
-        )
-
-        market_transaction.additional_properties = d
-        return market_transaction
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

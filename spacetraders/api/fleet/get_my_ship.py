@@ -12,20 +12,20 @@ from ...types import UNSET, Response
 def _get_kwargs(
     ship_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Dict[str, Any]:
-    url = "{}/my/ships/{shipSymbol}".format(client.base_url, shipSymbol=ship_symbol)
+    url = "{}/my/ships/{shipSymbol}".format(_client.base_url, shipSymbol=ship_symbol)
 
-    headers: Dict[str, str] = client.get_headers()
-    cookies: Dict[str, Any] = client.get_cookies()
+    headers: Dict[str, str] = _client.get_headers()
+    cookies: Dict[str, Any] = _client.get_cookies()
 
     return {
         "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
-        "timeout": client.get_timeout(),
-        "follow_redirects": client.follow_redirects,
+        "timeout": _client.get_timeout(),
+        "follow_redirects": _client.follow_redirects,
     }
 
 
@@ -33,7 +33,8 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[GetMyShipResponse200]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = GetMyShipResponse200.from_dict(response.json())
+        response_200 = GetMyShipResponse200.update_forward_refs()
+        GetMyShipResponse200(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -56,7 +57,7 @@ def _build_response(
 def sync_detailed(
     ship_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Response[GetMyShipResponse200]:
     """Get Ship
 
@@ -75,21 +76,21 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,
-        client=client,
+        _client=_client,
     )
 
     response = httpx.request(
-        verify=client.verify_ssl,
+        verify=_client.verify_ssl,
         **kwargs,
     )
 
-    return _build_response(client=client, response=response)
+    return _build_response(client=_client, response=response)
 
 
 def sync(
     ship_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Optional[GetMyShipResponse200]:
     """Get Ship
 
@@ -108,14 +109,14 @@ def sync(
 
     return sync_detailed(
         ship_symbol=ship_symbol,
-        client=client,
+        _client=_client,
     ).parsed
 
 
 async def asyncio_detailed(
     ship_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Response[GetMyShipResponse200]:
     """Get Ship
 
@@ -134,19 +135,19 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,
-        client=client,
+        _client=_client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
+    async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
+        response = await c.request(**kwargs)
 
-    return _build_response(client=client, response=response)
+    return _build_response(client=_client, response=response)
 
 
 async def asyncio(
     ship_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
 ) -> Optional[GetMyShipResponse200]:
     """Get Ship
 
@@ -166,6 +167,6 @@ async def asyncio(
     return (
         await asyncio_detailed(
             ship_symbol=ship_symbol,
-            client=client,
+            _client=_client,
         )
     ).parsed

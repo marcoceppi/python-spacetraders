@@ -13,74 +13,28 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.cooldown import Cooldown
+from ..models.scanned_waypoint import ScannedWaypoint
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.cooldown import Cooldown
-    from ..models.scanned_waypoint import ScannedWaypoint
-
 
 T = TypeVar("T", bound="CreateShipWaypointScanResponse201Data")
 
 
-@attr.s(auto_attribs=True)
-class CreateShipWaypointScanResponse201Data:
+class CreateShipWaypointScanResponse201Data(BaseModel):
     """
     Attributes:
         cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
         waypoints (List['ScannedWaypoint']):
     """
 
-    cooldown: "Cooldown"
-    waypoints: List["ScannedWaypoint"]
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    cooldown: "Cooldown" = Field(alias="cooldown")
+    waypoints: List["ScannedWaypoint"] = Field(alias="waypoints")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.cooldown import Cooldown
-        from ..models.scanned_waypoint import ScannedWaypoint
-
-        cooldown = self.cooldown.to_dict()
-
-        waypoints = []
-        for waypoints_item_data in self.waypoints:
-            waypoints_item = waypoints_item_data.to_dict()
-
-            waypoints.append(waypoints_item)
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "cooldown": cooldown,
-                "waypoints": waypoints,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.cooldown import Cooldown
-        from ..models.scanned_waypoint import ScannedWaypoint
-
-        d = src_dict.copy()
-        cooldown = Cooldown.from_dict(d.pop("cooldown"))
-
-        waypoints = []
-        _waypoints = d.pop("waypoints")
-        for waypoints_item_data in _waypoints:
-            waypoints_item = ScannedWaypoint.from_dict(waypoints_item_data)
-
-            waypoints.append(waypoints_item)
-
-        create_ship_waypoint_scan_response_201_data = cls(
-            cooldown=cooldown,
-            waypoints=waypoints,
-        )
-
-        create_ship_waypoint_scan_response_201_data.additional_properties = d
-        return create_ship_waypoint_scan_response_201_data
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

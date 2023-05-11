@@ -13,20 +13,17 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.ship_nav_flight_mode import ShipNavFlightMode
+from ..models.ship_nav_route import ShipNavRoute
 from ..models.ship_nav_status import ShipNavStatus
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.ship_nav_route import ShipNavRoute
-
 
 T = TypeVar("T", bound="ShipNav")
 
 
-@attr.s(auto_attribs=True)
-class ShipNav:
+class ShipNav(BaseModel):
     """The navigation information of the ship.
 
     Attributes:
@@ -39,63 +36,15 @@ class ShipNav:
             ShipNavFlightMode.CRUISE.
     """
 
-    system_symbol: str
-    waypoint_symbol: str
-    route: "ShipNavRoute"
-    status: ShipNavStatus
+    system_symbol: str = Field(alias="systemSymbol")
+    waypoint_symbol: str = Field(alias="waypointSymbol")
+    route: "ShipNavRoute" = Field(alias="route")
+    status: ShipNavStatus = Field(alias="status")
     flight_mode: ShipNavFlightMode = ShipNavFlightMode.CRUISE
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.ship_nav_route import ShipNavRoute
-
-        system_symbol = self.system_symbol
-        waypoint_symbol = self.waypoint_symbol
-        route = self.route.to_dict()
-
-        status = self.status.value
-
-        flight_mode = self.flight_mode.value
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "systemSymbol": system_symbol,
-                "waypointSymbol": waypoint_symbol,
-                "route": route,
-                "status": status,
-                "flightMode": flight_mode,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.ship_nav_route import ShipNavRoute
-
-        d = src_dict.copy()
-        system_symbol = d.pop("systemSymbol")
-
-        waypoint_symbol = d.pop("waypointSymbol")
-
-        route = ShipNavRoute.from_dict(d.pop("route"))
-
-        status = ShipNavStatus(d.pop("status"))
-
-        flight_mode = ShipNavFlightMode(d.pop("flightMode"))
-
-        ship_nav = cls(
-            system_symbol=system_symbol,
-            waypoint_symbol=waypoint_symbol,
-            route=route,
-            status=status,
-            flight_mode=flight_mode,
-        )
-
-        ship_nav.additional_properties = d
-        return ship_nav
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

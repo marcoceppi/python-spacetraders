@@ -13,19 +13,16 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.agent import Agent
+from ..models.ship_fuel import ShipFuel
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.agent import Agent
-    from ..models.ship_fuel import ShipFuel
-
 
 T = TypeVar("T", bound="RefuelShipResponse200Data")
 
 
-@attr.s(auto_attribs=True)
-class RefuelShipResponse200Data:
+class RefuelShipResponse200Data(BaseModel):
     """
     Attributes:
         agent (Agent):
@@ -33,46 +30,12 @@ class RefuelShipResponse200Data:
             or action.
     """
 
-    agent: "Agent"
-    fuel: "ShipFuel"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    agent: "Agent" = Field(alias="agent")
+    fuel: "ShipFuel" = Field(alias="fuel")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.agent import Agent
-        from ..models.ship_fuel import ShipFuel
-
-        agent = self.agent.to_dict()
-
-        fuel = self.fuel.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "agent": agent,
-                "fuel": fuel,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.agent import Agent
-        from ..models.ship_fuel import ShipFuel
-
-        d = src_dict.copy()
-        agent = Agent.from_dict(d.pop("agent"))
-
-        fuel = ShipFuel.from_dict(d.pop("fuel"))
-
-        refuel_ship_response_200_data = cls(
-            agent=agent,
-            fuel=fuel,
-        )
-
-        refuel_ship_response_200_data.additional_properties = d
-        return refuel_ship_response_200_data
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

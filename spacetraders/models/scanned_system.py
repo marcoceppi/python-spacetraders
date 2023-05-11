@@ -12,6 +12,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.system_type import SystemType
 from ..types import UNSET, Unset
@@ -19,8 +20,7 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="ScannedSystem")
 
 
-@attr.s(auto_attribs=True)
-class ScannedSystem:
+class ScannedSystem(BaseModel):
     """
     Attributes:
         symbol (str):
@@ -31,64 +31,16 @@ class ScannedSystem:
         distance (int):
     """
 
-    symbol: str
-    sector_symbol: str
-    type: SystemType
-    x: int
-    y: int
-    distance: int
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    symbol: str = Field(alias="symbol")
+    sector_symbol: str = Field(alias="sectorSymbol")
+    type: SystemType = Field(alias="type")
+    x: int = Field(alias="x")
+    y: int = Field(alias="y")
+    distance: int = Field(alias="distance")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        symbol = self.symbol
-        sector_symbol = self.sector_symbol
-        type = self.type.value
-
-        x = self.x
-        y = self.y
-        distance = self.distance
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "symbol": symbol,
-                "sectorSymbol": sector_symbol,
-                "type": type,
-                "x": x,
-                "y": y,
-                "distance": distance,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        symbol = d.pop("symbol")
-
-        sector_symbol = d.pop("sectorSymbol")
-
-        type = SystemType(d.pop("type"))
-
-        x = d.pop("x")
-
-        y = d.pop("y")
-
-        distance = d.pop("distance")
-
-        scanned_system = cls(
-            symbol=symbol,
-            sector_symbol=sector_symbol,
-            type=type,
-            x=x,
-            y=y,
-            distance=distance,
-        )
-
-        scanned_system.additional_properties = d
-        return scanned_system
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

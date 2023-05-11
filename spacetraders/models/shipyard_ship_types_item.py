@@ -13,6 +13,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.ship_type import ShipType
 from ..types import UNSET, Unset
@@ -20,45 +21,17 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="ShipyardShipTypesItem")
 
 
-@attr.s(auto_attribs=True)
-class ShipyardShipTypesItem:
+class ShipyardShipTypesItem(BaseModel):
     """
     Attributes:
         type (Union[Unset, ShipType]):
     """
 
     type: Union[Unset, ShipType] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        type: Union[Unset, str] = UNSET
-        if not isinstance(self.type, Unset):
-            type = self.type.value
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if type is not UNSET:
-            field_dict["type"] = type
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _type = d.pop("type", UNSET)
-        type: Union[Unset, ShipType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = ShipType(_type)
-
-        shipyard_ship_types_item = cls(
-            type=type,
-        )
-
-        shipyard_ship_types_item.additional_properties = d
-        return shipyard_ship_types_item
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

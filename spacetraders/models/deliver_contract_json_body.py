@@ -12,14 +12,14 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="DeliverContractJsonBody")
 
 
-@attr.s(auto_attribs=True)
-class DeliverContractJsonBody:
+class DeliverContractJsonBody(BaseModel):
     """
     Attributes:
         ship_symbol (str):
@@ -27,45 +27,13 @@ class DeliverContractJsonBody:
         units (int):
     """
 
-    ship_symbol: str
-    trade_symbol: str
-    units: int
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    ship_symbol: str = Field(alias="shipSymbol")
+    trade_symbol: str = Field(alias="tradeSymbol")
+    units: int = Field(alias="units")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        ship_symbol = self.ship_symbol
-        trade_symbol = self.trade_symbol
-        units = self.units
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "shipSymbol": ship_symbol,
-                "tradeSymbol": trade_symbol,
-                "units": units,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        ship_symbol = d.pop("shipSymbol")
-
-        trade_symbol = d.pop("tradeSymbol")
-
-        units = d.pop("units")
-
-        deliver_contract_json_body = cls(
-            ship_symbol=ship_symbol,
-            trade_symbol=trade_symbol,
-            units=units,
-        )
-
-        deliver_contract_json_body.additional_properties = d
-        return deliver_contract_json_body
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

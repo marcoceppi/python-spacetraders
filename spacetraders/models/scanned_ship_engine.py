@@ -12,47 +12,25 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ScannedShipEngine")
 
 
-@attr.s(auto_attribs=True)
-class ScannedShipEngine:
+class ScannedShipEngine(BaseModel):
     """The engine of the ship.
 
     Attributes:
         symbol (str):
     """
 
-    symbol: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    symbol: str = Field(alias="symbol")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        symbol = self.symbol
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "symbol": symbol,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        symbol = d.pop("symbol")
-
-        scanned_ship_engine = cls(
-            symbol=symbol,
-        )
-
-        scanned_ship_engine.additional_properties = d
-        return scanned_ship_engine
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

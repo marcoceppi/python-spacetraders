@@ -14,23 +14,20 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.ship_engine import ShipEngine
+from ..models.ship_frame import ShipFrame
+from ..models.ship_module import ShipModule
+from ..models.ship_mount import ShipMount
+from ..models.ship_reactor import ShipReactor
 from ..models.ship_type import ShipType
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.ship_engine import ShipEngine
-    from ..models.ship_frame import ShipFrame
-    from ..models.ship_module import ShipModule
-    from ..models.ship_mount import ShipMount
-    from ..models.ship_reactor import ShipReactor
-
 
 T = TypeVar("T", bound="ShipyardShip")
 
 
-@attr.s(auto_attribs=True)
-class ShipyardShip:
+class ShipyardShip(BaseModel):
     """
     Attributes:
         name (str):
@@ -47,124 +44,19 @@ class ShipyardShip:
         type (Union[Unset, ShipType]):
     """
 
-    name: str
-    description: str
-    purchase_price: int
-    frame: "ShipFrame"
-    reactor: "ShipReactor"
-    engine: "ShipEngine"
-    modules: List["ShipModule"]
-    mounts: List["ShipMount"]
+    name: str = Field(alias="name")
+    description: str = Field(alias="description")
+    purchase_price: int = Field(alias="purchasePrice")
+    frame: "ShipFrame" = Field(alias="frame")
+    reactor: "ShipReactor" = Field(alias="reactor")
+    engine: "ShipEngine" = Field(alias="engine")
+    modules: List["ShipModule"] = Field(alias="modules")
+    mounts: List["ShipMount"] = Field(alias="mounts")
     type: Union[Unset, ShipType] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.ship_engine import ShipEngine
-        from ..models.ship_frame import ShipFrame
-        from ..models.ship_module import ShipModule
-        from ..models.ship_mount import ShipMount
-        from ..models.ship_reactor import ShipReactor
-
-        name = self.name
-        description = self.description
-        purchase_price = self.purchase_price
-        frame = self.frame.to_dict()
-
-        reactor = self.reactor.to_dict()
-
-        engine = self.engine.to_dict()
-
-        modules = []
-        for modules_item_data in self.modules:
-            modules_item = modules_item_data.to_dict()
-
-            modules.append(modules_item)
-
-        mounts = []
-        for mounts_item_data in self.mounts:
-            mounts_item = mounts_item_data.to_dict()
-
-            mounts.append(mounts_item)
-
-        type: Union[Unset, str] = UNSET
-        if not isinstance(self.type, Unset):
-            type = self.type.value
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "name": name,
-                "description": description,
-                "purchasePrice": purchase_price,
-                "frame": frame,
-                "reactor": reactor,
-                "engine": engine,
-                "modules": modules,
-                "mounts": mounts,
-            }
-        )
-        if type is not UNSET:
-            field_dict["type"] = type
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.ship_engine import ShipEngine
-        from ..models.ship_frame import ShipFrame
-        from ..models.ship_module import ShipModule
-        from ..models.ship_mount import ShipMount
-        from ..models.ship_reactor import ShipReactor
-
-        d = src_dict.copy()
-        name = d.pop("name")
-
-        description = d.pop("description")
-
-        purchase_price = d.pop("purchasePrice")
-
-        frame = ShipFrame.from_dict(d.pop("frame"))
-
-        reactor = ShipReactor.from_dict(d.pop("reactor"))
-
-        engine = ShipEngine.from_dict(d.pop("engine"))
-
-        modules = []
-        _modules = d.pop("modules")
-        for modules_item_data in _modules:
-            modules_item = ShipModule.from_dict(modules_item_data)
-
-            modules.append(modules_item)
-
-        mounts = []
-        _mounts = d.pop("mounts")
-        for mounts_item_data in _mounts:
-            mounts_item = ShipMount.from_dict(mounts_item_data)
-
-            mounts.append(mounts_item)
-
-        _type = d.pop("type", UNSET)
-        type: Union[Unset, ShipType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = ShipType(_type)
-
-        shipyard_ship = cls(
-            name=name,
-            description=description,
-            purchase_price=purchase_price,
-            frame=frame,
-            reactor=reactor,
-            engine=engine,
-            modules=modules,
-            mounts=mounts,
-            type=type,
-        )
-
-        shipyard_ship.additional_properties = d
-        return shipyard_ship
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

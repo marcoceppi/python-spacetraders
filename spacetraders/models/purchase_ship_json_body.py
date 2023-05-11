@@ -12,6 +12,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.ship_type import ShipType
 from ..types import UNSET, Unset
@@ -19,48 +20,19 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="PurchaseShipJsonBody")
 
 
-@attr.s(auto_attribs=True)
-class PurchaseShipJsonBody:
+class PurchaseShipJsonBody(BaseModel):
     """
     Attributes:
         ship_type (ShipType):
         waypoint_symbol (str): The symbol of the waypoint you want to purchase the ship at.
     """
 
-    ship_type: ShipType
-    waypoint_symbol: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    ship_type: ShipType = Field(alias="shipType")
+    waypoint_symbol: str = Field(alias="waypointSymbol")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        ship_type = self.ship_type.value
-
-        waypoint_symbol = self.waypoint_symbol
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "shipType": ship_type,
-                "waypointSymbol": waypoint_symbol,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        ship_type = ShipType(d.pop("shipType"))
-
-        waypoint_symbol = d.pop("waypointSymbol")
-
-        purchase_ship_json_body = cls(
-            ship_type=ship_type,
-            waypoint_symbol=waypoint_symbol,
-        )
-
-        purchase_ship_json_body.additional_properties = d
-        return purchase_ship_json_body
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

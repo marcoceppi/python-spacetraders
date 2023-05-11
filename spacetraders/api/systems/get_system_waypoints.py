@@ -12,16 +12,16 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     system_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/systems/{systemSymbol}/waypoints".format(
-        client.base_url, systemSymbol=system_symbol
+        _client.base_url, systemSymbol=system_symbol
     )
 
-    headers: Dict[str, str] = client.get_headers()
-    cookies: Dict[str, Any] = client.get_cookies()
+    headers: Dict[str, str] = _client.get_headers()
+    cookies: Dict[str, Any] = _client.get_cookies()
 
     params: Dict[str, Any] = {}
     params["page"] = page
@@ -35,8 +35,8 @@ def _get_kwargs(
         "url": url,
         "headers": headers,
         "cookies": cookies,
-        "timeout": client.get_timeout(),
-        "follow_redirects": client.follow_redirects,
+        "timeout": _client.get_timeout(),
+        "follow_redirects": _client.follow_redirects,
         "params": params,
     }
 
@@ -45,7 +45,8 @@ def _parse_response(
     *, client: Client, response: httpx.Response
 ) -> Optional[GetSystemWaypointsResponse200]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = GetSystemWaypointsResponse200.from_dict(response.json())
+        response_200 = GetSystemWaypointsResponse200.update_forward_refs()
+        GetSystemWaypointsResponse200(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -68,7 +69,7 @@ def _build_response(
 def sync_detailed(
     system_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
 ) -> Response[GetSystemWaypointsResponse200]:
@@ -92,23 +93,23 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         system_symbol=system_symbol,
-        client=client,
+        _client=_client,
         page=page,
         limit=limit,
     )
 
     response = httpx.request(
-        verify=client.verify_ssl,
+        verify=_client.verify_ssl,
         **kwargs,
     )
 
-    return _build_response(client=client, response=response)
+    return _build_response(client=_client, response=response)
 
 
 def sync(
     system_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
 ) -> Optional[GetSystemWaypointsResponse200]:
@@ -132,7 +133,7 @@ def sync(
 
     return sync_detailed(
         system_symbol=system_symbol,
-        client=client,
+        _client=_client,
         page=page,
         limit=limit,
     ).parsed
@@ -141,7 +142,7 @@ def sync(
 async def asyncio_detailed(
     system_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
 ) -> Response[GetSystemWaypointsResponse200]:
@@ -165,21 +166,21 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         system_symbol=system_symbol,
-        client=client,
+        _client=_client,
         page=page,
         limit=limit,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.request(**kwargs)
+    async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
+        response = await c.request(**kwargs)
 
-    return _build_response(client=client, response=response)
+    return _build_response(client=_client, response=response)
 
 
 async def asyncio(
     system_symbol: str,
     *,
-    client: AuthenticatedClient,
+    _client: AuthenticatedClient,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
 ) -> Optional[GetSystemWaypointsResponse200]:
@@ -204,7 +205,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             system_symbol=system_symbol,
-            client=client,
+            _client=_client,
             page=page,
             limit=limit,
         )

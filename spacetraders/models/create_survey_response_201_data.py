@@ -13,74 +13,28 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.cooldown import Cooldown
+from ..models.survey import Survey
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.cooldown import Cooldown
-    from ..models.survey import Survey
-
 
 T = TypeVar("T", bound="CreateSurveyResponse201Data")
 
 
-@attr.s(auto_attribs=True)
-class CreateSurveyResponse201Data:
+class CreateSurveyResponse201Data(BaseModel):
     """
     Attributes:
         cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
         surveys (List['Survey']):
     """
 
-    cooldown: "Cooldown"
-    surveys: List["Survey"]
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    cooldown: "Cooldown" = Field(alias="cooldown")
+    surveys: List["Survey"] = Field(alias="surveys")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.cooldown import Cooldown
-        from ..models.survey import Survey
-
-        cooldown = self.cooldown.to_dict()
-
-        surveys = []
-        for surveys_item_data in self.surveys:
-            surveys_item = surveys_item_data.to_dict()
-
-            surveys.append(surveys_item)
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "cooldown": cooldown,
-                "surveys": surveys,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.cooldown import Cooldown
-        from ..models.survey import Survey
-
-        d = src_dict.copy()
-        cooldown = Cooldown.from_dict(d.pop("cooldown"))
-
-        surveys = []
-        _surveys = d.pop("surveys")
-        for surveys_item_data in _surveys:
-            surveys_item = Survey.from_dict(surveys_item_data)
-
-            surveys.append(surveys_item)
-
-        create_survey_response_201_data = cls(
-            cooldown=cooldown,
-            surveys=surveys,
-        )
-
-        create_survey_response_201_data.additional_properties = d
-        return create_survey_response_201_data
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

@@ -13,60 +13,27 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.ship_refine_ship_refine_200_response_data import (
+    ShipRefineShipRefine200ResponseData,
+)
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.ship_refine_ship_refine_200_response_data import (
-        ShipRefineShipRefine200ResponseData,
-    )
-
 
 T = TypeVar("T", bound="ShipRefineShipRefine200Response")
 
 
-@attr.s(auto_attribs=True)
-class ShipRefineShipRefine200Response:
+class ShipRefineShipRefine200Response(BaseModel):
     """
     Attributes:
         data (ShipRefineShipRefine200ResponseData):
     """
 
-    data: "ShipRefineShipRefine200ResponseData"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: "ShipRefineShipRefine200ResponseData" = Field(alias="data")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.ship_refine_ship_refine_200_response_data import (
-            ShipRefineShipRefine200ResponseData,
-        )
-
-        data = self.data.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "data": data,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.ship_refine_ship_refine_200_response_data import (
-            ShipRefineShipRefine200ResponseData,
-        )
-
-        d = src_dict.copy()
-        data = ShipRefineShipRefine200ResponseData.from_dict(d.pop("data"))
-
-        ship_refine_ship_refine_200_response = cls(
-            data=data,
-        )
-
-        ship_refine_ship_refine_200_response.additional_properties = d
-        return ship_refine_ship_refine_200_response
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

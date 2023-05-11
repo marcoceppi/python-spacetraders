@@ -12,6 +12,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.ship_refine_json_body_produce import ShipRefineJsonBodyProduce
 from ..types import UNSET, Unset
@@ -19,40 +20,17 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="ShipRefineJsonBody")
 
 
-@attr.s(auto_attribs=True)
-class ShipRefineJsonBody:
+class ShipRefineJsonBody(BaseModel):
     """
     Attributes:
         produce (ShipRefineJsonBodyProduce):
     """
 
-    produce: ShipRefineJsonBodyProduce
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    produce: ShipRefineJsonBodyProduce = Field(alias="produce")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        produce = self.produce.value
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "produce": produce,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        produce = ShipRefineJsonBodyProduce(d.pop("produce"))
-
-        ship_refine_json_body = cls(
-            produce=produce,
-        )
-
-        ship_refine_json_body.additional_properties = d
-        return ship_refine_json_body
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

@@ -13,20 +13,17 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.system_faction import SystemFaction
 from ..models.system_type import SystemType
+from ..models.system_waypoint import SystemWaypoint
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.system_faction import SystemFaction
-    from ..models.system_waypoint import SystemWaypoint
-
 
 T = TypeVar("T", bound="System")
 
 
-@attr.s(auto_attribs=True)
-class System:
+class System(BaseModel):
     """
     Attributes:
         symbol (str):
@@ -38,95 +35,17 @@ class System:
         factions (List['SystemFaction']):
     """
 
-    symbol: str
-    sector_symbol: str
-    type: SystemType
-    x: int
-    y: int
-    waypoints: List["SystemWaypoint"]
-    factions: List["SystemFaction"]
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    symbol: str = Field(alias="symbol")
+    sector_symbol: str = Field(alias="sectorSymbol")
+    type: SystemType = Field(alias="type")
+    x: int = Field(alias="x")
+    y: int = Field(alias="y")
+    waypoints: List["SystemWaypoint"] = Field(alias="waypoints")
+    factions: List["SystemFaction"] = Field(alias="factions")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.system_faction import SystemFaction
-        from ..models.system_waypoint import SystemWaypoint
-
-        symbol = self.symbol
-        sector_symbol = self.sector_symbol
-        type = self.type.value
-
-        x = self.x
-        y = self.y
-        waypoints = []
-        for waypoints_item_data in self.waypoints:
-            waypoints_item = waypoints_item_data.to_dict()
-
-            waypoints.append(waypoints_item)
-
-        factions = []
-        for factions_item_data in self.factions:
-            factions_item = factions_item_data.to_dict()
-
-            factions.append(factions_item)
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "symbol": symbol,
-                "sectorSymbol": sector_symbol,
-                "type": type,
-                "x": x,
-                "y": y,
-                "waypoints": waypoints,
-                "factions": factions,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.system_faction import SystemFaction
-        from ..models.system_waypoint import SystemWaypoint
-
-        d = src_dict.copy()
-        symbol = d.pop("symbol")
-
-        sector_symbol = d.pop("sectorSymbol")
-
-        type = SystemType(d.pop("type"))
-
-        x = d.pop("x")
-
-        y = d.pop("y")
-
-        waypoints = []
-        _waypoints = d.pop("waypoints")
-        for waypoints_item_data in _waypoints:
-            waypoints_item = SystemWaypoint.from_dict(waypoints_item_data)
-
-            waypoints.append(waypoints_item)
-
-        factions = []
-        _factions = d.pop("factions")
-        for factions_item_data in _factions:
-            factions_item = SystemFaction.from_dict(factions_item_data)
-
-            factions.append(factions_item)
-
-        system = cls(
-            symbol=symbol,
-            sector_symbol=sector_symbol,
-            type=type,
-            x=x,
-            y=y,
-            waypoints=waypoints,
-            factions=factions,
-        )
-
-        system.additional_properties = d
-        return system
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

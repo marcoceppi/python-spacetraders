@@ -15,14 +15,14 @@ from typing import (
 
 import attr
 from dateutil.parser import isoparse
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Cooldown")
 
 
-@attr.s(auto_attribs=True)
-class Cooldown:
+class Cooldown(BaseModel):
     """A cooldown is a period of time in which a ship cannot perform certain actions.
 
     Attributes:
@@ -32,51 +32,14 @@ class Cooldown:
         expiration (datetime.datetime): The date and time when the cooldown expires in ISO 8601 format
     """
 
-    ship_symbol: str
-    total_seconds: int
-    remaining_seconds: int
-    expiration: datetime.datetime
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    ship_symbol: str = Field(alias="shipSymbol")
+    total_seconds: int = Field(alias="totalSeconds")
+    remaining_seconds: int = Field(alias="remainingSeconds")
+    expiration: datetime.datetime = Field(alias="expiration")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        ship_symbol = self.ship_symbol
-        total_seconds = self.total_seconds
-        remaining_seconds = self.remaining_seconds
-        expiration = self.expiration.isoformat()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "shipSymbol": ship_symbol,
-                "totalSeconds": total_seconds,
-                "remainingSeconds": remaining_seconds,
-                "expiration": expiration,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        ship_symbol = d.pop("shipSymbol")
-
-        total_seconds = d.pop("totalSeconds")
-
-        remaining_seconds = d.pop("remainingSeconds")
-
-        expiration = isoparse(d.pop("expiration"))
-
-        cooldown = cls(
-            ship_symbol=ship_symbol,
-            total_seconds=total_seconds,
-            remaining_seconds=remaining_seconds,
-            expiration=expiration,
-        )
-
-        cooldown.additional_properties = d
-        return cooldown
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

@@ -13,60 +13,27 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.sell_cargo_sell_cargo_201_response_data import (
+    SellCargoSellCargo201ResponseData,
+)
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.sell_cargo_sell_cargo_201_response_data import (
-        SellCargoSellCargo201ResponseData,
-    )
-
 
 T = TypeVar("T", bound="SellCargoSellCargo201Response")
 
 
-@attr.s(auto_attribs=True)
-class SellCargoSellCargo201Response:
+class SellCargoSellCargo201Response(BaseModel):
     """
     Attributes:
         data (SellCargoSellCargo201ResponseData):
     """
 
-    data: "SellCargoSellCargo201ResponseData"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: "SellCargoSellCargo201ResponseData" = Field(alias="data")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.sell_cargo_sell_cargo_201_response_data import (
-            SellCargoSellCargo201ResponseData,
-        )
-
-        data = self.data.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "data": data,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.sell_cargo_sell_cargo_201_response_data import (
-            SellCargoSellCargo201ResponseData,
-        )
-
-        d = src_dict.copy()
-        data = SellCargoSellCargo201ResponseData.from_dict(d.pop("data"))
-
-        sell_cargo_sell_cargo_201_response = cls(
-            data=data,
-        )
-
-        sell_cargo_sell_cargo_201_response.additional_properties = d
-        return sell_cargo_sell_cargo_201_response
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

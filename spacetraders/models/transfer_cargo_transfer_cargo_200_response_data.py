@@ -13,54 +13,25 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.ship_cargo import ShipCargo
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.ship_cargo import ShipCargo
-
 
 T = TypeVar("T", bound="TransferCargoTransferCargo200ResponseData")
 
 
-@attr.s(auto_attribs=True)
-class TransferCargoTransferCargo200ResponseData:
+class TransferCargoTransferCargo200ResponseData(BaseModel):
     """
     Attributes:
         cargo (ShipCargo):
     """
 
-    cargo: "ShipCargo"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    cargo: "ShipCargo" = Field(alias="cargo")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.ship_cargo import ShipCargo
-
-        cargo = self.cargo.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "cargo": cargo,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.ship_cargo import ShipCargo
-
-        d = src_dict.copy()
-        cargo = ShipCargo.from_dict(d.pop("cargo"))
-
-        transfer_cargo_transfer_cargo_200_response_data = cls(
-            cargo=cargo,
-        )
-
-        transfer_cargo_transfer_cargo_200_response_data.additional_properties = d
-        return transfer_cargo_transfer_cargo_200_response_data
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

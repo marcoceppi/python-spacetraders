@@ -13,54 +13,25 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.jump_gate import JumpGate
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.jump_gate import JumpGate
-
 
 T = TypeVar("T", bound="GetJumpGateResponse200")
 
 
-@attr.s(auto_attribs=True)
-class GetJumpGateResponse200:
+class GetJumpGateResponse200(BaseModel):
     """
     Attributes:
         data (JumpGate):
     """
 
-    data: "JumpGate"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: "JumpGate" = Field(alias="data")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.jump_gate import JumpGate
-
-        data = self.data.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "data": data,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.jump_gate import JumpGate
-
-        d = src_dict.copy()
-        data = JumpGate.from_dict(d.pop("data"))
-
-        get_jump_gate_response_200 = cls(
-            data=data,
-        )
-
-        get_jump_gate_response_200.additional_properties = d
-        return get_jump_gate_response_200
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

@@ -12,14 +12,14 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="TransferCargoTransferCargoRequest")
 
 
-@attr.s(auto_attribs=True)
-class TransferCargoTransferCargoRequest:
+class TransferCargoTransferCargoRequest(BaseModel):
     """
     Attributes:
         trade_symbol (str):
@@ -27,45 +27,13 @@ class TransferCargoTransferCargoRequest:
         ship_symbol (str):
     """
 
-    trade_symbol: str
-    units: int
-    ship_symbol: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    trade_symbol: str = Field(alias="tradeSymbol")
+    units: int = Field(alias="units")
+    ship_symbol: str = Field(alias="shipSymbol")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        trade_symbol = self.trade_symbol
-        units = self.units
-        ship_symbol = self.ship_symbol
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "tradeSymbol": trade_symbol,
-                "units": units,
-                "shipSymbol": ship_symbol,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        trade_symbol = d.pop("tradeSymbol")
-
-        units = d.pop("units")
-
-        ship_symbol = d.pop("shipSymbol")
-
-        transfer_cargo_transfer_cargo_request = cls(
-            trade_symbol=trade_symbol,
-            units=units,
-            ship_symbol=ship_symbol,
-        )
-
-        transfer_cargo_transfer_cargo_request.additional_properties = d
-        return transfer_cargo_transfer_cargo_request
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

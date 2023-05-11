@@ -13,54 +13,25 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
+from ..models.ship_nav import ShipNav
 from ..types import UNSET, Unset
-
-if TYPE_CHECKING:
-    from ..models.ship_nav import ShipNav
-
 
 T = TypeVar("T", bound="DockShipDockShip200ResponseData")
 
 
-@attr.s(auto_attribs=True)
-class DockShipDockShip200ResponseData:
+class DockShipDockShip200ResponseData(BaseModel):
     """
     Attributes:
         nav (ShipNav): The navigation information of the ship.
     """
 
-    nav: "ShipNav"
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    nav: "ShipNav" = Field(alias="nav")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.ship_nav import ShipNav
-
-        nav = self.nav.to_dict()
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "nav": nav,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.ship_nav import ShipNav
-
-        d = src_dict.copy()
-        nav = ShipNav.from_dict(d.pop("nav"))
-
-        dock_ship_dock_ship_200_response_data = cls(
-            nav=nav,
-        )
-
-        dock_ship_dock_ship_200_response_data.additional_properties = d
-        return dock_ship_dock_ship_200_response_data
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

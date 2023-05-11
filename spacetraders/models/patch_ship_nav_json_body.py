@@ -13,6 +13,7 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..models.ship_nav_flight_mode import ShipNavFlightMode
 from ..types import UNSET, Unset
@@ -20,8 +21,7 @@ from ..types import UNSET, Unset
 T = TypeVar("T", bound="PatchShipNavJsonBody")
 
 
-@attr.s(auto_attribs=True)
-class PatchShipNavJsonBody:
+class PatchShipNavJsonBody(BaseModel):
     """
     Attributes:
         flight_mode (Union[Unset, ShipNavFlightMode]): The ship's set speed when traveling between waypoints or systems.
@@ -29,37 +29,10 @@ class PatchShipNavJsonBody:
     """
 
     flight_mode: Union[Unset, ShipNavFlightMode] = ShipNavFlightMode.CRUISE
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        flight_mode: Union[Unset, str] = UNSET
-        if not isinstance(self.flight_mode, Unset):
-            flight_mode = self.flight_mode.value
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if flight_mode is not UNSET:
-            field_dict["flightMode"] = flight_mode
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _flight_mode = d.pop("flightMode", UNSET)
-        flight_mode: Union[Unset, ShipNavFlightMode]
-        if isinstance(_flight_mode, Unset):
-            flight_mode = UNSET
-        else:
-            flight_mode = ShipNavFlightMode(_flight_mode)
-
-        patch_ship_nav_json_body = cls(
-            flight_mode=flight_mode,
-        )
-
-        patch_ship_nav_json_body.additional_properties = d
-        return patch_ship_nav_json_body
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

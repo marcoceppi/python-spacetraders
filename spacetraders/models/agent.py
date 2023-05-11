@@ -12,14 +12,14 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Agent")
 
 
-@attr.s(auto_attribs=True)
-class Agent:
+class Agent(BaseModel):
     """
     Attributes:
         account_id (str):
@@ -29,51 +29,14 @@ class Agent:
             overdrawn.
     """
 
-    account_id: str
-    symbol: str
-    headquarters: str
-    credits_: int
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    account_id: str = Field(alias="accountId")
+    symbol: str = Field(alias="symbol")
+    headquarters: str = Field(alias="headquarters")
+    credits_: int = Field(alias="credits")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        account_id = self.account_id
-        symbol = self.symbol
-        headquarters = self.headquarters
-        credits_ = self.credits_
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "accountId": account_id,
-                "symbol": symbol,
-                "headquarters": headquarters,
-                "credits": credits_,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        account_id = d.pop("accountId")
-
-        symbol = d.pop("symbol")
-
-        headquarters = d.pop("headquarters")
-
-        credits_ = d.pop("credits")
-
-        agent = cls(
-            account_id=account_id,
-            symbol=symbol,
-            headquarters=headquarters,
-            credits_=credits_,
-        )
-
-        agent.additional_properties = d
-        return agent
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:

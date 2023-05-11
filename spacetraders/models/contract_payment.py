@@ -12,53 +12,26 @@ from typing import (
 )
 
 import attr
+from pydantic import BaseModel, Field
 
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ContractPayment")
 
 
-@attr.s(auto_attribs=True)
-class ContractPayment:
+class ContractPayment(BaseModel):
     """
     Attributes:
         on_accepted (int): The amount of credits received up front for accepting the contract.
         on_fulfilled (int): The amount of credits received when the contract is fulfilled.
     """
 
-    on_accepted: int
-    on_fulfilled: int
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    on_accepted: int = Field(alias="onAccepted")
+    on_fulfilled: int = Field(alias="onFulfilled")
+    additional_properties: Dict[str, Any] = {}
 
-    def to_dict(self) -> Dict[str, Any]:
-        on_accepted = self.on_accepted
-        on_fulfilled = self.on_fulfilled
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "onAccepted": on_accepted,
-                "onFulfilled": on_fulfilled,
-            }
-        )
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        on_accepted = d.pop("onAccepted")
-
-        on_fulfilled = d.pop("onFulfilled")
-
-        contract_payment = cls(
-            on_accepted=on_accepted,
-            on_fulfilled=on_fulfilled,
-        )
-
-        contract_payment.additional_properties = d
-        return contract_payment
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def additional_keys(self) -> List[str]:
