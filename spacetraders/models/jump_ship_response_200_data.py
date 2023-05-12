@@ -31,12 +31,16 @@ class JumpShipResponse200Data(BaseModel):
     """
 
     cooldown: "Cooldown" = Field(alias="cooldown")
-    nav: Union[Unset, "ShipNav"] = Field(alias="nav")
+    nav: Union[Unset, "ShipNav"] = Field(UNSET, alias="nav")
     additional_properties: Dict[str, Any] = {}
 
     class Config:
         arbitrary_types_allowed = True
         allow_population_by_field_name = True
+
+    def dict(self, *args, **kwargs):
+        output = super().dict(*args, **kwargs)
+        return {k: v for k, v in output.items() if v is not UNSET}
 
     @property
     def additional_keys(self) -> List[str]:

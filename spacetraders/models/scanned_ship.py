@@ -44,14 +44,18 @@ class ScannedShip(BaseModel):
     registration: "ShipRegistration" = Field(alias="registration")
     nav: "ShipNav" = Field(alias="nav")
     engine: "ScannedShipEngine" = Field(alias="engine")
-    frame: Union[Unset, "ScannedShipFrame"] = Field(alias="frame")
-    reactor: Union[Unset, "ScannedShipReactor"] = Field(alias="reactor")
-    mounts: Union[Unset, List["ScannedShipMountsItem"]] = Field(alias="mounts")
+    frame: Union[Unset, "ScannedShipFrame"] = Field(UNSET, alias="frame")
+    reactor: Union[Unset, "ScannedShipReactor"] = Field(UNSET, alias="reactor")
+    mounts: Union[Unset, List["ScannedShipMountsItem"]] = Field(UNSET, alias="mounts")
     additional_properties: Dict[str, Any] = {}
 
     class Config:
         arbitrary_types_allowed = True
         allow_population_by_field_name = True
+
+    def dict(self, *args, **kwargs):
+        output = super().dict(*args, **kwargs)
+        return {k: v for k, v in output.items() if v is not UNSET}
 
     @property
     def additional_keys(self) -> List[str]:

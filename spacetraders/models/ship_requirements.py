@@ -29,14 +29,18 @@ class ShipRequirements(BaseModel):
         slots (Union[Unset, int]): The number of module slots required for installation.
     """
 
-    power: Union[Unset, int] = Field(alias="power")
-    crew: Union[Unset, int] = Field(alias="crew")
-    slots: Union[Unset, int] = Field(alias="slots")
+    power: Union[Unset, int] = Field(UNSET, alias="power")
+    crew: Union[Unset, int] = Field(UNSET, alias="crew")
+    slots: Union[Unset, int] = Field(UNSET, alias="slots")
     additional_properties: Dict[str, Any] = {}
 
     class Config:
         arbitrary_types_allowed = True
         allow_population_by_field_name = True
+
+    def dict(self, *args, **kwargs):
+        output = super().dict(*args, **kwargs)
+        return {k: v for k, v in output.items() if v is not UNSET}
 
     @property
     def additional_keys(self) -> List[str]:

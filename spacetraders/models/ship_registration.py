@@ -32,12 +32,16 @@ class ShipRegistration(BaseModel):
 
     name: str = Field(alias="name")
     role: ShipRole = Field(alias="role")
-    faction_symbol: Union[Unset, str] = Field(alias="factionSymbol")
+    faction_symbol: Union[Unset, str] = Field(UNSET, alias="factionSymbol")
     additional_properties: Dict[str, Any] = {}
 
     class Config:
         arbitrary_types_allowed = True
         allow_population_by_field_name = True
+
+    def dict(self, *args, **kwargs):
+        output = super().dict(*args, **kwargs)
+        return {k: v for k, v in output.items() if v is not UNSET}
 
     @property
     def additional_keys(self) -> List[str]:

@@ -39,14 +39,18 @@ class ShipMount(BaseModel):
     symbol: ShipMountSymbol = Field(alias="symbol")
     name: str = Field(alias="name")
     requirements: "ShipRequirements" = Field(alias="requirements")
-    description: Union[Unset, str] = Field(alias="description")
-    strength: Union[Unset, int] = Field(alias="strength")
-    deposits: Union[Unset, List[ShipMountDepositsItem]] = Field(alias="deposits")
+    description: Union[Unset, str] = Field(UNSET, alias="description")
+    strength: Union[Unset, int] = Field(UNSET, alias="strength")
+    deposits: Union[Unset, List[ShipMountDepositsItem]] = Field(UNSET, alias="deposits")
     additional_properties: Dict[str, Any] = {}
 
     class Config:
         arbitrary_types_allowed = True
         allow_population_by_field_name = True
+
+    def dict(self, *args, **kwargs):
+        output = super().dict(*args, **kwargs)
+        return {k: v for k, v in output.items() if v is not UNSET}
 
     @property
     def additional_keys(self) -> List[str]:
