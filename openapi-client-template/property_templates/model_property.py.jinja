@@ -25,7 +25,7 @@
 {{ destination }} = {{ transformed }}
 {% endif %}
 {% else %}
-{{ destination }}{% if declare_type %}: {{ type_string }}{% endif %} = UNSET
+{{ destination }}{% if declare_type %}: {{ type_string }}{% endif %}
 if not isinstance({{ source }}, Unset):
 {% if property.nullable %}
     {{ destination }} = {{ transformed }} if {{ source }} else None
