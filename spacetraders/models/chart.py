@@ -32,9 +32,9 @@ class Chart(BaseModel):
         submitted_on (Union[Unset, datetime.datetime]):
     """
 
-    waypoint_symbol: Union[Unset, str] = UNSET
-    submitted_by: Union[Unset, str] = UNSET
-    submitted_on: Union[Unset, datetime.datetime] = UNSET
+    waypoint_symbol: Union[Unset, str] = Field(alias="waypointSymbol")
+    submitted_by: Union[Unset, str] = Field(alias="submittedBy")
+    submitted_on: Union[Unset, datetime.datetime] = Field(alias="submittedOn")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

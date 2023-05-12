@@ -28,7 +28,9 @@ class PatchShipNavJsonBody(BaseModel):
             Default: ShipNavFlightMode.CRUISE.
     """
 
-    flight_mode: Union[Unset, ShipNavFlightMode] = ShipNavFlightMode.CRUISE
+    flight_mode: Union[Unset, ShipNavFlightMode] = Field(
+        ShipNavFlightMode.CRUISE, alias="flightMode"
+    )
     additional_properties: Dict[str, Any] = {}
 
     class Config:

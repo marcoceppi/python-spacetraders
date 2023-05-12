@@ -27,8 +27,8 @@ class ShipRefineShipRefine200ResponseDataProducedItem(BaseModel):
         units (Union[Unset, int]):
     """
 
-    trade_symbol: Union[Unset, str] = UNSET
-    units: Union[Unset, int] = UNSET
+    trade_symbol: Union[Unset, str] = Field(alias="tradeSymbol")
+    units: Union[Unset, int] = Field(alias="units")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

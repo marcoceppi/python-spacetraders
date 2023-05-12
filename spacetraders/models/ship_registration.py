@@ -32,7 +32,7 @@ class ShipRegistration(BaseModel):
 
     name: str = Field(alias="name")
     role: ShipRole = Field(alias="role")
-    faction_symbol: Union[Unset, str] = UNSET
+    faction_symbol: Union[Unset, str] = Field(alias="factionSymbol")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

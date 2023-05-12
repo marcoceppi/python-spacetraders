@@ -29,9 +29,9 @@ class ShipRequirements(BaseModel):
         slots (Union[Unset, int]): The number of module slots required for installation.
     """
 
-    power: Union[Unset, int] = UNSET
-    crew: Union[Unset, int] = UNSET
-    slots: Union[Unset, int] = UNSET
+    power: Union[Unset, int] = Field(alias="power")
+    crew: Union[Unset, int] = Field(alias="crew")
+    slots: Union[Unset, int] = Field(alias="slots")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

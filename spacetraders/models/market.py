@@ -41,8 +41,8 @@ class Market(BaseModel):
     exports: List["TradeGood"] = Field(alias="exports")
     imports: List["TradeGood"] = Field(alias="imports")
     exchange: List["TradeGood"] = Field(alias="exchange")
-    transactions: Union[Unset, List["MarketTransaction"]] = UNSET
-    trade_goods: Union[Unset, List["MarketTradeGood"]] = UNSET
+    transactions: Union[Unset, List["MarketTransaction"]] = Field(alias="transactions")
+    trade_goods: Union[Unset, List["MarketTradeGood"]] = Field(alias="tradeGoods")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

@@ -39,7 +39,7 @@ class ConnectedSystem(BaseModel):
     x: int = Field(alias="x")
     y: int = Field(alias="y")
     distance: int = Field(alias="distance")
-    faction_symbol: Union[Unset, str] = UNSET
+    faction_symbol: Union[Unset, str] = Field(alias="factionSymbol")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

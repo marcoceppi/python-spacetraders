@@ -39,9 +39,9 @@ class ShipModule(BaseModel):
     symbol: ShipModuleSymbol = Field(alias="symbol")
     name: str = Field(alias="name")
     requirements: "ShipRequirements" = Field(alias="requirements")
-    capacity: Union[Unset, int] = UNSET
-    range_: Union[Unset, int] = UNSET
-    description: Union[Unset, str] = UNSET
+    capacity: Union[Unset, int] = Field(alias="capacity")
+    range_: Union[Unset, int] = Field(alias="range")
+    description: Union[Unset, str] = Field(alias="description")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

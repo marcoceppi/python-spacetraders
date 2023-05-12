@@ -52,7 +52,7 @@ class ShipyardShip(BaseModel):
     engine: "ShipEngine" = Field(alias="engine")
     modules: List["ShipModule"] = Field(alias="modules")
     mounts: List["ShipMount"] = Field(alias="mounts")
-    type: Union[Unset, ShipType] = UNSET
+    type: Union[Unset, ShipType] = Field(alias="type")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

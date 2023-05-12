@@ -35,7 +35,7 @@ class ContractTerms(BaseModel):
 
     deadline: datetime.datetime = Field(alias="deadline")
     payment: "ContractPayment" = Field(alias="payment")
-    deliver: Union[Unset, List["ContractDeliverGood"]] = UNSET
+    deliver: Union[Unset, List["ContractDeliverGood"]] = Field(alias="deliver")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

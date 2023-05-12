@@ -41,8 +41,8 @@ class Contract(BaseModel):
     type: ContractType = Field(alias="type")
     terms: "ContractTerms" = Field(alias="terms")
     expiration: datetime.datetime = Field(alias="expiration")
-    accepted: bool = False
-    fulfilled: bool = False
+    accepted: bool = Field(False, alias="accepted")
+    fulfilled: bool = Field(False, alias="fulfilled")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

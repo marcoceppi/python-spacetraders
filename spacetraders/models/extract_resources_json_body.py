@@ -29,7 +29,7 @@ class ExtractResourcesJsonBody(BaseModel):
             types of resources that can be found there.
     """
 
-    survey: Union[Unset, "Survey"] = UNSET
+    survey: Union[Unset, "Survey"] = Field(alias="survey")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

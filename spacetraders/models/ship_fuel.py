@@ -33,7 +33,7 @@ class ShipFuel(BaseModel):
 
     current: int = Field(alias="current")
     capacity: int = Field(alias="capacity")
-    consumed: Union[Unset, "ShipFuelConsumed"] = UNSET
+    consumed: Union[Unset, "ShipFuelConsumed"] = Field(alias="consumed")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

@@ -41,7 +41,7 @@ class ShipReactor(BaseModel):
     description: str = Field(alias="description")
     power_output: int = Field(alias="powerOutput")
     requirements: "ShipRequirements" = Field(alias="requirements")
-    condition: Union[Unset, int] = UNSET
+    condition: Union[Unset, int] = Field(alias="condition")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

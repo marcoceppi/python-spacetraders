@@ -41,7 +41,7 @@ class ShipEngine(BaseModel):
     description: str = Field(alias="description")
     speed: float = Field(alias="speed")
     requirements: "ShipRequirements" = Field(alias="requirements")
-    condition: Union[Unset, int] = UNSET
+    condition: Union[Unset, int] = Field(alias="condition")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

@@ -27,7 +27,7 @@ class ShipyardShipTypesItem(BaseModel):
         type (Union[Unset, ShipType]):
     """
 
-    type: Union[Unset, ShipType] = UNSET
+    type: Union[Unset, ShipType] = Field(alias="type")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

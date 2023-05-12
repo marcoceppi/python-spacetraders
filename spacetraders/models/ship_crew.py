@@ -40,7 +40,7 @@ class ShipCrew(BaseModel):
     capacity: int = Field(alias="capacity")
     morale: int = Field(alias="morale")
     wages: int = Field(alias="wages")
-    rotation: ShipCrewRotation = ShipCrewRotation.STRICT
+    rotation: ShipCrewRotation = Field(ShipCrewRotation.STRICT, alias="rotation")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

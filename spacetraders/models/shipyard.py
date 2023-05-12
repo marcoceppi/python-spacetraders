@@ -35,8 +35,10 @@ class Shipyard(BaseModel):
 
     symbol: str = Field(alias="symbol")
     ship_types: List["ShipyardShipTypesItem"] = Field(alias="shipTypes")
-    transactions: Union[Unset, List["ShipyardTransaction"]] = UNSET
-    ships: Union[Unset, List["ShipyardShip"]] = UNSET
+    transactions: Union[Unset, List["ShipyardTransaction"]] = Field(
+        alias="transactions"
+    )
+    ships: Union[Unset, List["ShipyardShip"]] = Field(alias="ships")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

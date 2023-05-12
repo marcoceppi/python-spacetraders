@@ -39,9 +39,9 @@ class ShipMount(BaseModel):
     symbol: ShipMountSymbol = Field(alias="symbol")
     name: str = Field(alias="name")
     requirements: "ShipRequirements" = Field(alias="requirements")
-    description: Union[Unset, str] = UNSET
-    strength: Union[Unset, int] = UNSET
-    deposits: Union[Unset, List[ShipMountDepositsItem]] = UNSET
+    description: Union[Unset, str] = Field(alias="description")
+    strength: Union[Unset, int] = Field(alias="strength")
+    deposits: Union[Unset, List[ShipMountDepositsItem]] = Field(alias="deposits")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

@@ -47,7 +47,7 @@ class ShipFrame(BaseModel):
     mounting_points: int = Field(alias="mountingPoints")
     fuel_capacity: int = Field(alias="fuelCapacity")
     requirements: "ShipRequirements" = Field(alias="requirements")
-    condition: Union[Unset, int] = UNSET
+    condition: Union[Unset, int] = Field(alias="condition")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

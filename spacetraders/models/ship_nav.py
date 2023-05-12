@@ -40,7 +40,7 @@ class ShipNav(BaseModel):
     waypoint_symbol: str = Field(alias="waypointSymbol")
     route: "ShipNavRoute" = Field(alias="route")
     status: ShipNavStatus = Field(alias="status")
-    flight_mode: ShipNavFlightMode = ShipNavFlightMode.CRUISE
+    flight_mode: ShipNavFlightMode = Field(ShipNavFlightMode.CRUISE, alias="flightMode")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

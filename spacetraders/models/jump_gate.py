@@ -33,7 +33,7 @@ class JumpGate(BaseModel):
 
     jump_range: float = Field(alias="jumpRange")
     connected_systems: List["ConnectedSystem"] = Field(alias="connectedSystems")
-    faction_symbol: Union[Unset, str] = UNSET
+    faction_symbol: Union[Unset, str] = Field(alias="factionSymbol")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

@@ -49,8 +49,8 @@ class Waypoint(BaseModel):
     y: int = Field(alias="y")
     orbitals: List["WaypointOrbital"] = Field(alias="orbitals")
     traits: List["WaypointTrait"] = Field(alias="traits")
-    faction: Union[Unset, "WaypointFaction"] = UNSET
-    chart: Union[Unset, "Chart"] = UNSET
+    faction: Union[Unset, "WaypointFaction"] = Field(alias="faction")
+    chart: Union[Unset, "Chart"] = Field(alias="chart")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

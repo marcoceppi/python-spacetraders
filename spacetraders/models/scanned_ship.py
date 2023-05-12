@@ -44,9 +44,9 @@ class ScannedShip(BaseModel):
     registration: "ShipRegistration" = Field(alias="registration")
     nav: "ShipNav" = Field(alias="nav")
     engine: "ScannedShipEngine" = Field(alias="engine")
-    frame: Union[Unset, "ScannedShipFrame"] = UNSET
-    reactor: Union[Unset, "ScannedShipReactor"] = UNSET
-    mounts: Union[Unset, List["ScannedShipMountsItem"]] = UNSET
+    frame: Union[Unset, "ScannedShipFrame"] = Field(alias="frame")
+    reactor: Union[Unset, "ScannedShipReactor"] = Field(alias="reactor")
+    mounts: Union[Unset, List["ScannedShipMountsItem"]] = Field(alias="mounts")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

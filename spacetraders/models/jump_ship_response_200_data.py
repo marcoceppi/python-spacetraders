@@ -31,7 +31,7 @@ class JumpShipResponse200Data(BaseModel):
     """
 
     cooldown: "Cooldown" = Field(alias="cooldown")
-    nav: Union[Unset, "ShipNav"] = UNSET
+    nav: Union[Unset, "ShipNav"] = Field(alias="nav")
     additional_properties: Dict[str, Any] = {}
 
     class Config:
