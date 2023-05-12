@@ -85,11 +85,6 @@ params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 {% endfor %}
 *,
 {# Proper client based on whether or not the endpoint requires authentication #}
-{% if endpoint.requires_security %}
-_client: AuthenticatedClient,
-{% else %}
-_client: Client,
-{% endif %}
 {# Form data if any #}
 {% if endpoint.form_body %}
 form_data: {{ endpoint.form_body.get_type_string() }},
@@ -100,7 +95,12 @@ multipart_data: {{ endpoint.multipart_body.get_type_string() }},
 {% endif %}
 {# JSON body if any #}
 {% if endpoint.json_body %}
-**json_body: {{ endpoint.json_body.get_type_string() }},
+{% for parameter in endpoint.json_body.required_properties %}
+{{ parameter.to_string() }},
+{% endfor %}
+{% for parameter in endpoint.json_body.optional_properties %}
+{{ parameter.to_string() }},
+{% endfor %}
 {% endif %}
 {# query parameters #}
 {% for parameter in endpoint.query_parameters.values() %}
@@ -113,6 +113,11 @@ multipart_data: {{ endpoint.multipart_body.get_type_string() }},
 {% for parameter in endpoint.cookie_parameters.values() %}
 {{ parameter.to_string() }},
 {% endfor %}
+{% if endpoint.requires_security %}
+_client: AuthenticatedClient,
+{% else %}
+_client: Client,
+{% endif %}
 {% endmacro %}
 
 {# The all the kwargs passed into an endpoint (and variants thereof)) #}
@@ -123,11 +128,6 @@ multipart_data: {{ endpoint.multipart_body.get_type_string() }},
 {% endfor %}
 *,
 {# Proper client based on whether or not the endpoint requires authentication #}
-{% if endpoint.requires_security %}
-_client: AuthenticatedClient,
-{% else %}
-_client: Client,
-{% endif %}
 {# Form data if any #}
 {% if endpoint.form_body %}
 form_data: {{ endpoint.form_body.get_type_string() }},
@@ -151,6 +151,11 @@ json_body: {{ endpoint.json_body.get_type_string() }},
 {% for parameter in endpoint.cookie_parameters.values() %}
 {{ parameter.to_string() }},
 {% endfor %}
+{% if endpoint.requires_security %}
+_client: AuthenticatedClient,
+{% else %}
+_client: Client,
+{% endif %}
 {% endmacro %}
 
 {# Just lists all kwargs to endpoints as name=name for passing to other functions #}
@@ -188,7 +193,7 @@ form_data = {{ endpoint.form_data.get_type_string() }}(**form_data)
 multipart_data = {{ endpoint.multipart_data.get_type_string() }}(**multipart_data)
 {% endif %}
 {% if endpoint.json_body %}
-json_body = {{ endpoint.json_body.get_type_string() }}.parse_obj(json_body)
+json_body = {{ endpoint.json_body.get_type_string() }}()
 {% endif %}
 {% endmacro %}
 

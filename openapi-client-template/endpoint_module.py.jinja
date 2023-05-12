@@ -11,6 +11,13 @@ from ... import errors
 {{ relative }}
 {% endfor %}
 
+{% if endpoint.json_body %}
+{% for relative in endpoint.json_body.relative_imports %}
+{{ relative }}
+{% endfor %}
+{% endif %}
+
+
 {% from "endpoint_macros.py.jinja" import header_params, cookie_params, query_params, json_body, multipart_body,
     arguments, client, kwargs, kwarguments, type_casting, parse_response, docstring %}
 
