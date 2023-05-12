@@ -1,12 +1,12 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.dock_ship_dock_ship_200_response import DockShipDockShip200Response
-from ...types import UNSET, Response
+from ...types import Response
 
 
 def _get_kwargs(

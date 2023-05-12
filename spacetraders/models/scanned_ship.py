@@ -1,19 +1,11 @@
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
     Union,
-    cast,
 )
 
-import attr
 from pydantic import BaseModel, Field
 
 from ..models.scanned_ship_engine import ScannedShipEngine

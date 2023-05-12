@@ -1,24 +1,16 @@
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
-    cast,
 )
 
-import attr
 from pydantic import BaseModel, Field
 
 from ..models.ship_refine_ship_refine_200_response_data import (
     ShipRefineShipRefine200ResponseData,
 )
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="ShipRefineShipRefine200Response")
 

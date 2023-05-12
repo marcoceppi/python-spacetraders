@@ -1,18 +1,10 @@
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
-    cast,
 )
 
-import attr
 from pydantic import BaseModel, Field
 
 from ..models.ship_cargo import ShipCargo
@@ -25,7 +17,7 @@ from ..models.ship_mount import ShipMount
 from ..models.ship_nav import ShipNav
 from ..models.ship_reactor import ShipReactor
 from ..models.ship_registration import ShipRegistration
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="Ship")
 

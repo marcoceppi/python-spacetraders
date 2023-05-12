@@ -1,7 +1,6 @@
 """ Contains some shared types for properties """
 from http import HTTPStatus
 from typing import (
-    Any,
     BinaryIO,
     Generic,
     Literal,

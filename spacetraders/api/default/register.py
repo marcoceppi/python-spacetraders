@@ -1,13 +1,13 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.register_json_body import RegisterJsonBody
 from ...models.register_response_201 import RegisterResponse201
-from ...types import UNSET, Response
+from ...types import Response
 
 
 def _get_kwargs(

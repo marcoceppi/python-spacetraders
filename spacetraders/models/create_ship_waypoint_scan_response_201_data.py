@@ -1,23 +1,15 @@
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
-    cast,
 )
 
-import attr
 from pydantic import BaseModel, Field
 
 from ..models.cooldown import Cooldown
 from ..models.scanned_waypoint import ScannedWaypoint
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="CreateShipWaypointScanResponse201Data")
 

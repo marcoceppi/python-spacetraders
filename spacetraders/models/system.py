@@ -1,24 +1,16 @@
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
-    cast,
 )
 
-import attr
 from pydantic import BaseModel, Field
 
 from ..models.system_faction import SystemFaction
 from ..models.system_type import SystemType
 from ..models.system_waypoint import SystemWaypoint
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="System")
 

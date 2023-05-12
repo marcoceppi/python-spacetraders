@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -11,7 +11,7 @@ from ...models.purchase_cargo_purchase_cargo_201_response import (
 from ...models.purchase_cargo_purchase_cargo_request import (
     PurchaseCargoPurchaseCargoRequest,
 )
-from ...types import UNSET, Response
+from ...types import Response
 
 
 def _get_kwargs(

@@ -1,25 +1,16 @@
 import datetime
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
-    cast,
 )
 
-import attr
-from dateutil.parser import isoparse
 from pydantic import BaseModel, Field
 
 from ..models.survey_deposit import SurveyDeposit
 from ..models.survey_size import SurveySize
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="Survey")
 

@@ -1,21 +1,12 @@
 import datetime
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
     Union,
-    cast,
 )
 
-import attr
-from dateutil.parser import isoparse
 from pydantic import BaseModel, Field
 
 from ..models.contract_deliver_good import ContractDeliverGood

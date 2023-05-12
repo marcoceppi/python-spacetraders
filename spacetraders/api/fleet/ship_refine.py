@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -9,7 +9,7 @@ from ...models.ship_refine_json_body import ShipRefineJsonBody
 from ...models.ship_refine_ship_refine_200_response import (
     ShipRefineShipRefine200Response,
 )
-from ...types import UNSET, Response
+from ...types import Response
 
 
 def _get_kwargs(

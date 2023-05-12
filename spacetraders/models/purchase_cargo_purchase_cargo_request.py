@@ -1,20 +1,13 @@
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
 )
 
-import attr
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="PurchaseCargoPurchaseCargoRequest")
 

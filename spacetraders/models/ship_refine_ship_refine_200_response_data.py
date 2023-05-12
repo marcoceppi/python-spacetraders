@@ -1,18 +1,10 @@
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
-    cast,
 )
 
-import attr
 from pydantic import BaseModel, Field
 
 from ..models.cooldown import Cooldown
@@ -23,7 +15,7 @@ from ..models.ship_refine_ship_refine_200_response_data_consumed_item import (
 from ..models.ship_refine_ship_refine_200_response_data_produced_item import (
     ShipRefineShipRefine200ResponseDataProducedItem,
 )
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="ShipRefineShipRefine200ResponseData")
 

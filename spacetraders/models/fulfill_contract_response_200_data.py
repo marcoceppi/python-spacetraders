@@ -1,23 +1,15 @@
 from typing import (
-    TYPE_CHECKING,
     Any,
-    BinaryIO,
     Dict,
     List,
-    Optional,
-    TextIO,
-    Tuple,
-    Type,
     TypeVar,
-    cast,
 )
 
-import attr
 from pydantic import BaseModel, Field
 
 from ..models.agent import Agent
 from ..models.contract import Contract
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="FulfillContractResponse200Data")
 
