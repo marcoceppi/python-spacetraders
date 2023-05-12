@@ -70,7 +70,7 @@ class Ship(BaseModel):
 
     def dict(self, *args, **kwargs):
         output = super().dict(*args, **kwargs)
-        return {k: v for k, v in output.items() if v is not UNSET}
+        return {k: v for k, v in output.items() if not isinstance(v, Unset)}
 
     @property
     def additional_keys(self) -> List[str]:
