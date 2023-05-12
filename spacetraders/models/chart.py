@@ -32,14 +32,18 @@ class Chart(BaseModel):
         submitted_on (Union[Unset, datetime.datetime]):
     """
 
-    waypoint_symbol: Union[Unset, str] = UNSET
-    submitted_by: Union[Unset, str] = UNSET
-    submitted_on: Union[Unset, datetime.datetime] = UNSET
+    waypoint_symbol: Union[Unset, str] = Field(UNSET, alias="waypointSymbol")
+    submitted_by: Union[Unset, str] = Field(UNSET, alias="submittedBy")
+    submitted_on: Union[Unset, datetime.datetime] = Field(UNSET, alias="submittedOn")
     additional_properties: Dict[str, Any] = {}
 
     class Config:
         arbitrary_types_allowed = True
         allow_population_by_field_name = True
+
+    def dict(self, *args, **kwargs):
+        output = super().dict(*args, **kwargs)
+        return {k: v for k, v in output.items() if v is not UNSET}
 
     @property
     def additional_keys(self) -> List[str]:

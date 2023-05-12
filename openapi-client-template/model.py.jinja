@@ -67,7 +67,12 @@ class {{ class_name }}(BaseModel):
     {% endfor %}
     {% for property in model.required_properties + model.optional_properties %}
     {% if property.default is not none or not property.required %}
-    {{ property.to_string() }}
+    {% if " = UNSET" in property.to_string() %}
+    {{ property.to_string().replace(" = UNSET", "") }} = Field(UNSET, alias="{{ property.name }}")
+    {% else %}
+    {% set property_key, default_value = property.to_string().split(" = ") %}
+    {{ property_key}} = Field({{default_value}}, alias="{{ property.name }}")
+    {% endif %}
     {% endif %}
     {% endfor %}
     {% if model.additional_properties %}
@@ -130,6 +135,10 @@ return field_dict
     class Config:
         arbitrary_types_allowed = True
         allow_population_by_field_name = True
+
+    def dict(self, *args, **kwargs):
+        output = super().dict(*args, **kwargs)
+        return {k: v for k, v in output.items() if v is not UNSET}
 
     {% if model.additional_properties %}
     @property
