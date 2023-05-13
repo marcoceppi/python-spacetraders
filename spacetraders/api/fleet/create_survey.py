@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional
 
@@ -6,7 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.create_survey_response_201 import CreateSurveyResponse201
-from ...types import Response
+from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
@@ -59,6 +60,7 @@ def sync_detailed(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
 ) -> Response[CreateSurveyResponse201]:
     """Create Survey
 
@@ -91,45 +93,38 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-def sync(
-    ship_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-) -> Optional[CreateSurveyResponse201]:
-    """Create Survey
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     If you want to target specific yields for an extraction, you can survey a waypoint, such as an
-    asteroid field, and send the survey in the body of the extract request. Each survey may have
-    multiple deposits, and if a symbol shows up more than once, that indicates a higher chance of
-    extracting that resource.
-
-    Your ship will enter a cooldown between consecutive survey requests. Surveys will eventually expire
-    after a period of time. Multiple ships can use the same survey for extraction.
-
-    Args:
-        ship_symbol (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        CreateSurveyResponse201
-    """
-
-    return sync_detailed(
-        ship_symbol=ship_symbol,
-        _client=_client,
-    ).parsed
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
+        )
+    )
 
 
 async def asyncio_detailed(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
 ) -> Response[CreateSurveyResponse201]:
     """Create Survey
 
@@ -160,38 +155,28 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
         response = await c.request(**kwargs)
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-async def asyncio(
-    ship_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-) -> Optional[CreateSurveyResponse201]:
-    """Create Survey
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     If you want to target specific yields for an extraction, you can survey a waypoint, such as an
-    asteroid field, and send the survey in the body of the extract request. Each survey may have
-    multiple deposits, and if a symbol shows up more than once, that indicates a higher chance of
-    extracting that resource.
-
-    Your ship will enter a cooldown between consecutive survey requests. Surveys will eventually expire
-    after a period of time. Multiple ships can use the same survey for extraction.
-
-    Args:
-        ship_symbol (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        CreateSurveyResponse201
-    """
-
-    return (
-        await asyncio_detailed(
-            ship_symbol=ship_symbol,
-            _client=_client,
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
         )
-    ).parsed
+    )

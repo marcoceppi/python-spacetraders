@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional
 
@@ -11,7 +12,7 @@ from ...models.purchase_cargo_purchase_cargo_201_response import (
 from ...models.purchase_cargo_purchase_cargo_request import (
     PurchaseCargoPurchaseCargoRequest,
 )
-from ...types import Response
+from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
@@ -68,6 +69,7 @@ def sync_detailed(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
     **json_body: PurchaseCargoPurchaseCargoRequest,
 ) -> Response[PurchaseCargoPurchaseCargo201Response]:
     """Purchase Cargo
@@ -99,42 +101,38 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-def sync(
-    ship_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-    **json_body: PurchaseCargoPurchaseCargoRequest,
-) -> Optional[PurchaseCargoPurchaseCargo201Response]:
-    """Purchase Cargo
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Purchase cargo.
-
-    Args:
-        ship_symbol (str):
-        json_body (PurchaseCargoPurchaseCargoRequest):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        PurchaseCargoPurchaseCargo201Response
-    """
-
-    return sync_detailed(
-        ship_symbol=ship_symbol,
-        _client=_client,
-        json_body=json_body,
-    ).parsed
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
+        )
+    )
 
 
 async def asyncio_detailed(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
     **json_body: PurchaseCargoPurchaseCargoRequest,
 ) -> Response[PurchaseCargoPurchaseCargo201Response]:
     """Purchase Cargo
@@ -164,35 +162,28 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
         response = await c.request(**kwargs)
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-async def asyncio(
-    ship_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-    **json_body: PurchaseCargoPurchaseCargoRequest,
-) -> Optional[PurchaseCargoPurchaseCargo201Response]:
-    """Purchase Cargo
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Purchase cargo.
-
-    Args:
-        ship_symbol (str):
-        json_body (PurchaseCargoPurchaseCargoRequest):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        PurchaseCargoPurchaseCargo201Response
-    """
-
-    return (
-        await asyncio_detailed(
-            ship_symbol=ship_symbol,
-            _client=_client,
-            json_body=json_body,
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
         )
-    ).parsed
+    )

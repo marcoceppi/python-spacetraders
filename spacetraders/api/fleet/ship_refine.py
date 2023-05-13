@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional
 
@@ -9,7 +10,7 @@ from ...models.ship_refine_json_body import ShipRefineJsonBody
 from ...models.ship_refine_ship_refine_200_response import (
     ShipRefineShipRefine200Response,
 )
-from ...types import Response
+from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
@@ -66,6 +67,7 @@ def sync_detailed(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
     **json_body: ShipRefineJsonBody,
 ) -> Response[ShipRefineShipRefine200Response]:
     """Ship Refine
@@ -98,43 +100,38 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-def sync(
-    ship_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-    **json_body: ShipRefineJsonBody,
-) -> Optional[ShipRefineShipRefine200Response]:
-    """Ship Refine
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Attempt to refine the raw materials on your ship. The request will only succeed if your ship is
-    capable of refining at the time of the request.
-
-    Args:
-        ship_symbol (str):
-        json_body (ShipRefineJsonBody):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ShipRefineShipRefine200Response
-    """
-
-    return sync_detailed(
-        ship_symbol=ship_symbol,
-        _client=_client,
-        json_body=json_body,
-    ).parsed
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
+        )
+    )
 
 
 async def asyncio_detailed(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
     **json_body: ShipRefineJsonBody,
 ) -> Response[ShipRefineShipRefine200Response]:
     """Ship Refine
@@ -165,36 +162,28 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
         response = await c.request(**kwargs)
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-async def asyncio(
-    ship_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-    **json_body: ShipRefineJsonBody,
-) -> Optional[ShipRefineShipRefine200Response]:
-    """Ship Refine
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Attempt to refine the raw materials on your ship. The request will only succeed if your ship is
-    capable of refining at the time of the request.
-
-    Args:
-        ship_symbol (str):
-        json_body (ShipRefineJsonBody):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        ShipRefineShipRefine200Response
-    """
-
-    return (
-        await asyncio_detailed(
-            ship_symbol=ship_symbol,
-            _client=_client,
-            json_body=json_body,
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
         )
-    ).parsed
+    )

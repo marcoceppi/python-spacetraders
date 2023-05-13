@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional
 
@@ -7,7 +8,7 @@ from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.deliver_contract_json_body import DeliverContractJsonBody
 from ...models.deliver_contract_response_200 import DeliverContractResponse200
-from ...types import Response
+from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
@@ -64,6 +65,7 @@ def sync_detailed(
     contract_id: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
     **json_body: DeliverContractJsonBody,
 ) -> Response[DeliverContractResponse200]:
     """Deliver Contract
@@ -95,42 +97,38 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-def sync(
-    contract_id: str,
-    *,
-    _client: AuthenticatedClient,
-    **json_body: DeliverContractJsonBody,
-) -> Optional[DeliverContractResponse200]:
-    """Deliver Contract
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Deliver cargo on a given contract.
-
-    Args:
-        contract_id (str):
-        json_body (DeliverContractJsonBody):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        DeliverContractResponse200
-    """
-
-    return sync_detailed(
-        contract_id=contract_id,
-        _client=_client,
-        json_body=json_body,
-    ).parsed
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
+        )
+    )
 
 
 async def asyncio_detailed(
     contract_id: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
     **json_body: DeliverContractJsonBody,
 ) -> Response[DeliverContractResponse200]:
     """Deliver Contract
@@ -160,35 +158,28 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
         response = await c.request(**kwargs)
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-async def asyncio(
-    contract_id: str,
-    *,
-    _client: AuthenticatedClient,
-    **json_body: DeliverContractJsonBody,
-) -> Optional[DeliverContractResponse200]:
-    """Deliver Contract
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Deliver cargo on a given contract.
-
-    Args:
-        contract_id (str):
-        json_body (DeliverContractJsonBody):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        DeliverContractResponse200
-    """
-
-    return (
-        await asyncio_detailed(
-            contract_id=contract_id,
-            _client=_client,
-            json_body=json_body,
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
         )
-    ).parsed
+    )

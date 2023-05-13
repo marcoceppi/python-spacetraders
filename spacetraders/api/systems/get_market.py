@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional
 
@@ -6,7 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.get_market_response_200 import GetMarketResponse200
-from ...types import Response
+from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
@@ -61,6 +62,7 @@ def sync_detailed(
     waypoint_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
 ) -> Response[GetMarketResponse200]:
     """Get Market
 
@@ -91,38 +93,31 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-def sync(
-    system_symbol: str,
-    waypoint_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-) -> Optional[GetMarketResponse200]:
-    """Get Market
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Retrieve imports, exports and exchange data from a marketplace. Imports can be sold, exports can be
-    purchased, and exchange goods can be purchased or sold. Send a ship to the waypoint to access trade
-    good prices and recent transactions.
-
-    Args:
-        system_symbol (str):
-        waypoint_symbol (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        GetMarketResponse200
-    """
-
-    return sync_detailed(
-        system_symbol=system_symbol,
-        waypoint_symbol=waypoint_symbol,
-        _client=_client,
-    ).parsed
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
+        )
+    )
 
 
 async def asyncio_detailed(
@@ -130,6 +125,7 @@ async def asyncio_detailed(
     waypoint_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
 ) -> Response[GetMarketResponse200]:
     """Get Market
 
@@ -158,37 +154,28 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
         response = await c.request(**kwargs)
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-async def asyncio(
-    system_symbol: str,
-    waypoint_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-) -> Optional[GetMarketResponse200]:
-    """Get Market
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Retrieve imports, exports and exchange data from a marketplace. Imports can be sold, exports can be
-    purchased, and exchange goods can be purchased or sold. Send a ship to the waypoint to access trade
-    good prices and recent transactions.
-
-    Args:
-        system_symbol (str):
-        waypoint_symbol (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        GetMarketResponse200
-    """
-
-    return (
-        await asyncio_detailed(
-            system_symbol=system_symbol,
-            waypoint_symbol=waypoint_symbol,
-            _client=_client,
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
         )
-    ).parsed
+    )

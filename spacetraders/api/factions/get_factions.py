@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional, Union
 
@@ -6,7 +7,7 @@ import httpx
 from ... import errors
 from ...client import Client
 from ...models.get_factions_response_200 import GetFactionsResponse200
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, ApiError, Error, Response, Unset
 
 
 def _get_kwargs(
@@ -65,6 +66,7 @@ def _build_response(
 def sync_detailed(
     *,
     _client: Client,
+    raise_on_error: Optional[bool] = None,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
 ) -> Response[GetFactionsResponse200]:
@@ -95,41 +97,37 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-def sync(
-    *,
-    _client: Client,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-) -> Optional[GetFactionsResponse200]:
-    """List Factions
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     List all discovered factions in the game.
-
-    Args:
-        page (Union[Unset, None, int]):
-        limit (Union[Unset, None, int]):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        GetFactionsResponse200
-    """
-
-    return sync_detailed(
-        _client=_client,
-        page=page,
-        limit=limit,
-    ).parsed
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
+        )
+    )
 
 
 async def asyncio_detailed(
     *,
     _client: Client,
+    raise_on_error: Optional[bool] = None,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
 ) -> Response[GetFactionsResponse200]:
@@ -158,35 +156,28 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
         response = await c.request(**kwargs)
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-async def asyncio(
-    *,
-    _client: Client,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-) -> Optional[GetFactionsResponse200]:
-    """List Factions
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     List all discovered factions in the game.
-
-    Args:
-        page (Union[Unset, None, int]):
-        limit (Union[Unset, None, int]):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        GetFactionsResponse200
-    """
-
-    return (
-        await asyncio_detailed(
-            _client=_client,
-            page=page,
-            limit=limit,
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
         )
-    ).parsed
+    )

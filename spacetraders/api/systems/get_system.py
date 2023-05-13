@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional
 
@@ -6,7 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.get_system_response_200 import GetSystemResponse200
-from ...types import Response
+from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
@@ -59,6 +60,7 @@ def sync_detailed(
     system_symbol: str = "X1-OE",
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
 ) -> Response[GetSystemResponse200]:
     """Get System
 
@@ -85,39 +87,38 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-def sync(
-    system_symbol: str = "X1-OE",
-    *,
-    _client: AuthenticatedClient,
-) -> Optional[GetSystemResponse200]:
-    """Get System
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Get the details of a system.
-
-    Args:
-        system_symbol (str):  Default: 'X1-OE'.
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        GetSystemResponse200
-    """
-
-    return sync_detailed(
-        system_symbol=system_symbol,
-        _client=_client,
-    ).parsed
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
+        )
+    )
 
 
 async def asyncio_detailed(
     system_symbol: str = "X1-OE",
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
 ) -> Response[GetSystemResponse200]:
     """Get System
 
@@ -142,32 +143,28 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
         response = await c.request(**kwargs)
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-async def asyncio(
-    system_symbol: str = "X1-OE",
-    *,
-    _client: AuthenticatedClient,
-) -> Optional[GetSystemResponse200]:
-    """Get System
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Get the details of a system.
-
-    Args:
-        system_symbol (str):  Default: 'X1-OE'.
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        GetSystemResponse200
-    """
-
-    return (
-        await asyncio_detailed(
-            system_symbol=system_symbol,
-            _client=_client,
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
         )
-    ).parsed
+    )

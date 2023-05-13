@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from typing import Any, Dict, Optional
 
@@ -6,7 +7,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.orbit_ship_orbit_ship_200_response import OrbitShipOrbitShip200Response
-from ...types import Response
+from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
@@ -59,6 +60,7 @@ def sync_detailed(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
 ) -> Response[OrbitShipOrbitShip200Response]:
     """Orbit Ship
 
@@ -88,42 +90,38 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-def sync(
-    ship_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-) -> Optional[OrbitShipOrbitShip200Response]:
-    """Orbit Ship
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Attempt to move your ship into orbit at it's current location. The request will only succeed if your
-    ship is capable of moving into orbit at the time of the request.
-
-    The endpoint is idempotent - successive calls will succeed even if the ship is already in orbit.
-
-    Args:
-        ship_symbol (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        OrbitShipOrbitShip200Response
-    """
-
-    return sync_detailed(
-        ship_symbol=ship_symbol,
-        _client=_client,
-    ).parsed
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
+        )
+    )
 
 
 async def asyncio_detailed(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    raise_on_error: Optional[bool] = None,
 ) -> Response[OrbitShipOrbitShip200Response]:
     """Orbit Ship
 
@@ -151,35 +149,28 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:
         response = await c.request(**kwargs)
 
-    return _build_response(client=_client, response=response)
+    resp = _build_response(client=_client, response=response)
 
+    raise_on_error = (
+        raise_on_error if raise_on_error is not None else _client.raise_on_error
+    )
+    if not raise_on_error:
+        return resp
 
-async def asyncio(
-    ship_symbol: str,
-    *,
-    _client: AuthenticatedClient,
-) -> Optional[OrbitShipOrbitShip200Response]:
-    """Orbit Ship
+    if resp.status_code < 300:
+        return resp.parsed.data
 
-     Attempt to move your ship into orbit at it's current location. The request will only succeed if your
-    ship is capable of moving into orbit at the time of the request.
-
-    The endpoint is idempotent - successive calls will succeed even if the ship is already in orbit.
-
-    Args:
-        ship_symbol (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        OrbitShipOrbitShip200Response
-    """
-
-    return (
-        await asyncio_detailed(
-            ship_symbol=ship_symbol,
-            _client=_client,
+    try:
+        error = json.loads(resp.content)
+        details = error.get("error", {})
+    except Exception:
+        details = {"message": resp.content}
+    raise ApiError(
+        Error(
+            status_code=resp.status_code,
+            message=details.get("message"),
+            code=details.get("code"),
+            data=details.get("data"),
+            headers=resp.headers,
         )
-    ).parsed
+    )

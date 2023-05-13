@@ -90,6 +90,7 @@ _client: AuthenticatedClient,
 {% else %}
 _client: Client,
 {% endif %}
+raise_on_error: Optional[bool] = None,
 {# Form data if any #}
 {% if endpoint.form_body %}
 form_data: {{ endpoint.form_body.get_type_string() }},
