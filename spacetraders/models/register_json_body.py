@@ -3,12 +3,13 @@ from typing import (
     Dict,
     List,
     TypeVar,
+    Union,
 )
 
 from pydantic import BaseModel, Field
 
 from ..models.register_json_body_faction import RegisterJsonBodyFaction
-from ..types import Unset
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="RegisterJsonBody")
 
@@ -18,10 +19,12 @@ class RegisterJsonBody(BaseModel):
     Attributes:
         faction (RegisterJsonBodyFaction): The faction you choose determines your headquarters.
         symbol (str): How other agents will see your ships and information. Example: BADGER.
+        email (Union[Unset, str]): Your email address. This is used if you reserved your call sign between resets.
     """
 
     faction: RegisterJsonBodyFaction = Field(alias="faction")
     symbol: str = Field(alias="symbol")
+    email: Union[Unset, str] = Field(UNSET, alias="email")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

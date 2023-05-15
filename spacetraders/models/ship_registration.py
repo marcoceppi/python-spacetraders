@@ -3,13 +3,12 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
 from ..models.ship_role import ShipRole
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="ShipRegistration")
 
@@ -19,13 +18,13 @@ class ShipRegistration(BaseModel):
 
     Attributes:
         name (str): The agent's registered name of the ship
+        faction_symbol (str): The symbol of the faction the ship is registered with
         role (ShipRole): The registered role of the ship
-        faction_symbol (Union[Unset, str]): The symbol of the faction the ship is registered with
     """
 
     name: str = Field(alias="name")
+    faction_symbol: str = Field(alias="factionSymbol")
     role: ShipRole = Field(alias="role")
-    faction_symbol: Union[Unset, str] = Field(UNSET, alias="factionSymbol")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

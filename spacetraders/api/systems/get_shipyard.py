@@ -66,7 +66,8 @@ def sync_detailed(
 ) -> Response[GetShipyardResponse200]:
     """Get Shipyard
 
-     Get the shipyard for a waypoint.
+     Get the shipyard for a waypoint. Send a ship to the waypoint to access ships that are currently
+    available for purchase and recent transactions.
 
     Args:
         system_symbol (str):
@@ -127,7 +128,8 @@ async def asyncio_detailed(
 ) -> Response[GetShipyardResponse200]:
     """Get Shipyard
 
-     Get the shipyard for a waypoint.
+     Get the shipyard for a waypoint. Send a ship to the waypoint to access ships that are currently
+    available for purchase and recent transactions.
 
     Args:
         system_symbol (str):
