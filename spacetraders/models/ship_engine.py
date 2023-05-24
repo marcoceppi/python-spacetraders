@@ -22,7 +22,7 @@ class ShipEngine(BaseModel):
         symbol (ShipEngineSymbol):
         name (str):
         description (str):
-        speed (float):
+        speed (int):
         requirements (ShipRequirements): The requirements for installation on a ship
         condition (Union[Unset, int]): Condition is a range of 0 to 100 where 0 is completely worn out and 100 is brand
             new.
@@ -31,7 +31,7 @@ class ShipEngine(BaseModel):
     symbol: ShipEngineSymbol = Field(alias="symbol")
     name: str = Field(alias="name")
     description: str = Field(alias="description")
-    speed: float = Field(alias="speed")
+    speed: int = Field(alias="speed")
     requirements: "ShipRequirements" = Field(alias="requirements")
     condition: Union[Unset, int] = Field(UNSET, alias="condition")
     additional_properties: Dict[str, Any] = {}

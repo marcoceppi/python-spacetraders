@@ -5,7 +5,7 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.get_market_response_200 import GetMarketResponse200
 from ...types import ApiError, Error, Response
 
@@ -14,7 +14,7 @@ def _get_kwargs(
     system_symbol: str,
     waypoint_symbol: str,
     *,
-    _client: AuthenticatedClient,
+    _client: Client,
 ) -> Dict[str, Any]:
     url = "{}/systems/{systemSymbol}/waypoints/{waypointSymbol}/market".format(
         _client.base_url, systemSymbol=system_symbol, waypointSymbol=waypoint_symbol
@@ -61,7 +61,7 @@ def sync_detailed(
     system_symbol: str,
     waypoint_symbol: str,
     *,
-    _client: AuthenticatedClient,
+    _client: Client,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetMarketResponse200]:
     """Get Market
@@ -124,7 +124,7 @@ async def asyncio_detailed(
     system_symbol: str,
     waypoint_symbol: str,
     *,
-    _client: AuthenticatedClient,
+    _client: Client,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetMarketResponse200]:
     """Get Market

@@ -5,41 +5,46 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ... import errors
-from ...client import Client
-from ...models.get_shipyard_response_200 import GetShipyardResponse200
+from ...client import AuthenticatedClient, Client
+from ...models.negotiate_contract_negotiate_contract_200_response import (
+    NegotiateContractNegotiateContract200Response,
+)
 from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
-    system_symbol: str,
-    waypoint_symbol: str,
+    ship_symbol: str,
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
+    json_body: Any,
 ) -> Dict[str, Any]:
-    url = "{}/systems/{systemSymbol}/waypoints/{waypointSymbol}/shipyard".format(
-        _client.base_url, systemSymbol=system_symbol, waypointSymbol=waypoint_symbol
+    url = "{}/my/ships/{shipSymbol}/negotiate/contract".format(
+        _client.base_url, shipSymbol=ship_symbol
     )
 
     headers: Dict[str, str] = _client.get_headers()
     cookies: Dict[str, Any] = _client.get_cookies()
 
+    json_json_body = json_body
+
     return {
-        "method": "get",
+        "method": "post",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": _client.get_timeout(),
         "follow_redirects": _client.follow_redirects,
+        "json": json_json_body,
     }
 
 
 def _parse_response(
     *, client: Client, response: httpx.Response
-) -> Optional[GetShipyardResponse200]:
-    if response.status_code == HTTPStatus.OK:
-        response_200 = GetShipyardResponse200(**response.json())
+) -> Optional[NegotiateContractNegotiateContract200Response]:
+    if response.status_code == HTTPStatus.CREATED:
+        response_201 = NegotiateContractNegotiateContract200Response(**response.json())
 
-        return response_200
+        return response_201
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -48,7 +53,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Client, response: httpx.Response
-) -> Response[GetShipyardResponse200]:
+) -> Response[NegotiateContractNegotiateContract200Response]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -58,33 +63,32 @@ def _build_response(
 
 
 def sync_detailed(
-    system_symbol: str,
-    waypoint_symbol: str,
+    ship_symbol: str,
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-) -> Response[GetShipyardResponse200]:
-    """Get Shipyard
-
-     Get the shipyard for a waypoint. Send a ship to the waypoint to access ships that are currently
-    available for purchase and recent transactions.
+    **json_body: Any,
+) -> Response[NegotiateContractNegotiateContract200Response]:
+    """Negotiate Contract
 
     Args:
-        system_symbol (str):
-        waypoint_symbol (str):
+        ship_symbol (str):
+        json_body (Any):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[GetShipyardResponse200]
+        Response[NegotiateContractNegotiateContract200Response]
     """
 
+    json_body = Any.parse_obj(json_body)
+
     kwargs = _get_kwargs(
-        system_symbol=system_symbol,
-        waypoint_symbol=waypoint_symbol,
+        ship_symbol=ship_symbol,
         _client=_client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -120,33 +124,32 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
-    system_symbol: str,
-    waypoint_symbol: str,
+    ship_symbol: str,
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-) -> Response[GetShipyardResponse200]:
-    """Get Shipyard
-
-     Get the shipyard for a waypoint. Send a ship to the waypoint to access ships that are currently
-    available for purchase and recent transactions.
+    **json_body: Any,
+) -> Response[NegotiateContractNegotiateContract200Response]:
+    """Negotiate Contract
 
     Args:
-        system_symbol (str):
-        waypoint_symbol (str):
+        ship_symbol (str):
+        json_body (Any):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[GetShipyardResponse200]
+        Response[NegotiateContractNegotiateContract200Response]
     """
 
+    json_body = Any.parse_obj(json_body)
+
     kwargs = _get_kwargs(
-        system_symbol=system_symbol,
-        waypoint_symbol=waypoint_symbol,
+        ship_symbol=ship_symbol,
         _client=_client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:

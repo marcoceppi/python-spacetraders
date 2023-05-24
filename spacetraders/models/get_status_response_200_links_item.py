@@ -1,33 +1,26 @@
-import datetime
 from typing import (
     Any,
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..types import Unset
 
-T = TypeVar("T", bound="Cooldown")
+T = TypeVar("T", bound="GetStatusResponse200LinksItem")
 
 
-class Cooldown(BaseModel):
-    """A cooldown is a period of time in which a ship cannot perform certain actions.
-
+class GetStatusResponse200LinksItem(BaseModel):
+    """
     Attributes:
-        ship_symbol (str): The symbol of the ship that is on cooldown
-        total_seconds (int): The total duration of the cooldown in seconds
-        remaining_seconds (int): The remaining duration of the cooldown in seconds
-        expiration (Union[Unset, datetime.datetime]): The date and time when the cooldown expires in ISO 8601 format
+        name (str):
+        url (str):
     """
 
-    ship_symbol: str = Field(alias="shipSymbol")
-    total_seconds: int = Field(alias="totalSeconds")
-    remaining_seconds: int = Field(alias="remainingSeconds")
-    expiration: Union[Unset, datetime.datetime] = Field(UNSET, alias="expiration")
+    name: str = Field(alias="name")
+    url: str = Field(alias="url")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

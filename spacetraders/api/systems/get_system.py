@@ -5,7 +5,7 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.get_system_response_200 import GetSystemResponse200
 from ...types import ApiError, Error, Response
 
@@ -13,7 +13,7 @@ from ...types import ApiError, Error, Response
 def _get_kwargs(
     system_symbol: str = "X1-OE",
     *,
-    _client: AuthenticatedClient,
+    _client: Client,
 ) -> Dict[str, Any]:
     url = "{}/systems/{systemSymbol}".format(
         _client.base_url, systemSymbol=system_symbol
@@ -59,7 +59,7 @@ def _build_response(
 def sync_detailed(
     system_symbol: str = "X1-OE",
     *,
-    _client: AuthenticatedClient,
+    _client: Client,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetSystemResponse200]:
     """Get System
@@ -117,7 +117,7 @@ def sync_detailed(
 async def asyncio_detailed(
     system_symbol: str = "X1-OE",
     *,
-    _client: AuthenticatedClient,
+    _client: Client,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetSystemResponse200]:
     """Get System

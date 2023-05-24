@@ -4,13 +4,14 @@ from typing import (
     Dict,
     List,
     TypeVar,
+    Union,
 )
 
 from pydantic import BaseModel, Field
 
 from ..models.contract_terms import ContractTerms
 from ..models.contract_type import ContractType
-from ..types import Unset
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Contract")
 
@@ -24,7 +25,9 @@ class Contract(BaseModel):
         terms (ContractTerms):
         accepted (bool): Whether the contract has been accepted by the agent
         fulfilled (bool): Whether the contract has been fulfilled
-        expiration (datetime.datetime): The time at which the contract expires
+        expiration (datetime.datetime): Deprecated in favor of deadlineToAccept
+        deadline_to_accept (Union[Unset, datetime.datetime]): The time at which the contract is no longer available to
+            be accepted
     """
 
     id: str = Field(alias="id")
@@ -34,6 +37,9 @@ class Contract(BaseModel):
     expiration: datetime.datetime = Field(alias="expiration")
     accepted: bool = Field(False, alias="accepted")
     fulfilled: bool = Field(False, alias="fulfilled")
+    deadline_to_accept: Union[Unset, datetime.datetime] = Field(
+        UNSET, alias="deadlineToAccept"
+    )
     additional_properties: Dict[str, Any] = {}
 
     class Config:

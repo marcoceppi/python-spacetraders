@@ -21,6 +21,7 @@ class Faction(BaseModel):
         description (str):
         headquarters (str):
         traits (List['FactionTrait']):
+        is_recruiting (bool): Whether or not the faction is currently recruiting new agents.
     """
 
     symbol: str = Field(alias="symbol")
@@ -28,6 +29,7 @@ class Faction(BaseModel):
     description: str = Field(alias="description")
     headquarters: str = Field(alias="headquarters")
     traits: List["FactionTrait"] = Field(alias="traits")
+    is_recruiting: bool = Field(alias="isRecruiting")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

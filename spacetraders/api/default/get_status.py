@@ -6,19 +6,15 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.get_shipyard_response_200 import GetShipyardResponse200
+from ...models.get_status_response_200 import GetStatusResponse200
 from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
-    system_symbol: str,
-    waypoint_symbol: str,
     *,
     _client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/systems/{systemSymbol}/waypoints/{waypointSymbol}/shipyard".format(
-        _client.base_url, systemSymbol=system_symbol, waypointSymbol=waypoint_symbol
-    )
+    url = "{}/".format(_client.base_url)
 
     headers: Dict[str, str] = _client.get_headers()
     cookies: Dict[str, Any] = _client.get_cookies()
@@ -35,9 +31,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Client, response: httpx.Response
-) -> Optional[GetShipyardResponse200]:
+) -> Optional[GetStatusResponse200]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = GetShipyardResponse200(**response.json())
+        response_200 = GetStatusResponse200(**response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -48,7 +44,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Client, response: httpx.Response
-) -> Response[GetShipyardResponse200]:
+) -> Response[GetStatusResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -58,32 +54,23 @@ def _build_response(
 
 
 def sync_detailed(
-    system_symbol: str,
-    waypoint_symbol: str,
     *,
     _client: Client,
     raise_on_error: Optional[bool] = None,
-) -> Response[GetShipyardResponse200]:
-    """Get Shipyard
+) -> Response[GetStatusResponse200]:
+    """Get Status
 
-     Get the shipyard for a waypoint. Send a ship to the waypoint to access ships that are currently
-    available for purchase and recent transactions.
-
-    Args:
-        system_symbol (str):
-        waypoint_symbol (str):
+     Return the status of the game server.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[GetShipyardResponse200]
+        Response[GetStatusResponse200]
     """
 
     kwargs = _get_kwargs(
-        system_symbol=system_symbol,
-        waypoint_symbol=waypoint_symbol,
         _client=_client,
     )
 
@@ -120,32 +107,23 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
-    system_symbol: str,
-    waypoint_symbol: str,
     *,
     _client: Client,
     raise_on_error: Optional[bool] = None,
-) -> Response[GetShipyardResponse200]:
-    """Get Shipyard
+) -> Response[GetStatusResponse200]:
+    """Get Status
 
-     Get the shipyard for a waypoint. Send a ship to the waypoint to access ships that are currently
-    available for purchase and recent transactions.
-
-    Args:
-        system_symbol (str):
-        waypoint_symbol (str):
+     Return the status of the game server.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[GetShipyardResponse200]
+        Response[GetStatusResponse200]
     """
 
     kwargs = _get_kwargs(
-        system_symbol=system_symbol,
-        waypoint_symbol=waypoint_symbol,
         _client=_client,
     )
 

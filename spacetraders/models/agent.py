@@ -20,12 +20,14 @@ class Agent(BaseModel):
         headquarters (str): The headquarters of the agent.
         credits_ (int): The number of credits the agent has available. Credits can be negative if funds have been
             overdrawn.
+        starting_faction (str): The faction the agent started with.
     """
 
     account_id: str = Field(alias="accountId")
     symbol: str = Field(alias="symbol")
     headquarters: str = Field(alias="headquarters")
     credits_: int = Field(alias="credits")
+    starting_faction: str = Field(alias="startingFaction")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

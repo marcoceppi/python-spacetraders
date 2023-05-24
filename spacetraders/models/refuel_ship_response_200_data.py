@@ -8,6 +8,7 @@ from typing import (
 from pydantic import BaseModel, Field
 
 from ..models.agent import Agent
+from ..models.market_transaction import MarketTransaction
 from ..models.ship_fuel import ShipFuel
 from ..types import Unset
 
@@ -20,10 +21,12 @@ class RefuelShipResponse200Data(BaseModel):
         agent (Agent):
         fuel (ShipFuel): Details of the ship's fuel tanks including how much fuel was consumed during the last transit
             or action.
+        transaction (MarketTransaction):
     """
 
     agent: "Agent" = Field(alias="agent")
     fuel: "ShipFuel" = Field(alias="fuel")
+    transaction: "MarketTransaction" = Field(alias="transaction")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

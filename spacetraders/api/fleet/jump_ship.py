@@ -70,8 +70,9 @@ def sync_detailed(
 ) -> Response[JumpShipResponse200]:
     """Jump Ship
 
-     Jump your ship instantly to a target system. Unlike other forms of navigation, jumping requires a
-    unit of antimatter.
+     Jump your ship instantly to a target system. When used while in orbit or docked to a jump gate
+    waypoint, any ship can use this command. When used elsewhere, jumping requires a jump drive unit and
+    consumes a unit of antimatter (which needs to be in your cargo).
 
     Args:
         ship_symbol (str):
@@ -134,8 +135,9 @@ async def asyncio_detailed(
 ) -> Response[JumpShipResponse200]:
     """Jump Ship
 
-     Jump your ship instantly to a target system. Unlike other forms of navigation, jumping requires a
-    unit of antimatter.
+     Jump your ship instantly to a target system. When used while in orbit or docked to a jump gate
+    waypoint, any ship can use this command. When used elsewhere, jumping requires a jump drive unit and
+    consumes a unit of antimatter (which needs to be in your cargo).
 
     Args:
         ship_symbol (str):

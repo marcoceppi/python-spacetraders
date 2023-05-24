@@ -5,14 +5,14 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ... import errors
-from ...client import AuthenticatedClient, Client
+from ...client import Client
 from ...models.get_systems_response_200 import GetSystemsResponse200
 from ...types import UNSET, ApiError, Error, Response, Unset
 
 
 def _get_kwargs(
     *,
-    _client: AuthenticatedClient,
+    _client: Client,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
 ) -> Dict[str, Any]:
@@ -65,7 +65,7 @@ def _build_response(
 
 def sync_detailed(
     *,
-    _client: AuthenticatedClient,
+    _client: Client,
     raise_on_error: Optional[bool] = None,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
@@ -126,7 +126,7 @@ def sync_detailed(
 
 async def asyncio_detailed(
     *,
-    _client: AuthenticatedClient,
+    _client: Client,
     raise_on_error: Optional[bool] = None,
     page: Union[Unset, None, int] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
