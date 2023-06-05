@@ -3,27 +3,36 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..models.agent import Agent
+from ..models.remove_mount_remove_mount_201_response_data_transaction import (
+    RemoveMountRemoveMount201ResponseDataTransaction,
+)
+from ..models.ship_cargo import ShipCargo
+from ..models.ship_mount import ShipMount
+from ..types import Unset
 
-T = TypeVar("T", bound="RegisterJsonBody")
+T = TypeVar("T", bound="RemoveMountRemoveMount201ResponseData")
 
 
-class RegisterJsonBody(BaseModel):
+class RemoveMountRemoveMount201ResponseData(BaseModel):
     """
     Attributes:
-        faction (Any): The faction you choose determines your headquarters. Example: COSMIC.
-        symbol (str): How other agents will see your ships and information. Example: BADGER.
-        email (Union[Unset, str]): Your email address. This is used if you reserved your call sign between resets.
+        agent (Agent):
+        mounts (List['ShipMount']):
+        cargo (ShipCargo):
+        transaction (RemoveMountRemoveMount201ResponseDataTransaction):
     """
 
-    faction: Any = Field(alias="faction")
-    symbol: str = Field(alias="symbol")
-    email: Union[Unset, str] = Field(UNSET, alias="email")
+    agent: "Agent" = Field(alias="agent")
+    mounts: List["ShipMount"] = Field(alias="mounts")
+    cargo: "ShipCargo" = Field(alias="cargo")
+    transaction: "RemoveMountRemoveMount201ResponseDataTransaction" = Field(
+        alias="transaction"
+    )
     additional_properties: Dict[str, Any] = {}
 
     class Config:

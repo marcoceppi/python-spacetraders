@@ -6,40 +6,48 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.get_shipyard_response_200 import GetShipyardResponse200
+from ...models.install_mount_install_mount_201_response import (
+    InstallMountInstallMount201Response,
+)
+from ...models.install_mount_install_mount_request import (
+    InstallMountInstallMountRequest,
+)
 from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
-    system_symbol: str,
-    waypoint_symbol: str,
+    ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    json_body: InstallMountInstallMountRequest,
 ) -> Dict[str, Any]:
-    url = "{}/systems/{systemSymbol}/waypoints/{waypointSymbol}/shipyard".format(
-        _client.base_url, systemSymbol=system_symbol, waypointSymbol=waypoint_symbol
+    url = "{}/my/ships/{shipSymbol}/mounts/install".format(
+        _client.base_url, shipSymbol=ship_symbol
     )
 
     headers: Dict[str, str] = _client.get_headers()
     cookies: Dict[str, Any] = _client.get_cookies()
 
+    json_json_body = json_body.dict(by_alias=True)
+
     return {
-        "method": "get",
+        "method": "post",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": _client.get_timeout(),
         "follow_redirects": _client.follow_redirects,
+        "json": json_json_body,
     }
 
 
 def _parse_response(
     *, client: Client, response: httpx.Response
-) -> Optional[GetShipyardResponse200]:
-    if response.status_code == HTTPStatus.OK:
-        response_200 = GetShipyardResponse200(**response.json())
+) -> Optional[InstallMountInstallMount201Response]:
+    if response.status_code == HTTPStatus.CREATED:
+        response_201 = InstallMountInstallMount201Response(**response.json())
 
-        return response_200
+        return response_201
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -48,7 +56,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Client, response: httpx.Response
-) -> Response[GetShipyardResponse200]:
+) -> Response[InstallMountInstallMount201Response]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -58,33 +66,34 @@ def _build_response(
 
 
 def sync_detailed(
-    system_symbol: str,
-    waypoint_symbol: str,
+    ship_symbol: str,
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-) -> Response[GetShipyardResponse200]:
-    """Get Shipyard
+    **json_body: InstallMountInstallMountRequest,
+) -> Response[InstallMountInstallMount201Response]:
+    """Install Mount
 
-     Get the shipyard for a waypoint. Send a ship to the waypoint to access ships that are currently
-    available for purchase and recent transactions.
+     Install a mount on a ship.
 
     Args:
-        system_symbol (str):
-        waypoint_symbol (str):
+        ship_symbol (str):
+        json_body (InstallMountInstallMountRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[GetShipyardResponse200]
+        Response[InstallMountInstallMount201Response]
     """
 
+    json_body = InstallMountInstallMountRequest.parse_obj(json_body)
+
     kwargs = _get_kwargs(
-        system_symbol=system_symbol,
-        waypoint_symbol=waypoint_symbol,
+        ship_symbol=ship_symbol,
         _client=_client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -120,33 +129,34 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
-    system_symbol: str,
-    waypoint_symbol: str,
+    ship_symbol: str,
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-) -> Response[GetShipyardResponse200]:
-    """Get Shipyard
+    **json_body: InstallMountInstallMountRequest,
+) -> Response[InstallMountInstallMount201Response]:
+    """Install Mount
 
-     Get the shipyard for a waypoint. Send a ship to the waypoint to access ships that are currently
-    available for purchase and recent transactions.
+     Install a mount on a ship.
 
     Args:
-        system_symbol (str):
-        waypoint_symbol (str):
+        ship_symbol (str):
+        json_body (InstallMountInstallMountRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[GetShipyardResponse200]
+        Response[InstallMountInstallMount201Response]
     """
 
+    json_body = InstallMountInstallMountRequest.parse_obj(json_body)
+
     kwargs = _get_kwargs(
-        system_symbol=system_symbol,
-        waypoint_symbol=waypoint_symbol,
+        ship_symbol=ship_symbol,
         _client=_client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:

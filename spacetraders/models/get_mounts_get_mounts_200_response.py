@@ -3,27 +3,23 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..models.ship_mount import ShipMount
+from ..types import Unset
 
-T = TypeVar("T", bound="RegisterJsonBody")
+T = TypeVar("T", bound="GetMountsGetMounts200Response")
 
 
-class RegisterJsonBody(BaseModel):
+class GetMountsGetMounts200Response(BaseModel):
     """
     Attributes:
-        faction (Any): The faction you choose determines your headquarters. Example: COSMIC.
-        symbol (str): How other agents will see your ships and information. Example: BADGER.
-        email (Union[Unset, str]): Your email address. This is used if you reserved your call sign between resets.
+        data (List['ShipMount']):
     """
 
-    faction: Any = Field(alias="faction")
-    symbol: str = Field(alias="symbol")
-    email: Union[Unset, str] = Field(UNSET, alias="email")
+    data: List["ShipMount"] = Field(alias="data")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

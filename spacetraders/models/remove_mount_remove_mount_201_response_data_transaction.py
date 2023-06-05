@@ -1,29 +1,27 @@
+import datetime
 from typing import (
     Any,
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..types import Unset
 
-T = TypeVar("T", bound="RegisterJsonBody")
+T = TypeVar("T", bound="RemoveMountRemoveMount201ResponseDataTransaction")
 
 
-class RegisterJsonBody(BaseModel):
+class RemoveMountRemoveMount201ResponseDataTransaction(BaseModel):
     """
     Attributes:
-        faction (Any): The faction you choose determines your headquarters. Example: COSMIC.
-        symbol (str): How other agents will see your ships and information. Example: BADGER.
-        email (Union[Unset, str]): Your email address. This is used if you reserved your call sign between resets.
+        total_price (int): The total price of the transaction.
+        timestamp (datetime.datetime): The timestamp of the transaction.
     """
 
-    faction: Any = Field(alias="faction")
-    symbol: str = Field(alias="symbol")
-    email: Union[Unset, str] = Field(UNSET, alias="email")
+    total_price: int = Field(alias="totalPrice")
+    timestamp: datetime.datetime = Field(alias="timestamp")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

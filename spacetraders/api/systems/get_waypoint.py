@@ -5,7 +5,7 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ... import errors
-from ...client import Client
+from ...client import AuthenticatedClient, Client
 from ...models.get_waypoint_response_200 import GetWaypointResponse200
 from ...types import ApiError, Error, Response
 
@@ -14,7 +14,7 @@ def _get_kwargs(
     system_symbol: str,
     waypoint_symbol: str,
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
 ) -> Dict[str, Any]:
     url = "{}/systems/{systemSymbol}/waypoints/{waypointSymbol}".format(
         _client.base_url, systemSymbol=system_symbol, waypointSymbol=waypoint_symbol
@@ -61,7 +61,7 @@ def sync_detailed(
     system_symbol: str,
     waypoint_symbol: str,
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetWaypointResponse200]:
     """Get Waypoint
@@ -122,7 +122,7 @@ async def asyncio_detailed(
     system_symbol: str,
     waypoint_symbol: str,
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetWaypointResponse200]:
     """Get Waypoint
