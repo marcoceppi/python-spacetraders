@@ -64,8 +64,11 @@ def sync_detailed(
 ) -> Response[DockShipDockShip200Response]:
     """Dock Ship
 
-     Attempt to dock your ship at it's current location. Docking will only succeed if the waypoint is a
-    dockable location, and your ship is capable of docking at the time of the request.
+     Attempt to dock your ship at its current location. Docking will only succeed if your ship is capable
+    of docking at the time of the request.
+
+    Docked ships can access elements in their current location, such as the market or a shipyard, but
+    cannot do actions that require the ship to be above surface such as navigating or extracting.
 
     The endpoint is idempotent - successive calls will succeed even if the ship is already docked.
 
@@ -125,8 +128,11 @@ async def asyncio_detailed(
 ) -> Response[DockShipDockShip200Response]:
     """Dock Ship
 
-     Attempt to dock your ship at it's current location. Docking will only succeed if the waypoint is a
-    dockable location, and your ship is capable of docking at the time of the request.
+     Attempt to dock your ship at its current location. Docking will only succeed if your ship is capable
+    of docking at the time of the request.
+
+    Docked ships can access elements in their current location, such as the market or a shipyard, but
+    cannot do actions that require the ship to be above surface such as navigating or extracting.
 
     The endpoint is idempotent - successive calls will succeed even if the ship is already docked.
 

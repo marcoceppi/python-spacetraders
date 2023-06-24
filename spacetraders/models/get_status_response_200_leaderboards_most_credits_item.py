@@ -15,8 +15,8 @@ T = TypeVar("T", bound="GetStatusResponse200LeaderboardsMostCreditsItem")
 class GetStatusResponse200LeaderboardsMostCreditsItem(BaseModel):
     """
     Attributes:
-        agent_symbol (str):
-        credits_ (int):
+        agent_symbol (str): Symbol of the agent.
+        credits_ (int): Amount of credits.
     """
 
     agent_symbol: str = Field(alias="agentSymbol")

@@ -18,7 +18,7 @@ class CreateShipWaypointScanResponse201Data(BaseModel):
     """
     Attributes:
         cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
-        waypoints (List['ScannedWaypoint']):
+        waypoints (List['ScannedWaypoint']): List of scanned waypoints.
     """
 
     cooldown: "Cooldown" = Field(alias="cooldown")

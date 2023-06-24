@@ -70,9 +70,14 @@ def sync_detailed(
 ) -> Response[JumpShipResponse200]:
     """Jump Ship
 
-     Jump your ship instantly to a target system. When used while in orbit or docked to a jump gate
-    waypoint, any ship can use this command. When used elsewhere, jumping requires a jump drive unit and
-    consumes a unit of antimatter (which needs to be in your cargo).
+     Jump your ship instantly to a target system. The ship must be in orbit to use this function. When
+    used while in orbit of a Jump Gate waypoint, any ship can use this command, jumping to the target
+    system's Jump Gate waypoint.
+
+    When used elsewhere, jumping requires the ship to have a `Jump Drive` module installed and consumes
+    a unit of antimatter from the ship's cargo. The command will fail if there is no antimatter to
+    consume. When jumping via the `Jump Drive` module, the ship ends up at its largest source of energy
+    in the system, such as a gas planet or a jump gate.
 
     Args:
         ship_symbol (str):
@@ -135,9 +140,14 @@ async def asyncio_detailed(
 ) -> Response[JumpShipResponse200]:
     """Jump Ship
 
-     Jump your ship instantly to a target system. When used while in orbit or docked to a jump gate
-    waypoint, any ship can use this command. When used elsewhere, jumping requires a jump drive unit and
-    consumes a unit of antimatter (which needs to be in your cargo).
+     Jump your ship instantly to a target system. The ship must be in orbit to use this function. When
+    used while in orbit of a Jump Gate waypoint, any ship can use this command, jumping to the target
+    system's Jump Gate waypoint.
+
+    When used elsewhere, jumping requires the ship to have a `Jump Drive` module installed and consumes
+    a unit of antimatter from the ship's cargo. The command will fail if there is no antimatter to
+    consume. When jumping via the `Jump Drive` module, the ship ends up at its largest source of energy
+    in the system, such as a gas planet or a jump gate.
 
     Args:
         ship_symbol (str):

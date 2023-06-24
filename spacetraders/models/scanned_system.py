@@ -14,14 +14,15 @@ T = TypeVar("T", bound="ScannedSystem")
 
 
 class ScannedSystem(BaseModel):
-    """
+    """Details of a system was that scanned.
+
     Attributes:
-        symbol (str):
-        sector_symbol (str):
+        symbol (str): Symbol of the system.
+        sector_symbol (str): Symbol of the system's sector.
         type (SystemType): The type of waypoint.
-        x (int):
-        y (int):
-        distance (int):
+        x (int): Position in the universe in the x axis.
+        y (int): Position in the universe in the y axis.
+        distance (int): The system's distance from the scanning ship.
     """
 
     symbol: str = Field(alias="symbol")

@@ -16,7 +16,7 @@ T = TypeVar("T", bound="GetMyAgentResponse200")
 class GetMyAgentResponse200(BaseModel):
     """
     Attributes:
-        data (Agent):
+        data (Agent): Agent details.
     """
 
     data: "Agent" = Field(alias="data")

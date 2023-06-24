@@ -15,10 +15,10 @@ T = TypeVar("T", bound="GetStatusResponse200Stats")
 class GetStatusResponse200Stats(BaseModel):
     """
     Attributes:
-        agents (int):
-        ships (int):
-        systems (int):
-        waypoints (int):
+        agents (int): Number of registered agents in the game.
+        ships (int): Total number of ships in the game.
+        systems (int): Total number of systems in the game.
+        waypoints (int): Total number of waypoints in the game.
     """
 
     agents: int = Field(alias="agents")

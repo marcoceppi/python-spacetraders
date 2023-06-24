@@ -76,6 +76,11 @@ def sync_detailed(
 
      Install a mount on a ship.
 
+    In order to install a mount, the ship must be docked and located in a waypoint that has a `Shipyard`
+    trait. The ship also must have the mount to install in its cargo hold.
+
+    An installation fee will be deduced by the Shipyard for installing the mount on the ship.
+
     Args:
         ship_symbol (str):
         json_body (InstallMountInstallMountRequest):
@@ -138,6 +143,11 @@ async def asyncio_detailed(
     """Install Mount
 
      Install a mount on a ship.
+
+    In order to install a mount, the ship must be docked and located in a waypoint that has a `Shipyard`
+    trait. The ship also must have the mount to install in its cargo hold.
+
+    An installation fee will be deduced by the Shipyard for installing the mount on the ship.
 
     Args:
         ship_symbol (str):

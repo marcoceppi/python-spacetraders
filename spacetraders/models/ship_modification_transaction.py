@@ -1,27 +1,34 @@
+import datetime
 from typing import (
     Any,
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..types import Unset
 
-T = TypeVar("T", bound="ShipRefineShipRefine200ResponseDataConsumedItem")
+T = TypeVar("T", bound="ShipModificationTransaction")
 
 
-class ShipRefineShipRefine200ResponseDataConsumedItem(BaseModel):
-    """
+class ShipModificationTransaction(BaseModel):
+    """Result of a transaction for a ship modification, such as installing a mount or a module.
+
     Attributes:
-        trade_symbol (Union[Unset, str]):
-        units (Union[Unset, int]):
+        waypoint_symbol (str): The symbol of the waypoint where the transaction took place.
+        ship_symbol (str): The symbol of the ship that made the transaction.
+        trade_symbol (str): The symbol of the trade good.
+        total_price (int): The total price of the transaction.
+        timestamp (datetime.datetime): The timestamp of the transaction.
     """
 
-    trade_symbol: Union[Unset, str] = Field(UNSET, alias="tradeSymbol")
-    units: Union[Unset, int] = Field(UNSET, alias="units")
+    waypoint_symbol: str = Field(alias="waypointSymbol")
+    ship_symbol: str = Field(alias="shipSymbol")
+    trade_symbol: str = Field(alias="tradeSymbol")
+    total_price: int = Field(alias="totalPrice")
+    timestamp: datetime.datetime = Field(alias="timestamp")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

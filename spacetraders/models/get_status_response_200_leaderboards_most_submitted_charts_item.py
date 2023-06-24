@@ -15,8 +15,8 @@ T = TypeVar("T", bound="GetStatusResponse200LeaderboardsMostSubmittedChartsItem"
 class GetStatusResponse200LeaderboardsMostSubmittedChartsItem(BaseModel):
     """
     Attributes:
-        agent_symbol (str):
-        chart_count (int):
+        agent_symbol (str): Symbol of the agent.
+        chart_count (int): Amount of charts done by the agent.
     """
 
     agent_symbol: str = Field(alias="agentSymbol")

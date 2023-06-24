@@ -70,11 +70,12 @@ def sync_detailed(
 ) -> Response[WarpShipResponse200]:
     """Warp Ship
 
-     Warp your ship to a target destination in another system. Warping will consume the necessary fuel
-    and supplies from the ship's manifest, and will pay out crew wages from the agent's account.
+     Warp your ship to a target destination in another system. The ship must be in orbit to use this
+    function and must have the `Warp Drive` module installed. Warping will consume the necessary fuel
+    from the ship's manifest.
 
     The returned response will detail the route information including the expected time of arrival. Most
-    ship actions are unavailable until the ship has arrived at it's destination.
+    ship actions are unavailable until the ship has arrived at its destination.
 
     Args:
         ship_symbol (str):
@@ -137,11 +138,12 @@ async def asyncio_detailed(
 ) -> Response[WarpShipResponse200]:
     """Warp Ship
 
-     Warp your ship to a target destination in another system. Warping will consume the necessary fuel
-    and supplies from the ship's manifest, and will pay out crew wages from the agent's account.
+     Warp your ship to a target destination in another system. The ship must be in orbit to use this
+    function and must have the `Warp Drive` module installed. Warping will consume the necessary fuel
+    from the ship's manifest.
 
     The returned response will detail the route information including the expected time of arrival. Most
-    ship actions are unavailable until the ship has arrived at it's destination.
+    ship actions are unavailable until the ship has arrived at its destination.
 
     Args:
         ship_symbol (str):

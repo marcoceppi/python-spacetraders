@@ -16,7 +16,7 @@ class WaypointOrbital(BaseModel):
     """An orbital is another waypoint that orbits a parent waypoint.
 
     Attributes:
-        symbol (str):
+        symbol (str): The symbol of the orbiting waypoint.
     """
 
     symbol: str = Field(alias="symbol")

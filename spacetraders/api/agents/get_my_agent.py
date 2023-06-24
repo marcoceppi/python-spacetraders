@@ -58,7 +58,7 @@ def sync_detailed(
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetMyAgentResponse200]:
-    """My Agent Details
+    """Get Agent
 
      Fetch your agent's details.
 
@@ -111,7 +111,7 @@ async def asyncio_detailed(
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetMyAgentResponse200]:
-    """My Agent Details
+    """Get Agent
 
      Fetch your agent's details.
 

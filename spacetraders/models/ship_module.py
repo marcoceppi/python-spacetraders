@@ -20,20 +20,22 @@ class ShipModule(BaseModel):
     Module installations are permanent.
 
         Attributes:
-            symbol (ShipModuleSymbol):
-            name (str):
+            symbol (ShipModuleSymbol): The symbol of the module.
+            name (str): Name of this module.
+            description (str): Description of this module.
             requirements (ShipRequirements): The requirements for installation on a ship
-            capacity (Union[Unset, int]):
-            range_ (Union[Unset, int]):
-            description (Union[Unset, str]):
+            capacity (Union[Unset, int]): Modules that provide capacity, such as cargo hold or crew quarters will show this
+                value to denote how much of a bonus the module grants.
+            range_ (Union[Unset, int]): Modules that have a range will such as a sensor array show this value to denote how
+                far can the module reach with its capabilities.
     """
 
     symbol: ShipModuleSymbol = Field(alias="symbol")
     name: str = Field(alias="name")
+    description: str = Field(alias="description")
     requirements: "ShipRequirements" = Field(alias="requirements")
     capacity: Union[Unset, int] = Field(UNSET, alias="capacity")
     range_: Union[Unset, int] = Field(UNSET, alias="range")
-    description: Union[Unset, str] = Field(UNSET, alias="description")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

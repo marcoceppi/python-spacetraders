@@ -64,13 +64,20 @@ def sync_detailed(
 ) -> Response[CreateSurveyResponse201]:
     """Create Survey
 
-     If you want to target specific yields for an extraction, you can survey a waypoint, such as an
-    asteroid field, and send the survey in the body of the extract request. Each survey may have
-    multiple deposits, and if a symbol shows up more than once, that indicates a higher chance of
-    extracting that resource.
+     Create surveys on a waypoint that can be extracted such as asteroid fields. A survey focuses on
+    specific types of deposits from the extracted location. When ships extract using this survey, they
+    are guaranteed to procure a high amount of one of the goods in the survey.
 
-    Your ship will enter a cooldown between consecutive survey requests. Surveys will eventually expire
-    after a period of time. Multiple ships can use the same survey for extraction.
+    In order to use a survey, send the entire survey details in the body of the extract request.
+
+    Each survey may have multiple deposits, and if a symbol shows up more than once, that indicates a
+    higher chance of extracting that resource.
+
+    Your ship will enter a cooldown after surveying in which it is unable to perform certain actions.
+    Surveys will eventually expire after a period of time or will be exhausted after being extracted
+    several times based on the survey's size. Multiple ships can use the same survey for extraction.
+
+    A ship must have the `Surveyor` mount installed in order to use this function.
 
     Args:
         ship_symbol (str):
@@ -128,13 +135,20 @@ async def asyncio_detailed(
 ) -> Response[CreateSurveyResponse201]:
     """Create Survey
 
-     If you want to target specific yields for an extraction, you can survey a waypoint, such as an
-    asteroid field, and send the survey in the body of the extract request. Each survey may have
-    multiple deposits, and if a symbol shows up more than once, that indicates a higher chance of
-    extracting that resource.
+     Create surveys on a waypoint that can be extracted such as asteroid fields. A survey focuses on
+    specific types of deposits from the extracted location. When ships extract using this survey, they
+    are guaranteed to procure a high amount of one of the goods in the survey.
 
-    Your ship will enter a cooldown between consecutive survey requests. Surveys will eventually expire
-    after a period of time. Multiple ships can use the same survey for extraction.
+    In order to use a survey, send the entire survey details in the body of the extract request.
+
+    Each survey may have multiple deposits, and if a symbol shows up more than once, that indicates a
+    higher chance of extracting that resource.
+
+    Your ship will enter a cooldown after surveying in which it is unable to perform certain actions.
+    Surveys will eventually expire after a period of time or will be exhausted after being extracted
+    several times based on the survey's size. Multiple ships can use the same survey for extraction.
+
+    A ship must have the `Surveyor` mount installed in order to use this function.
 
     Args:
         ship_symbol (str):

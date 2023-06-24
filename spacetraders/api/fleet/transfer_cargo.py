@@ -76,6 +76,12 @@ def sync_detailed(
 
      Transfer cargo between ships.
 
+    The receiving ship must be in the same waypoint as the transferring ship, and it must able to hold
+    the additional cargo after the transfer is complete. Both ships also must be in the same state,
+    either both are docked or both are orbiting.
+
+    The response body's cargo shows the cargo of the transferring ship after the transfer is complete.
+
     Args:
         ship_symbol (str):
         json_body (TransferCargoTransferCargoRequest):
@@ -138,6 +144,12 @@ async def asyncio_detailed(
     """Transfer Cargo
 
      Transfer cargo between ships.
+
+    The receiving ship must be in the same waypoint as the transferring ship, and it must able to hold
+    the additional cargo after the transfer is complete. Both ships also must be in the same state,
+    either both are docked or both are orbiting.
+
+    The response body's cargo shows the cargo of the transferring ship after the transfer is complete.
 
     Args:
         ship_symbol (str):

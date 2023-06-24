@@ -16,7 +16,7 @@ T = TypeVar("T", bound="GetContractResponse200")
 class GetContractResponse200(BaseModel):
     """
     Attributes:
-        data (Contract):
+        data (Contract): Contract details.
     """
 
     data: "Contract" = Field(alias="data")

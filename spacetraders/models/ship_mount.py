@@ -20,12 +20,14 @@ class ShipMount(BaseModel):
     """A mount is installed on the exterier of a ship.
 
     Attributes:
-        symbol (ShipMountSymbol):
-        name (str):
+        symbol (ShipMountSymbol): Symbo of this mount.
+        name (str): Name of this mount.
         requirements (ShipRequirements): The requirements for installation on a ship
-        description (Union[Unset, str]):
-        strength (Union[Unset, int]):
-        deposits (Union[Unset, List[ShipMountDepositsItem]]):
+        description (Union[Unset, str]): Description of this mount.
+        strength (Union[Unset, int]): Mounts that have this value, such as mining lasers, denote how powerful this
+            mount's capabilities are.
+        deposits (Union[Unset, List[ShipMountDepositsItem]]): Mounts that have this value denote what goods can be
+            produced from using the mount.
     """
 
     symbol: ShipMountSymbol = Field(alias="symbol")

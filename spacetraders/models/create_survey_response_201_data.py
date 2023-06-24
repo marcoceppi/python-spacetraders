@@ -18,7 +18,7 @@ class CreateSurveyResponse201Data(BaseModel):
     """
     Attributes:
         cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
-        surveys (List['Survey']):
+        surveys (List['Survey']): Surveys created by this action.
     """
 
     cooldown: "Cooldown" = Field(alias="cooldown")

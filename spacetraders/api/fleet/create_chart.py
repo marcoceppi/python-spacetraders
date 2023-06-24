@@ -64,12 +64,13 @@ def sync_detailed(
 ) -> Response[CreateChartResponse201]:
     """Create Chart
 
-     Command a ship to chart the current waypoint.
+     Command a ship to chart the waypoint at its current location.
 
-    Waypoints in the universe are uncharted by default. These locations will not show up in the API
+    Most waypoints in the universe are uncharted by default. These waypoints have their traits hidden
     until they have been charted by a ship.
 
-    Charting a location will record your agent as the one who created the chart.
+    Charting a waypoint will record your agent as the one who created the chart, and all other agents
+    would also be able to see the waypoint's traits.
 
     Args:
         ship_symbol (str):
@@ -127,12 +128,13 @@ async def asyncio_detailed(
 ) -> Response[CreateChartResponse201]:
     """Create Chart
 
-     Command a ship to chart the current waypoint.
+     Command a ship to chart the waypoint at its current location.
 
-    Waypoints in the universe are uncharted by default. These locations will not show up in the API
+    Most waypoints in the universe are uncharted by default. These waypoints have their traits hidden
     until they have been charted by a ship.
 
-    Charting a location will record your agent as the one who created the chart.
+    Charting a waypoint will record your agent as the one who created the chart, and all other agents
+    would also be able to see the waypoint's traits.
 
     Args:
         ship_symbol (str):

@@ -66,7 +66,10 @@ def sync_detailed(
 ) -> Response[GetJumpGateResponse200]:
     """Get Jump Gate
 
-     Get jump gate details for a waypoint.
+     Get jump gate details for a waypoint. Requires a waypoint of type `JUMP_GATE` to use.
+
+    The response will return all systems that are have a Jump Gate in range of this Jump Gate. Those
+    systems can be jumped to from this Jump Gate.
 
     Args:
         system_symbol (str):
@@ -127,7 +130,10 @@ async def asyncio_detailed(
 ) -> Response[GetJumpGateResponse200]:
     """Get Jump Gate
 
-     Get jump gate details for a waypoint.
+     Get jump gate details for a waypoint. Requires a waypoint of type `JUMP_GATE` to use.
+
+    The response will return all systems that are have a Jump Gate in range of this Jump Gate. Those
+    systems can be jumped to from this Jump Gate.
 
     Args:
         system_symbol (str):

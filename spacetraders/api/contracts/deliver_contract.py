@@ -68,9 +68,15 @@ def sync_detailed(
     raise_on_error: Optional[bool] = None,
     **json_body: DeliverContractJsonBody,
 ) -> Response[DeliverContractResponse200]:
-    """Deliver Contract
+    """Deliver Cargo to Contract
 
-     Deliver cargo on a given contract.
+     Deliver cargo to a contract.
+
+    In order to use this API, a ship must be at the delivery location (denoted in the delivery terms as
+    `destinationSymbol` of a contract) and must have a number of units of a good required by this
+    contract in its cargo.
+
+    Cargo that was delivered will be removed from the ship's cargo.
 
     Args:
         contract_id (str):
@@ -131,9 +137,15 @@ async def asyncio_detailed(
     raise_on_error: Optional[bool] = None,
     **json_body: DeliverContractJsonBody,
 ) -> Response[DeliverContractResponse200]:
-    """Deliver Contract
+    """Deliver Cargo to Contract
 
-     Deliver cargo on a given contract.
+     Deliver cargo to a contract.
+
+    In order to use this API, a ship must be at the delivery location (denoted in the delivery terms as
+    `destinationSymbol` of a contract) and must have a number of units of a good required by this
+    contract in its cargo.
+
+    Cargo that was delivered will be removed from the ship's cargo.
 
     Args:
         contract_id (str):

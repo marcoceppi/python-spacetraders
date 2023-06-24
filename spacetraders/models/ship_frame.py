@@ -21,12 +21,15 @@ class ShipFrame(BaseModel):
     maneuverable.
 
         Attributes:
-            symbol (ShipFrameSymbol):
-            name (str):
-            description (str):
-            module_slots (int):
-            mounting_points (int):
-            fuel_capacity (int):
+            symbol (ShipFrameSymbol): Symbol of the frame.
+            name (str): Name of the frame.
+            description (str): Description of the frame.
+            module_slots (int): The amount of slots that can be dedicated to modules installed in the ship. Each installed
+                module take up a number of slots, and once there are no more slots, no new modules can be installed.
+            mounting_points (int): The amount of slots that can be dedicated to mounts installed in the ship. Each installed
+                mount takes up a number of points, and once there are no more points remaining, no new mounts can be installed.
+            fuel_capacity (int): The maximum amount of fuel that can be stored in this ship. When refueling, the ship will
+                be refueled to this amount.
             requirements (ShipRequirements): The requirements for installation on a ship
             condition (Union[Unset, int]): Condition is a range of 0 to 100 where 0 is completely worn out and 100 is brand
                 new.

@@ -21,8 +21,9 @@ T = TypeVar("T", bound="GetStatusResponse200Leaderboards")
 class GetStatusResponse200Leaderboards(BaseModel):
     """
     Attributes:
-        most_credits (List['GetStatusResponse200LeaderboardsMostCreditsItem']):
-        most_submitted_charts (List['GetStatusResponse200LeaderboardsMostSubmittedChartsItem']):
+        most_credits (List['GetStatusResponse200LeaderboardsMostCreditsItem']): Top agents with the most credits.
+        most_submitted_charts (List['GetStatusResponse200LeaderboardsMostSubmittedChartsItem']): Top agents with the
+            most charted submitted.
     """
 
     most_credits: List["GetStatusResponse200LeaderboardsMostCreditsItem"] = Field(

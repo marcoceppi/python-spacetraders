@@ -16,10 +16,10 @@ T = TypeVar("T", bound="SystemWaypoint")
 class SystemWaypoint(BaseModel):
     """
     Attributes:
-        symbol (str):
+        symbol (str): The symbol of the waypoint.
         type (WaypointType): The type of waypoint.
-        x (int):
-        y (int):
+        x (int): Position in the universe in the x axis.
+        y (int): Position in the universe in the y axis.
     """
 
     symbol: str = Field(alias="symbol")

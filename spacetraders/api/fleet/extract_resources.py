@@ -70,8 +70,12 @@ def sync_detailed(
 ) -> Response[ExtractResourcesResponse201]:
     """Extract Resources
 
-     Extract resources from the waypoint into your ship. Send an optional survey as the payload to target
-    specific yields.
+     Extract resources from a waypoint that can be extracted, such as asteroid fields, into your ship.
+    Send an optional survey as the payload to target specific yields.
+
+    The ship must be in orbit to be able to extract and must have mining equipments installed that can
+    extract goods, such as the `Gas Siphon` mount for gas-based goods or `Mining Laser` mount for ore-
+    based goods.
 
     Args:
         ship_symbol (str):
@@ -134,8 +138,12 @@ async def asyncio_detailed(
 ) -> Response[ExtractResourcesResponse201]:
     """Extract Resources
 
-     Extract resources from the waypoint into your ship. Send an optional survey as the payload to target
-    specific yields.
+     Extract resources from a waypoint that can be extracted, such as asteroid fields, into your ship.
+    Send an optional survey as the payload to target specific yields.
+
+    The ship must be in orbit to be able to extract and must have mining equipments installed that can
+    extract goods, such as the `Gas Siphon` mount for gas-based goods or `Mining Laser` mount for ore-
+    based goods.
 
     Args:
         ship_symbol (str):

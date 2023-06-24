@@ -16,7 +16,7 @@ class ScannedShipFrame(BaseModel):
     """The frame of the ship.
 
     Attributes:
-        symbol (str):
+        symbol (str): The symbol of the frame.
     """
 
     symbol: str = Field(alias="symbol")

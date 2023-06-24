@@ -14,11 +14,12 @@ T = TypeVar("T", bound="TradeGood")
 
 
 class TradeGood(BaseModel):
-    """
+    """A good that can be traded for other goods or currency.
+
     Attributes:
-        symbol (TradeSymbol):
-        name (str):
-        description (str):
+        symbol (TradeSymbol): The good's symbol.
+        name (str): The name of the good.
+        description (str): The description of the good.
     """
 
     symbol: TradeSymbol = Field(alias="symbol")

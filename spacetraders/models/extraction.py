@@ -14,10 +14,11 @@ T = TypeVar("T", bound="Extraction")
 
 
 class Extraction(BaseModel):
-    """
+    """Extraction details.
+
     Attributes:
-        ship_symbol (str):
-        yield_ (ExtractionYield):
+        ship_symbol (str): Symbol of the ship that executed the extraction.
+        yield_ (ExtractionYield): A yield from the extraction operation.
     """
 
     ship_symbol: str = Field(alias="shipSymbol")

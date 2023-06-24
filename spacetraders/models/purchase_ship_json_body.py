@@ -16,7 +16,7 @@ T = TypeVar("T", bound="PurchaseShipJsonBody")
 class PurchaseShipJsonBody(BaseModel):
     """
     Attributes:
-        ship_type (ShipType):
+        ship_type (ShipType): Type of ship
         waypoint_symbol (str): The symbol of the waypoint you want to purchase the ship at.
     """
 

@@ -70,7 +70,8 @@ def sync_detailed(
 ) -> Response[SellCargoSellCargo201Response]:
     """Sell Cargo
 
-     Sell cargo.
+     Sell cargo in your ship to a market that trades this cargo. The ship must be docked in a waypoint
+    that has the `Marketplace` trait in order to use this function.
 
     Args:
         ship_symbol (str):
@@ -133,7 +134,8 @@ async def asyncio_detailed(
 ) -> Response[SellCargoSellCargo201Response]:
     """Sell Cargo
 
-     Sell cargo.
+     Sell cargo in your ship to a market that trades this cargo. The ship must be docked in a waypoint
+    that has the `Marketplace` trait in order to use this function.
 
     Args:
         ship_symbol (str):

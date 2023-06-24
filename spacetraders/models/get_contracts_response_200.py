@@ -18,7 +18,7 @@ class GetContractsResponse200(BaseModel):
     """
     Attributes:
         data (List['Contract']):
-        meta (Meta):
+        meta (Meta): Meta details for pagination.
     """
 
     data: List["Contract"] = Field(alias="data")

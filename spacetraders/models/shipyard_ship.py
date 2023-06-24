@@ -33,7 +33,7 @@ class ShipyardShip(BaseModel):
         engine (ShipEngine): The engine determines how quickly a ship travels between waypoints.
         modules (List['ShipModule']):
         mounts (List['ShipMount']):
-        type (Union[Unset, ShipType]):
+        type (Union[Unset, ShipType]): Type of ship
     """
 
     name: str = Field(alias="name")

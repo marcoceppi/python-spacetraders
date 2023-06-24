@@ -5,14 +5,14 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ... import errors
-from ...client import Client
+from ...client import AuthenticatedClient, Client
 from ...models.get_status_response_200 import GetStatusResponse200
 from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
 ) -> Dict[str, Any]:
     url = "{}/".format(_client.base_url)
 
@@ -55,12 +55,14 @@ def _build_response(
 
 def sync_detailed(
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetStatusResponse200]:
     """Get Status
 
      Return the status of the game server.
+    This also includes a few global elements, such as announcements, server reset dates and
+    leaderboards.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -108,12 +110,14 @@ def sync_detailed(
 
 async def asyncio_detailed(
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
 ) -> Response[GetStatusResponse200]:
     """Get Status
 
      Return the status of the game server.
+    This also includes a few global elements, such as announcements, server reset dates and
+    leaderboards.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

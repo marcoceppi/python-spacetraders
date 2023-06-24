@@ -14,8 +14,8 @@ def _get_kwargs(
     system_symbol: str,
     *,
     _client: AuthenticatedClient,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
+    page: Union[Unset, None, int] = 1,
+    limit: Union[Unset, None, int] = 10,
 ) -> Dict[str, Any]:
     url = "{}/systems/{systemSymbol}/waypoints".format(
         _client.base_url, systemSymbol=system_symbol
@@ -71,18 +71,19 @@ def sync_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
+    page: Union[Unset, None, int] = 1,
+    limit: Union[Unset, None, int] = 10,
 ) -> Response[GetSystemWaypointsResponse200]:
-    """List Waypoints
+    """List Waypoints in System
 
-     Fetch all of the waypoints for a given system. System must be charted or a ship must be present to
-    return waypoint details.
+     Return a paginated list of all of the waypoints for a given system.
+
+    If a waypoint is uncharted, it will return the `Uncharted` trait instead of its actual traits.
 
     Args:
         system_symbol (str):
-        page (Union[Unset, None, int]):
-        limit (Union[Unset, None, int]):
+        page (Union[Unset, None, int]):  Default: 1.
+        limit (Union[Unset, None, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -136,18 +137,19 @@ async def asyncio_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
+    page: Union[Unset, None, int] = 1,
+    limit: Union[Unset, None, int] = 10,
 ) -> Response[GetSystemWaypointsResponse200]:
-    """List Waypoints
+    """List Waypoints in System
 
-     Fetch all of the waypoints for a given system. System must be charted or a ship must be present to
-    return waypoint details.
+     Return a paginated list of all of the waypoints for a given system.
+
+    If a waypoint is uncharted, it will return the `Uncharted` trait instead of its actual traits.
 
     Args:
         system_symbol (str):
-        page (Union[Unset, None, int]):
-        limit (Union[Unset, None, int]):
+        page (Union[Unset, None, int]):  Default: 1.
+        limit (Union[Unset, None, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

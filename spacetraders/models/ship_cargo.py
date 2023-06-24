@@ -14,7 +14,8 @@ T = TypeVar("T", bound="ShipCargo")
 
 
 class ShipCargo(BaseModel):
-    """
+    """Ship cargo details.
+
     Attributes:
         capacity (int): The max number of items that can be stored in the cargo hold.
         units (int): The number of items currently stored in the cargo hold.

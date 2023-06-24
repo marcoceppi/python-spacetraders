@@ -18,7 +18,7 @@ class GetSystemsResponse200(BaseModel):
     """
     Attributes:
         data (List['System']):
-        meta (Meta):
+        meta (Meta): Meta details for pagination.
     """
 
     data: List["System"] = Field(alias="data")

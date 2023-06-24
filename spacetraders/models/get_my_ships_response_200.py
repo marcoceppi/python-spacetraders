@@ -18,7 +18,7 @@ class GetMyShipsResponse200(BaseModel):
     """
     Attributes:
         data (List['Ship']):
-        meta (Meta):
+        meta (Meta): Meta details for pagination.
     """
 
     data: List["Ship"] = Field(alias="data")

@@ -66,9 +66,12 @@ def sync_detailed(
 ) -> Response[GetMarketResponse200]:
     """Get Market
 
-     Retrieve imports, exports and exchange data from a marketplace. Imports can be sold, exports can be
-    purchased, and exchange goods can be purchased or sold. Send a ship to the waypoint to access trade
-    good prices and recent transactions.
+     Retrieve imports, exports and exchange data from a marketplace. Requires a waypoint that has the
+    `Marketplace` trait to use.
+
+    Send a ship to the waypoint to access trade good prices and recent transactions. Refer to the
+    [Market Overview page](https://docs.spacetraders.io/game-concepts/markets) to gain better a
+    understanding of the market in the game.
 
     Args:
         system_symbol (str):
@@ -129,9 +132,12 @@ async def asyncio_detailed(
 ) -> Response[GetMarketResponse200]:
     """Get Market
 
-     Retrieve imports, exports and exchange data from a marketplace. Imports can be sold, exports can be
-    purchased, and exchange goods can be purchased or sold. Send a ship to the waypoint to access trade
-    good prices and recent transactions.
+     Retrieve imports, exports and exchange data from a marketplace. Requires a waypoint that has the
+    `Marketplace` trait to use.
+
+    Send a ship to the waypoint to access trade good prices and recent transactions. Refer to the
+    [Market Overview page](https://docs.spacetraders.io/game-concepts/markets) to gain better a
+    understanding of the market in the game.
 
     Args:
         system_symbol (str):

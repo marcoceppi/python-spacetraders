@@ -17,12 +17,12 @@ T = TypeVar("T", bound="ConnectedSystem")
 class ConnectedSystem(BaseModel):
     """
     Attributes:
-        symbol (str):
-        sector_symbol (str):
+        symbol (str): The symbol of the system.
+        sector_symbol (str): The sector of this system.
         type (SystemType): The type of waypoint.
-        x (int):
-        y (int):
-        distance (int):
+        x (int): Position in the universe in the x axis.
+        y (int): Position in the universe in the y axis.
+        distance (int): The distance of this system to the connected Jump Gate.
         faction_symbol (Union[Unset, str]): The symbol of the faction that owns the connected jump gate in the system.
     """
 

@@ -13,10 +13,11 @@ T = TypeVar("T", bound="Agent")
 
 
 class Agent(BaseModel):
-    """
+    """Agent details.
+
     Attributes:
-        account_id (str):
-        symbol (str):
+        account_id (str): Account ID that is tied to this agent.
+        symbol (str): Symbol of the agent.
         headquarters (str): The headquarters of the agent.
         credits_ (int): The number of credits the agent has available. Credits can be negative if funds have been
             overdrawn.

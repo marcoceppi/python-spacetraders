@@ -74,7 +74,15 @@ def sync_detailed(
 ) -> Response[PurchaseCargoPurchaseCargo201Response]:
     """Purchase Cargo
 
-     Purchase cargo.
+     Purchase cargo from a market.
+
+    The ship must be docked in a waypoint that has `Marketplace` trait, and the market must be selling a
+    good to be able to purchase it.
+
+    The maximum amount of units of a good that can be purchased in each transaction are denoted by the
+    `tradeVolume` value of the good, which can be viewed by using the Get Market action.
+
+    Purchased goods are added to the ship's cargo hold.
 
     Args:
         ship_symbol (str):
@@ -137,7 +145,15 @@ async def asyncio_detailed(
 ) -> Response[PurchaseCargoPurchaseCargo201Response]:
     """Purchase Cargo
 
-     Purchase cargo.
+     Purchase cargo from a market.
+
+    The ship must be docked in a waypoint that has `Marketplace` trait, and the market must be selling a
+    good to be able to purchase it.
+
+    The maximum amount of units of a good that can be purchased in each transaction are denoted by the
+    `tradeVolume` value of the good, which can be viewed by using the Get Market action.
+
+    Purchased goods are added to the ship's cargo hold.
 
     Args:
         ship_symbol (str):

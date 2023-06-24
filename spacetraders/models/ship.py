@@ -23,10 +23,10 @@ T = TypeVar("T", bound="Ship")
 
 
 class Ship(BaseModel):
-    """A ship
+    """Ship details.
 
     Attributes:
-        symbol (str): The globally unique identifier of the ship in the following format: `[AGENT_SYMBOL]_[HEX_ID]`
+        symbol (str): The globally unique identifier of the ship in the following format: `[AGENT_SYMBOL]-[HEX_ID]`
         registration (ShipRegistration): The public registration information of the ship
         nav (ShipNav): The navigation information of the ship.
         crew (ShipCrew): The ship's crew service and maintain the ship's systems and equipment.
@@ -36,9 +36,9 @@ class Ship(BaseModel):
         reactor (ShipReactor): The reactor of the ship. The reactor is responsible for powering the ship's systems and
             weapons.
         engine (ShipEngine): The engine determines how quickly a ship travels between waypoints.
-        modules (List['ShipModule']):
-        mounts (List['ShipMount']):
-        cargo (ShipCargo):
+        modules (List['ShipModule']): Modules installed in this ship.
+        mounts (List['ShipMount']): Mounts installed in this ship.
+        cargo (ShipCargo): Ship cargo details.
         fuel (ShipFuel): Details of the ship's fuel tanks including how much fuel was consumed during the last transit
             or action.
     """

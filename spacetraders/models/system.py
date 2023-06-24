@@ -18,13 +18,13 @@ T = TypeVar("T", bound="System")
 class System(BaseModel):
     """
     Attributes:
-        symbol (str):
-        sector_symbol (str):
+        symbol (str): The symbol of the system.
+        sector_symbol (str): The symbol of the sector.
         type (SystemType): The type of waypoint.
-        x (int):
-        y (int):
-        waypoints (List['SystemWaypoint']):
-        factions (List['SystemFaction']):
+        x (int): Position in the universe in the x axis.
+        y (int): Position in the universe in the y axis.
+        waypoints (List['SystemWaypoint']): Waypoints in this system.
+        factions (List['SystemFaction']): Factions that control this system.
     """
 
     symbol: str = Field(alias="symbol")

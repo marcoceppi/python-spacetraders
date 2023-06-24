@@ -68,6 +68,8 @@ def sync_detailed(
 
      View the details of a waypoint.
 
+    If the waypoint is uncharted, it will return the 'Uncharted' trait instead of its actual traits.
+
     Args:
         system_symbol (str):
         waypoint_symbol (str):
@@ -128,6 +130,8 @@ async def asyncio_detailed(
     """Get Waypoint
 
      View the details of a waypoint.
+
+    If the waypoint is uncharted, it will return the 'Uncharted' trait instead of its actual traits.
 
     Args:
         system_symbol (str):

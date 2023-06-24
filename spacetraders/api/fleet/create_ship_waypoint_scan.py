@@ -66,7 +66,14 @@ def sync_detailed(
 ) -> Response[CreateShipWaypointScanResponse201]:
     """Scan Waypoints
 
-     Activate your ship's sensor arrays to scan for waypoint information.
+     Scan for nearby waypoints, retrieving detailed information on each waypoint in range. Scanning
+    uncharted waypoints will allow you to ignore their uncharted state and will list the waypoints'
+    traits.
+
+    Requires a ship to have the `Sensor Array` mount installed to use.
+
+    The ship will enter a cooldown after using this function, during which it cannot execute certain
+    actions.
 
     Args:
         ship_symbol (str):
@@ -124,7 +131,14 @@ async def asyncio_detailed(
 ) -> Response[CreateShipWaypointScanResponse201]:
     """Scan Waypoints
 
-     Activate your ship's sensor arrays to scan for waypoint information.
+     Scan for nearby waypoints, retrieving detailed information on each waypoint in range. Scanning
+    uncharted waypoints will allow you to ignore their uncharted state and will list the waypoints'
+    traits.
+
+    Requires a ship to have the `Sensor Array` mount installed to use.
+
+    The ship will enter a cooldown after using this function, during which it cannot execute certain
+    actions.
 
     Args:
         ship_symbol (str):

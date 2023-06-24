@@ -15,7 +15,8 @@ T = TypeVar("T", bound="MarketTransaction")
 
 
 class MarketTransaction(BaseModel):
-    """
+    """Result of a transaction with a market.
+
     Attributes:
         waypoint_symbol (str): The symbol of the waypoint where the transaction took place.
         ship_symbol (str): The symbol of the ship that made the transaction.

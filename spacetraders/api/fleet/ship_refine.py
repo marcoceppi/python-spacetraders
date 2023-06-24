@@ -7,8 +7,8 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.ship_refine_json_body import ShipRefineJsonBody
-from ...models.ship_refine_ship_refine_200_response import (
-    ShipRefineShipRefine200Response,
+from ...models.ship_refine_ship_refine_201_response import (
+    ShipRefineShipRefine201Response,
 )
 from ...types import ApiError, Error, Response
 
@@ -41,11 +41,11 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Client, response: httpx.Response
-) -> Optional[ShipRefineShipRefine200Response]:
-    if response.status_code == HTTPStatus.OK:
-        response_200 = ShipRefineShipRefine200Response(**response.json())
+) -> Optional[ShipRefineShipRefine201Response]:
+    if response.status_code == HTTPStatus.CREATED:
+        response_201 = ShipRefineShipRefine201Response(**response.json())
 
-        return response_200
+        return response_201
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -54,7 +54,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Client, response: httpx.Response
-) -> Response[ShipRefineShipRefine200Response]:
+) -> Response[ShipRefineShipRefine201Response]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -69,11 +69,14 @@ def sync_detailed(
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
     **json_body: ShipRefineJsonBody,
-) -> Response[ShipRefineShipRefine200Response]:
+) -> Response[ShipRefineShipRefine201Response]:
     """Ship Refine
 
      Attempt to refine the raw materials on your ship. The request will only succeed if your ship is
-    capable of refining at the time of the request.
+    capable of refining at the time of the request. In order to be able to refine, a ship must have
+    goods that can be refined and have installed a `Refinery` module that can refine it.
+
+    When refining, 30 basic goods will be converted into 10 processed goods.
 
     Args:
         ship_symbol (str):
@@ -84,7 +87,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ShipRefineShipRefine200Response]
+        Response[ShipRefineShipRefine201Response]
     """
 
     json_body = ShipRefineJsonBody.parse_obj(json_body)
@@ -133,11 +136,14 @@ async def asyncio_detailed(
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
     **json_body: ShipRefineJsonBody,
-) -> Response[ShipRefineShipRefine200Response]:
+) -> Response[ShipRefineShipRefine201Response]:
     """Ship Refine
 
      Attempt to refine the raw materials on your ship. The request will only succeed if your ship is
-    capable of refining at the time of the request.
+    capable of refining at the time of the request. In order to be able to refine, a ship must have
+    goods that can be refined and have installed a `Refinery` module that can refine it.
+
+    When refining, 30 basic goods will be converted into 10 processed goods.
 
     Args:
         ship_symbol (str):
@@ -148,7 +154,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ShipRefineShipRefine200Response]
+        Response[ShipRefineShipRefine201Response]
     """
 
     json_body = ShipRefineJsonBody.parse_obj(json_body)

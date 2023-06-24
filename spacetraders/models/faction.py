@@ -7,6 +7,7 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
+from ..models.faction_symbols import FactionSymbols
 from ..models.faction_trait import FactionTrait
 from ..types import Unset
 
@@ -14,17 +15,18 @@ T = TypeVar("T", bound="Faction")
 
 
 class Faction(BaseModel):
-    """
+    """Faction details.
+
     Attributes:
-        symbol (str):
-        name (str):
-        description (str):
-        headquarters (str):
-        traits (List['FactionTrait']):
+        symbol (FactionSymbols): The symbol of the faction.
+        name (str): Name of the faction.
+        description (str): Description of the faction.
+        headquarters (str): The waypoint in which the faction's HQ is located in.
+        traits (List['FactionTrait']): List of traits that define this faction.
         is_recruiting (bool): Whether or not the faction is currently recruiting new agents.
     """
 
-    symbol: str = Field(alias="symbol")
+    symbol: FactionSymbols = Field(alias="symbol")
     name: str = Field(alias="name")
     description: str = Field(alias="description")
     headquarters: str = Field(alias="headquarters")

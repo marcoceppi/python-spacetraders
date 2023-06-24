@@ -22,14 +22,14 @@ class Waypoint(BaseModel):
     """A waypoint is a location that ships can travel to such as a Planet, Moon or Space Station.
 
     Attributes:
-        symbol (str):
+        symbol (str): Symbol fo the waypoint.
         type (WaypointType): The type of waypoint.
-        system_symbol (str):
-        x (int):
-        y (int):
-        orbitals (List['WaypointOrbital']):
+        system_symbol (str): The symbol of the system this waypoint belongs to.
+        x (int): Position in the universe in the x axis.
+        y (int): Position in the universe in the Y axis.
+        orbitals (List['WaypointOrbital']): Waypoints that orbit this waypoint.
         traits (List['WaypointTrait']): The traits of the waypoint.
-        faction (Union[Unset, WaypointFaction]):
+        faction (Union[Unset, WaypointFaction]): The faction that controls the waypoint.
         chart (Union[Unset, Chart]): The chart of a system or waypoint, which makes the location visible to other
             agents.
     """

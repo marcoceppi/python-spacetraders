@@ -5,16 +5,16 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ... import errors
-from ...client import Client
+from ...client import AuthenticatedClient, Client
 from ...models.get_factions_response_200 import GetFactionsResponse200
 from ...types import UNSET, ApiError, Error, Response, Unset
 
 
 def _get_kwargs(
     *,
-    _client: Client,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
+    _client: AuthenticatedClient,
+    page: Union[Unset, None, int] = 1,
+    limit: Union[Unset, None, int] = 10,
 ) -> Dict[str, Any]:
     url = "{}/factions".format(_client.base_url)
 
@@ -65,18 +65,18 @@ def _build_response(
 
 def sync_detailed(
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
+    page: Union[Unset, None, int] = 1,
+    limit: Union[Unset, None, int] = 10,
 ) -> Response[GetFactionsResponse200]:
     """List Factions
 
-     List all discovered factions in the game.
+     Return a paginated list of all the factions in the game.
 
     Args:
-        page (Union[Unset, None, int]):
-        limit (Union[Unset, None, int]):
+        page (Union[Unset, None, int]):  Default: 1.
+        limit (Union[Unset, None, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -126,18 +126,18 @@ def sync_detailed(
 
 async def asyncio_detailed(
     *,
-    _client: Client,
+    _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
+    page: Union[Unset, None, int] = 1,
+    limit: Union[Unset, None, int] = 10,
 ) -> Response[GetFactionsResponse200]:
     """List Factions
 
-     List all discovered factions in the game.
+     Return a paginated list of all the factions in the game.
 
     Args:
-        page (Union[Unset, None, int]):
-        limit (Union[Unset, None, int]):
+        page (Union[Unset, None, int]):  Default: 1.
+        limit (Union[Unset, None, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

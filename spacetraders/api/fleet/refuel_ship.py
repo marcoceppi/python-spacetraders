@@ -6,6 +6,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.refuel_ship_json_body import RefuelShipJsonBody
 from ...models.refuel_ship_response_200 import RefuelShipResponse200
 from ...types import ApiError, Error, Response
 
@@ -14,6 +15,7 @@ def _get_kwargs(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
+    json_body: RefuelShipJsonBody,
 ) -> Dict[str, Any]:
     url = "{}/my/ships/{shipSymbol}/refuel".format(
         _client.base_url, shipSymbol=ship_symbol
@@ -22,6 +24,8 @@ def _get_kwargs(
     headers: Dict[str, str] = _client.get_headers()
     cookies: Dict[str, Any] = _client.get_cookies()
 
+    json_json_body = json_body.dict(by_alias=True)
+
     return {
         "method": "post",
         "url": url,
@@ -29,6 +33,7 @@ def _get_kwargs(
         "cookies": cookies,
         "timeout": _client.get_timeout(),
         "follow_redirects": _client.follow_redirects,
+        "json": json_json_body,
     }
 
 
@@ -61,13 +66,22 @@ def sync_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
+    **json_body: RefuelShipJsonBody,
 ) -> Response[RefuelShipResponse200]:
     """Refuel Ship
 
-     Refuel your ship from the local market.
+     Refuel your ship by buying fuel from the local market.
+
+    Requires the ship to be docked in a waypoint that has the `Marketplace` trait, and the market must
+    be selling fuel in order to refuel.
+
+    Each fuel bought from the market replenishes 100 units in your ship's fuel.
+
+    Ships will always be refuel to their frame's maximum fuel capacity when using this action.
 
     Args:
         ship_symbol (str):
+        json_body (RefuelShipJsonBody):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -77,9 +91,12 @@ def sync_detailed(
         Response[RefuelShipResponse200]
     """
 
+    json_body = RefuelShipJsonBody.parse_obj(json_body)
+
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,
         _client=_client,
+        json_body=json_body,
     )
 
     response = httpx.request(
@@ -119,13 +136,22 @@ async def asyncio_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
+    **json_body: RefuelShipJsonBody,
 ) -> Response[RefuelShipResponse200]:
     """Refuel Ship
 
-     Refuel your ship from the local market.
+     Refuel your ship by buying fuel from the local market.
+
+    Requires the ship to be docked in a waypoint that has the `Marketplace` trait, and the market must
+    be selling fuel in order to refuel.
+
+    Each fuel bought from the market replenishes 100 units in your ship's fuel.
+
+    Ships will always be refuel to their frame's maximum fuel capacity when using this action.
 
     Args:
         ship_symbol (str):
+        json_body (RefuelShipJsonBody):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -135,9 +161,12 @@ async def asyncio_detailed(
         Response[RefuelShipResponse200]
     """
 
+    json_body = RefuelShipJsonBody.parse_obj(json_body)
+
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,
         _client=_client,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:

@@ -19,17 +19,17 @@ T = TypeVar("T", bound="ScannedWaypoint")
 
 
 class ScannedWaypoint(BaseModel):
-    """A waypoint is a location that ships can travel to such as a Planet, Moon or Space Station.
+    """A waypoint that was scanned by a ship.
 
     Attributes:
-        symbol (str):
+        symbol (str): Symbol of the waypoint.
         type (WaypointType): The type of waypoint.
-        system_symbol (str):
-        x (int):
-        y (int):
-        orbitals (List['WaypointOrbital']):
+        system_symbol (str): Symbol of the system.
+        x (int): Position in the universe in the x axis.
+        y (int): Position in the universe in the y axis.
+        orbitals (List['WaypointOrbital']): List of waypoints that orbit this waypoint.
         traits (List['WaypointTrait']): The traits of the waypoint.
-        faction (Union[Unset, WaypointFaction]):
+        faction (Union[Unset, WaypointFaction]): The faction that controls the waypoint.
         chart (Union[Unset, Chart]): The chart of a system or waypoint, which makes the location visible to other
             agents.
     """

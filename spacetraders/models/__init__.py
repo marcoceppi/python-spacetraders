@@ -36,6 +36,7 @@ from .extract_resources_response_201_data import ExtractResourcesResponse201Data
 from .extraction import Extraction
 from .extraction_yield import ExtractionYield
 from .faction import Faction
+from .faction_symbols import FactionSymbols
 from .faction_trait import FactionTrait
 from .faction_trait_symbol import FactionTraitSymbol
 from .fulfill_contract_response_200 import FulfillContractResponse200
@@ -78,9 +79,6 @@ from .install_mount_install_mount_201_response import (
 from .install_mount_install_mount_201_response_data import (
     InstallMountInstallMount201ResponseData,
 )
-from .install_mount_install_mount_201_response_data_transaction import (
-    InstallMountInstallMount201ResponseDataTransaction,
-)
 from .install_mount_install_mount_request import InstallMountInstallMountRequest
 from .jettison_json_body import JettisonJsonBody
 from .jettison_response_200 import JettisonResponse200
@@ -118,6 +116,7 @@ from .purchase_cargo_purchase_cargo_request import PurchaseCargoPurchaseCargoReq
 from .purchase_ship_json_body import PurchaseShipJsonBody
 from .purchase_ship_response_201 import PurchaseShipResponse201
 from .purchase_ship_response_201_data import PurchaseShipResponse201Data
+from .refuel_ship_json_body import RefuelShipJsonBody
 from .refuel_ship_response_200 import RefuelShipResponse200
 from .refuel_ship_response_200_data import RefuelShipResponse200Data
 from .register_json_body import RegisterJsonBody
@@ -126,9 +125,6 @@ from .register_response_201_data import RegisterResponse201Data
 from .remove_mount_remove_mount_201_response import RemoveMountRemoveMount201Response
 from .remove_mount_remove_mount_201_response_data import (
     RemoveMountRemoveMount201ResponseData,
-)
-from .remove_mount_remove_mount_201_response_data_transaction import (
-    RemoveMountRemoveMount201ResponseDataTransaction,
 )
 from .remove_mount_remove_mount_request import RemoveMountRemoveMountRequest
 from .scanned_ship import ScannedShip
@@ -152,6 +148,7 @@ from .ship_frame import ShipFrame
 from .ship_frame_symbol import ShipFrameSymbol
 from .ship_fuel import ShipFuel
 from .ship_fuel_consumed import ShipFuelConsumed
+from .ship_modification_transaction import ShipModificationTransaction
 from .ship_module import ShipModule
 from .ship_module_symbol import ShipModuleSymbol
 from .ship_mount import ShipMount
@@ -166,15 +163,15 @@ from .ship_reactor import ShipReactor
 from .ship_reactor_symbol import ShipReactorSymbol
 from .ship_refine_json_body import ShipRefineJsonBody
 from .ship_refine_json_body_produce import ShipRefineJsonBodyProduce
-from .ship_refine_ship_refine_200_response import ShipRefineShipRefine200Response
-from .ship_refine_ship_refine_200_response_data import (
-    ShipRefineShipRefine200ResponseData,
+from .ship_refine_ship_refine_201_response import ShipRefineShipRefine201Response
+from .ship_refine_ship_refine_201_response_data import (
+    ShipRefineShipRefine201ResponseData,
 )
-from .ship_refine_ship_refine_200_response_data_consumed_item import (
-    ShipRefineShipRefine200ResponseDataConsumedItem,
+from .ship_refine_ship_refine_201_response_data_consumed_item import (
+    ShipRefineShipRefine201ResponseDataConsumedItem,
 )
-from .ship_refine_ship_refine_200_response_data_produced_item import (
-    ShipRefineShipRefine200ResponseDataProducedItem,
+from .ship_refine_ship_refine_201_response_data_produced_item import (
+    ShipRefineShipRefine201ResponseDataProducedItem,
 )
 from .ship_registration import ShipRegistration
 from .ship_requirements import ShipRequirements
@@ -243,6 +240,7 @@ __all__ = (
     "ExtractResourcesResponse201",
     "ExtractResourcesResponse201Data",
     "Faction",
+    "FactionSymbols",
     "FactionTrait",
     "FactionTraitSymbol",
     "FulfillContractResponse200",
@@ -275,7 +273,6 @@ __all__ = (
     "GetWaypointResponse200",
     "InstallMountInstallMount201Response",
     "InstallMountInstallMount201ResponseData",
-    "InstallMountInstallMount201ResponseDataTransaction",
     "InstallMountInstallMountRequest",
     "JettisonJsonBody",
     "JettisonResponse200",
@@ -305,6 +302,7 @@ __all__ = (
     "PurchaseShipJsonBody",
     "PurchaseShipResponse201",
     "PurchaseShipResponse201Data",
+    "RefuelShipJsonBody",
     "RefuelShipResponse200",
     "RefuelShipResponse200Data",
     "RegisterJsonBody",
@@ -312,7 +310,6 @@ __all__ = (
     "RegisterResponse201Data",
     "RemoveMountRemoveMount201Response",
     "RemoveMountRemoveMount201ResponseData",
-    "RemoveMountRemoveMount201ResponseDataTransaction",
     "RemoveMountRemoveMountRequest",
     "ScannedShip",
     "ScannedShipEngine",
@@ -335,6 +332,7 @@ __all__ = (
     "ShipFrameSymbol",
     "ShipFuel",
     "ShipFuelConsumed",
+    "ShipModificationTransaction",
     "ShipModule",
     "ShipModuleSymbol",
     "ShipMount",
@@ -349,10 +347,10 @@ __all__ = (
     "ShipReactorSymbol",
     "ShipRefineJsonBody",
     "ShipRefineJsonBodyProduce",
-    "ShipRefineShipRefine200Response",
-    "ShipRefineShipRefine200ResponseData",
-    "ShipRefineShipRefine200ResponseDataConsumedItem",
-    "ShipRefineShipRefine200ResponseDataProducedItem",
+    "ShipRefineShipRefine201Response",
+    "ShipRefineShipRefine201ResponseData",
+    "ShipRefineShipRefine201ResponseDataConsumedItem",
+    "ShipRefineShipRefine201ResponseDataProducedItem",
     "ShipRegistration",
     "ShipRequirements",
     "ShipRole",

@@ -14,7 +14,8 @@ T = TypeVar("T", bound="ShipFuelConsumed")
 
 
 class ShipFuelConsumed(BaseModel):
-    """
+    """An object that only shows up when an action has consumed fuel in the process. Shows the fuel consumption data.
+
     Attributes:
         amount (int): The amount of fuel consumed by the most recent transit or action.
         timestamp (datetime.datetime): The time at which the fuel was consumed.

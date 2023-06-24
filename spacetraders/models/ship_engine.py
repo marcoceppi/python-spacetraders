@@ -19,10 +19,11 @@ class ShipEngine(BaseModel):
     """The engine determines how quickly a ship travels between waypoints.
 
     Attributes:
-        symbol (ShipEngineSymbol):
-        name (str):
-        description (str):
-        speed (int):
+        symbol (ShipEngineSymbol): The symbol of the engine.
+        name (str): The name of the engine.
+        description (str): The description of the engine.
+        speed (int): The speed stat of this engine. The higher the speed, the faster a ship can travel from one point to
+            another. Reduces the time of arrival when navigating the ship.
         requirements (ShipRequirements): The requirements for installation on a ship
         condition (Union[Unset, int]): Condition is a range of 0 to 100 where 0 is completely worn out and 100 is brand
             new.

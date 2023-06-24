@@ -17,7 +17,7 @@ T = TypeVar("T", bound="ShipyardShipTypesItem")
 class ShipyardShipTypesItem(BaseModel):
     """
     Attributes:
-        type (Union[Unset, ShipType]):
+        type (Union[Unset, ShipType]): Type of ship
     """
 
     type: Union[Unset, ShipType] = Field(UNSET, alias="type")

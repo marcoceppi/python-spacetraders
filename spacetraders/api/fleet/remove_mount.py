@@ -74,6 +74,11 @@ def sync_detailed(
 
      Remove a mount from a ship.
 
+    The ship must be docked in a waypoint that has the `Shipyard` trait, and must have the desired mount
+    that it wish to remove installed.
+
+    A removal fee will be deduced from the agent by the Shipyard.
+
     Args:
         ship_symbol (str):
         json_body (RemoveMountRemoveMountRequest):
@@ -136,6 +141,11 @@ async def asyncio_detailed(
     """Remove Mount
 
      Remove a mount from a ship.
+
+    The ship must be docked in a waypoint that has the `Shipyard` trait, and must have the desired mount
+    that it wish to remove installed.
+
+    A removal fee will be deduced from the agent by the Shipyard.
 
     Args:
         ship_symbol (str):

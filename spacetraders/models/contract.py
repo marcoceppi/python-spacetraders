@@ -17,12 +17,13 @@ T = TypeVar("T", bound="Contract")
 
 
 class Contract(BaseModel):
-    """
+    """Contract details.
+
     Attributes:
-        id (str):
+        id (str): ID of the contract.
         faction_symbol (str): The symbol of the faction that this contract is for.
-        type (ContractType):
-        terms (ContractTerms):
+        type (ContractType): Type of contract.
+        terms (ContractTerms): Terms of the contract needed to fulfill it.
         accepted (bool): Whether the contract has been accepted by the agent
         fulfilled (bool): Whether the contract has been fulfilled
         expiration (datetime.datetime): Deprecated in favor of deadlineToAccept

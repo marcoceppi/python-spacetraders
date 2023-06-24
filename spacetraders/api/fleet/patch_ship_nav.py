@@ -70,7 +70,10 @@ def sync_detailed(
 ) -> Response[PatchShipNavResponse200]:
     """Patch Ship Nav
 
-     Update the nav data of a ship, such as the flight mode.
+     Update the nav configuration of a ship.
+
+    Currently only supports configuring the Flight Mode of the ship, which affects its speed and fuel
+    consumption.
 
     Args:
         ship_symbol (str):
@@ -133,7 +136,10 @@ async def asyncio_detailed(
 ) -> Response[PatchShipNavResponse200]:
     """Patch Ship Nav
 
-     Update the nav data of a ship, such as the flight mode.
+     Update the nav configuration of a ship.
+
+    Currently only supports configuring the Flight Mode of the ship, which affects its speed and fuel
+    consumption.
 
     Args:
         ship_symbol (str):

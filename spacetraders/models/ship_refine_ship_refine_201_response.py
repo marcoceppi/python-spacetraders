@@ -3,25 +3,25 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..models.ship_refine_ship_refine_201_response_data import (
+    ShipRefineShipRefine201ResponseData,
+)
+from ..types import Unset
 
-T = TypeVar("T", bound="ShipRefineShipRefine200ResponseDataProducedItem")
+T = TypeVar("T", bound="ShipRefineShipRefine201Response")
 
 
-class ShipRefineShipRefine200ResponseDataProducedItem(BaseModel):
+class ShipRefineShipRefine201Response(BaseModel):
     """
     Attributes:
-        trade_symbol (Union[Unset, str]):
-        units (Union[Unset, int]):
+        data (ShipRefineShipRefine201ResponseData):
     """
 
-    trade_symbol: Union[Unset, str] = Field(UNSET, alias="tradeSymbol")
-    units: Union[Unset, int] = Field(UNSET, alias="units")
+    data: "ShipRefineShipRefine201ResponseData" = Field(alias="data")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

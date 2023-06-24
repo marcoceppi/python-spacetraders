@@ -16,7 +16,7 @@ T = TypeVar("T", bound="ShipRefineJsonBody")
 class ShipRefineJsonBody(BaseModel):
     """
     Attributes:
-        produce (ShipRefineJsonBodyProduce):
+        produce (ShipRefineJsonBodyProduce): The type of good to produce out of the refining process.
     """
 
     produce: ShipRefineJsonBodyProduce = Field(alias="produce")

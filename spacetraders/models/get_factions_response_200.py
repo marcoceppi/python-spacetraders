@@ -18,7 +18,7 @@ class GetFactionsResponse200(BaseModel):
     """
     Attributes:
         data (List['Faction']):
-        meta (Meta):
+        meta (Meta): Meta details for pagination.
     """
 
     data: List["Faction"] = Field(alias="data")

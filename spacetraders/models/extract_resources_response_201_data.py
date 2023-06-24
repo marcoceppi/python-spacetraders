@@ -19,8 +19,8 @@ class ExtractResourcesResponse201Data(BaseModel):
     """
     Attributes:
         cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
-        extraction (Extraction):
-        cargo (ShipCargo):
+        extraction (Extraction): Extraction details.
+        cargo (ShipCargo): Ship cargo details.
     """
 
     cooldown: "Cooldown" = Field(alias="cooldown")

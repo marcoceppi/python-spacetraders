@@ -7,6 +7,7 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
+from ..models.faction_symbols import FactionSymbols
 from ..types import Unset
 
 T = TypeVar("T", bound="SystemFaction")
@@ -15,10 +16,10 @@ T = TypeVar("T", bound="SystemFaction")
 class SystemFaction(BaseModel):
     """
     Attributes:
-        symbol (str):
+        symbol (FactionSymbols): The symbol of the faction.
     """
 
-    symbol: str = Field(alias="symbol")
+    symbol: FactionSymbols = Field(alias="symbol")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

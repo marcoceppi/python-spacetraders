@@ -15,7 +15,7 @@ T = TypeVar("T", bound="RemoveMountRemoveMountRequest")
 class RemoveMountRemoveMountRequest(BaseModel):
     """
     Attributes:
-        symbol (str):
+        symbol (str): The symbol of the mount to remove.
     """
 
     symbol: str = Field(alias="symbol")

@@ -16,7 +16,7 @@ T = TypeVar("T", bound="TransferCargoTransferCargo200ResponseData")
 class TransferCargoTransferCargo200ResponseData(BaseModel):
     """
     Attributes:
-        cargo (ShipCargo):
+        cargo (ShipCargo): Ship cargo details.
     """
 
     cargo: "ShipCargo" = Field(alias="cargo")

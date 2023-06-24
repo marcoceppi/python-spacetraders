@@ -62,7 +62,7 @@ def sync_detailed(
 ) -> Response[GetMyShipResponse200]:
     """Get Ship
 
-     Retrieve the details of your ship.
+     Retrieve the details of a ship under your agent's ownership.
 
     Args:
         ship_symbol (str):
@@ -120,7 +120,7 @@ async def asyncio_detailed(
 ) -> Response[GetMyShipResponse200]:
     """Get Ship
 
-     Retrieve the details of your ship.
+     Retrieve the details of a ship under your agent's ownership.
 
     Args:
         ship_symbol (str):

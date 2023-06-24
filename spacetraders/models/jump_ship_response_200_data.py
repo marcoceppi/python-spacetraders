@@ -3,14 +3,13 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
 from ..models.cooldown import Cooldown
 from ..models.ship_nav import ShipNav
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="JumpShipResponse200Data")
 
@@ -19,11 +18,11 @@ class JumpShipResponse200Data(BaseModel):
     """
     Attributes:
         cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
-        nav (Union[Unset, ShipNav]): The navigation information of the ship.
+        nav (ShipNav): The navigation information of the ship.
     """
 
     cooldown: "Cooldown" = Field(alias="cooldown")
-    nav: Union[Unset, "ShipNav"] = Field(UNSET, alias="nav")
+    nav: "ShipNav" = Field(alias="nav")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

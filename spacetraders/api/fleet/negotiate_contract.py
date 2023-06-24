@@ -16,7 +16,6 @@ def _get_kwargs(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
-    json_body: Any,
 ) -> Dict[str, Any]:
     url = "{}/my/ships/{shipSymbol}/negotiate/contract".format(
         _client.base_url, shipSymbol=ship_symbol
@@ -25,8 +24,6 @@ def _get_kwargs(
     headers: Dict[str, str] = _client.get_headers()
     cookies: Dict[str, Any] = _client.get_cookies()
 
-    json_json_body = json_body
-
     return {
         "method": "post",
         "url": url,
@@ -34,7 +31,6 @@ def _get_kwargs(
         "cookies": cookies,
         "timeout": _client.get_timeout(),
         "follow_redirects": _client.follow_redirects,
-        "json": json_json_body,
     }
 
 
@@ -67,13 +63,21 @@ def sync_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    **json_body: Any,
 ) -> Response[NegotiateContractNegotiateContract200Response]:
     """Negotiate Contract
 
+     Negotiate a new contract with the HQ.
+
+    In order to negotiate a new contract, an agent must not have ongoing or offered contracts over the
+    allowed maximum amount. Currently the maximum contracts an agent can have at a time is 1.
+
+    Once a contract is negotiated, it is added to the list of contracts offered to the agent, which the
+    agent can then accept.
+
+    The ship must be present at a faction's HQ waypoint to negotiate a contract with that faction.
+
     Args:
         ship_symbol (str):
-        json_body (Any):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -83,12 +87,9 @@ def sync_detailed(
         Response[NegotiateContractNegotiateContract200Response]
     """
 
-    json_body = Any.parse_obj(json_body)
-
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,
         _client=_client,
-        json_body=json_body,
     )
 
     response = httpx.request(
@@ -128,13 +129,21 @@ async def asyncio_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    **json_body: Any,
 ) -> Response[NegotiateContractNegotiateContract200Response]:
     """Negotiate Contract
 
+     Negotiate a new contract with the HQ.
+
+    In order to negotiate a new contract, an agent must not have ongoing or offered contracts over the
+    allowed maximum amount. Currently the maximum contracts an agent can have at a time is 1.
+
+    Once a contract is negotiated, it is added to the list of contracts offered to the agent, which the
+    agent can then accept.
+
+    The ship must be present at a faction's HQ waypoint to negotiate a contract with that faction.
+
     Args:
         ship_symbol (str):
-        json_body (Any):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -144,12 +153,9 @@ async def asyncio_detailed(
         Response[NegotiateContractNegotiateContract200Response]
     """
 
-    json_body = Any.parse_obj(json_body)
-
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,
         _client=_client,
-        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:

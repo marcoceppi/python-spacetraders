@@ -7,6 +7,7 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
+from ..models.trade_symbol import TradeSymbol
 from ..types import Unset
 
 T = TypeVar("T", bound="PurchaseCargoPurchaseCargoRequest")
@@ -15,11 +16,11 @@ T = TypeVar("T", bound="PurchaseCargoPurchaseCargoRequest")
 class PurchaseCargoPurchaseCargoRequest(BaseModel):
     """
     Attributes:
-        symbol (str):
-        units (int):
+        symbol (TradeSymbol): The good's symbol.
+        units (int): Amounts of units to purchase.
     """
 
-    symbol: str = Field(alias="symbol")
+    symbol: TradeSymbol = Field(alias="symbol")
     units: int = Field(alias="units")
     additional_properties: Dict[str, Any] = {}
 

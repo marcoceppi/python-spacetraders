@@ -17,8 +17,8 @@ T = TypeVar("T", bound="DeliverContractResponse200Data")
 class DeliverContractResponse200Data(BaseModel):
     """
     Attributes:
-        contract (Contract):
-        cargo (ShipCargo):
+        contract (Contract): Contract details.
+        cargo (ShipCargo): Ship cargo details.
     """
 
     contract: "Contract" = Field(alias="contract")

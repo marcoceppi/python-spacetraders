@@ -15,9 +15,10 @@ T = TypeVar("T", bound="DeliverContractJsonBody")
 class DeliverContractJsonBody(BaseModel):
     """
     Attributes:
-        ship_symbol (str):
-        trade_symbol (str):
-        units (int):
+        ship_symbol (str): Symbol of a ship located in the destination to deliver a contract and that has a good to
+            deliver in its cargo.
+        trade_symbol (str): The symbol of the good to deliver.
+        units (int): Amount of units to deliver.
     """
 
     ship_symbol: str = Field(alias="shipSymbol")

@@ -11,7 +11,7 @@ from ...types import ApiError, Error, Response
 
 
 def _get_kwargs(
-    faction_symbol: str = "CGR",
+    faction_symbol: str,
     *,
     _client: Client,
 ) -> Dict[str, Any]:
@@ -57,7 +57,7 @@ def _build_response(
 
 
 def sync_detailed(
-    faction_symbol: str = "CGR",
+    faction_symbol: str,
     *,
     _client: Client,
     raise_on_error: Optional[bool] = None,
@@ -67,7 +67,7 @@ def sync_detailed(
      View the details of a faction.
 
     Args:
-        faction_symbol (str):  Default: 'CGR'.
+        faction_symbol (str):  Example: COSMIC.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -115,7 +115,7 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
-    faction_symbol: str = "CGR",
+    faction_symbol: str,
     *,
     _client: Client,
     raise_on_error: Optional[bool] = None,
@@ -125,7 +125,7 @@ async def asyncio_detailed(
      View the details of a faction.
 
     Args:
-        faction_symbol (str):  Default: 'CGR'.
+        faction_symbol (str):  Example: COSMIC.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

@@ -9,32 +9,34 @@ from pydantic import BaseModel, Field
 
 from ..models.cooldown import Cooldown
 from ..models.ship_cargo import ShipCargo
-from ..models.ship_refine_ship_refine_200_response_data_consumed_item import (
-    ShipRefineShipRefine200ResponseDataConsumedItem,
+from ..models.ship_refine_ship_refine_201_response_data_consumed_item import (
+    ShipRefineShipRefine201ResponseDataConsumedItem,
 )
-from ..models.ship_refine_ship_refine_200_response_data_produced_item import (
-    ShipRefineShipRefine200ResponseDataProducedItem,
+from ..models.ship_refine_ship_refine_201_response_data_produced_item import (
+    ShipRefineShipRefine201ResponseDataProducedItem,
 )
 from ..types import Unset
 
-T = TypeVar("T", bound="ShipRefineShipRefine200ResponseData")
+T = TypeVar("T", bound="ShipRefineShipRefine201ResponseData")
 
 
-class ShipRefineShipRefine200ResponseData(BaseModel):
+class ShipRefineShipRefine201ResponseData(BaseModel):
     """
     Attributes:
-        cargo (ShipCargo):
+        cargo (ShipCargo): Ship cargo details.
         cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
-        produced (List['ShipRefineShipRefine200ResponseDataProducedItem']):
-        consumed (List['ShipRefineShipRefine200ResponseDataConsumedItem']):
+        produced (List['ShipRefineShipRefine201ResponseDataProducedItem']): Goods that were produced by this refining
+            process.
+        consumed (List['ShipRefineShipRefine201ResponseDataConsumedItem']): Goods that were consumed during this
+            refining process.
     """
 
     cargo: "ShipCargo" = Field(alias="cargo")
     cooldown: "Cooldown" = Field(alias="cooldown")
-    produced: List["ShipRefineShipRefine200ResponseDataProducedItem"] = Field(
+    produced: List["ShipRefineShipRefine201ResponseDataProducedItem"] = Field(
         alias="produced"
     )
-    consumed: List["ShipRefineShipRefine200ResponseDataConsumedItem"] = Field(
+    consumed: List["ShipRefineShipRefine201ResponseDataConsumedItem"] = Field(
         alias="consumed"
     )
     additional_properties: Dict[str, Any] = {}

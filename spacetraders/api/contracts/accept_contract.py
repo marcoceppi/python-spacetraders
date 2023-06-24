@@ -64,7 +64,10 @@ def sync_detailed(
 ) -> Response[AcceptContractResponse200]:
     """Accept Contract
 
-     Accept a contract.
+     Accept a contract by ID.
+
+    You can only accept contracts that were offered to you, were not accepted yet, and whose deadlines
+    has not passed yet.
 
     Args:
         contract_id (str):
@@ -122,7 +125,10 @@ async def asyncio_detailed(
 ) -> Response[AcceptContractResponse200]:
     """Accept Contract
 
-     Accept a contract.
+     Accept a contract by ID.
+
+    You can only accept contracts that were offered to you, were not accepted yet, and whose deadlines
+    has not passed yet.
 
     Args:
         contract_id (str):

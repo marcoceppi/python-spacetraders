@@ -17,11 +17,13 @@ T = TypeVar("T", bound="ContractTerms")
 
 
 class ContractTerms(BaseModel):
-    """
+    """Terms of the contract needed to fulfill it.
+
     Attributes:
         deadline (datetime.datetime): The deadline for the contract.
         payment (ContractPayment):
-        deliver (Union[Unset, List['ContractDeliverGood']]):
+        deliver (Union[Unset, List['ContractDeliverGood']]): The cargo that needs to be delivered to fulfill the
+            contract.
     """
 
     deadline: datetime.datetime = Field(alias="deadline")

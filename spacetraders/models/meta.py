@@ -13,16 +13,18 @@ T = TypeVar("T", bound="Meta")
 
 
 class Meta(BaseModel):
-    """
+    """Meta details for pagination.
+
     Attributes:
-        total (int):
-        page (int):
-        limit (int):
+        total (int): Shows the total amount of items of this kind that exist.
+        page (int): A page denotes an amount of items, offset from the first item. Each page holds an amount of items
+            equal to the `limit`. Default: 1.
+        limit (int): The amount of items in each page. Limits how many items can be fetched at once. Default: 10.
     """
 
     total: int = Field(alias="total")
-    page: int = Field(alias="page")
-    limit: int = Field(alias="limit")
+    page: int = Field(1, alias="page")
+    limit: int = Field(10, alias="limit")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

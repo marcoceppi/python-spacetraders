@@ -18,7 +18,7 @@ class CreateShipShipScanResponse201Data(BaseModel):
     """
     Attributes:
         cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
-        ships (List['ScannedShip']):
+        ships (List['ScannedShip']): List of scanned ships.
     """
 
     cooldown: "Cooldown" = Field(alias="cooldown")

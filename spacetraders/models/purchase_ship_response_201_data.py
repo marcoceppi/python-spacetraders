@@ -18,9 +18,9 @@ T = TypeVar("T", bound="PurchaseShipResponse201Data")
 class PurchaseShipResponse201Data(BaseModel):
     """
     Attributes:
-        agent (Agent):
-        ship (Ship): A ship
-        transaction (ShipyardTransaction):
+        agent (Agent): Agent details.
+        ship (Ship): Ship details.
+        transaction (ShipyardTransaction): Results of a transaction with a shipyard.
     """
 
     agent: "Agent" = Field(alias="agent")

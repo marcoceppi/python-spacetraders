@@ -13,8 +13,8 @@ from ...types import UNSET, ApiError, Error, Response, Unset
 def _get_kwargs(
     *,
     _client: AuthenticatedClient,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
+    page: Union[Unset, None, int] = 1,
+    limit: Union[Unset, None, int] = 10,
 ) -> Dict[str, Any]:
     url = "{}/my/ships".format(_client.base_url)
 
@@ -67,16 +67,16 @@ def sync_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
+    page: Union[Unset, None, int] = 1,
+    limit: Union[Unset, None, int] = 10,
 ) -> Response[GetMyShipsResponse200]:
     """List Ships
 
-     Retrieve all of your ships.
+     Return a paginated list of all of ships under your agent's ownership.
 
     Args:
-        page (Union[Unset, None, int]):
-        limit (Union[Unset, None, int]):
+        page (Union[Unset, None, int]):  Default: 1.
+        limit (Union[Unset, None, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -128,16 +128,16 @@ async def asyncio_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    page: Union[Unset, None, int] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
+    page: Union[Unset, None, int] = 1,
+    limit: Union[Unset, None, int] = 10,
 ) -> Response[GetMyShipsResponse200]:
     """List Ships
 
-     Retrieve all of your ships.
+     Return a paginated list of all of ships under your agent's ownership.
 
     Args:
-        page (Union[Unset, None, int]):
-        limit (Union[Unset, None, int]):
+        page (Union[Unset, None, int]):  Default: 1.
+        limit (Union[Unset, None, int]):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

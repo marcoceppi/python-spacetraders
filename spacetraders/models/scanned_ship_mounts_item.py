@@ -16,7 +16,7 @@ class ScannedShipMountsItem(BaseModel):
     """A mount on the ship.
 
     Attributes:
-        symbol (str):
+        symbol (str): The symbol of the mount.
     """
 
     symbol: str = Field(alias="symbol")

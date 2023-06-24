@@ -8,6 +8,7 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
+from ..models.faction_symbols import FactionSymbols
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="RegisterJsonBody")
@@ -16,12 +17,13 @@ T = TypeVar("T", bound="RegisterJsonBody")
 class RegisterJsonBody(BaseModel):
     """
     Attributes:
-        faction (Any): The faction you choose determines your headquarters. Example: COSMIC.
-        symbol (str): How other agents will see your ships and information. Example: BADGER.
+        faction (FactionSymbols): The symbol of the faction.
+        symbol (str): Your desired agent symbol. This will be a unique name used to represent your agent, and will be
+            the prefix for your ships. Example: BADGER.
         email (Union[Unset, str]): Your email address. This is used if you reserved your call sign between resets.
     """
 
-    faction: Any = Field(alias="faction")
+    faction: FactionSymbols = Field(alias="faction")
     symbol: str = Field(alias="symbol")
     email: Union[Unset, str] = Field(UNSET, alias="email")
     additional_properties: Dict[str, Any] = {}

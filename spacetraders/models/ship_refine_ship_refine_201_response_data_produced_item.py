@@ -1,4 +1,3 @@
-import datetime
 from typing import (
     Any,
     Dict,
@@ -10,18 +9,18 @@ from pydantic import BaseModel, Field
 
 from ..types import Unset
 
-T = TypeVar("T", bound="InstallMountInstallMount201ResponseDataTransaction")
+T = TypeVar("T", bound="ShipRefineShipRefine201ResponseDataProducedItem")
 
 
-class InstallMountInstallMount201ResponseDataTransaction(BaseModel):
+class ShipRefineShipRefine201ResponseDataProducedItem(BaseModel):
     """
     Attributes:
-        total_price (int): The total price of the transaction.
-        timestamp (datetime.datetime): The timestamp of the transaction.
+        trade_symbol (str): Symbol of the good.
+        units (int): Amount of units of the good.
     """
 
-    total_price: int = Field(alias="totalPrice")
-    timestamp: datetime.datetime = Field(alias="timestamp")
+    trade_symbol: str = Field(alias="tradeSymbol")
+    units: int = Field(alias="units")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

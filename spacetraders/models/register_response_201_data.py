@@ -19,10 +19,10 @@ T = TypeVar("T", bound="RegisterResponse201Data")
 class RegisterResponse201Data(BaseModel):
     """
     Attributes:
-        agent (Agent):
-        contract (Contract):
-        faction (Faction):
-        ship (Ship): A ship
+        agent (Agent): Agent details.
+        contract (Contract): Contract details.
+        faction (Faction): Faction details.
+        ship (Ship): Ship details.
         token (str): A Bearer token for accessing secured API endpoints.
     """
 

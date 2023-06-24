@@ -18,9 +18,9 @@ class Chart(BaseModel):
     """The chart of a system or waypoint, which makes the location visible to other agents.
 
     Attributes:
-        waypoint_symbol (Union[Unset, str]):
-        submitted_by (Union[Unset, str]):
-        submitted_on (Union[Unset, datetime.datetime]):
+        waypoint_symbol (Union[Unset, str]): The symbol of the waypoint.
+        submitted_by (Union[Unset, str]): The agent that submitted the chart for this waypoint.
+        submitted_on (Union[Unset, datetime.datetime]): The time the chart for this waypoint was submitted.
     """
 
     waypoint_symbol: Union[Unset, str] = Field(UNSET, alias="waypointSymbol")

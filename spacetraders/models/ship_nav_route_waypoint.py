@@ -17,11 +17,11 @@ class ShipNavRouteWaypoint(BaseModel):
     """The destination or departure of a ships nav route.
 
     Attributes:
-        symbol (str):
+        symbol (str): The symbol of the waypoint.
         type (WaypointType): The type of waypoint.
-        system_symbol (str):
-        x (int):
-        y (int):
+        system_symbol (str): The symbol of the system the waypoint is in.
+        x (int): Position in the universe in the x axis.
+        y (int): Position in the universe in the y axis.
     """
 
     symbol: str = Field(alias="symbol")

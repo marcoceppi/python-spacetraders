@@ -16,7 +16,7 @@ T = TypeVar("T", bound="JettisonResponse200Data")
 class JettisonResponse200Data(BaseModel):
     """
     Attributes:
-        cargo (ShipCargo):
+        cargo (ShipCargo): Ship cargo details.
     """
 
     cargo: "ShipCargo" = Field(alias="cargo")

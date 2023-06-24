@@ -18,10 +18,10 @@ T = TypeVar("T", bound="RefuelShipResponse200Data")
 class RefuelShipResponse200Data(BaseModel):
     """
     Attributes:
-        agent (Agent):
+        agent (Agent): Agent details.
         fuel (ShipFuel): Details of the ship's fuel tanks including how much fuel was consumed during the last transit
             or action.
-        transaction (MarketTransaction):
+        transaction (MarketTransaction): Result of a transaction with a market.
     """
 
     agent: "Agent" = Field(alias="agent")

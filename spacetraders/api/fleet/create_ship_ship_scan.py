@@ -64,7 +64,12 @@ def sync_detailed(
 ) -> Response[CreateShipShipScanResponse201]:
     """Scan Ships
 
-     Activate your ship's sensor arrays to scan for ship information.
+     Scan for nearby ships, retrieving information for all ships in range.
+
+    Requires a ship to have the `Sensor Array` mount installed to use.
+
+    The ship will enter a cooldown after using this function, during which it cannot execute certain
+    actions.
 
     Args:
         ship_symbol (str):
@@ -122,7 +127,12 @@ async def asyncio_detailed(
 ) -> Response[CreateShipShipScanResponse201]:
     """Scan Ships
 
-     Activate your ship's sensor arrays to scan for ship information.
+     Scan for nearby ships, retrieving information for all ships in range.
+
+    Requires a ship to have the `Sensor Array` mount installed to use.
+
+    The ship will enter a cooldown after using this function, during which it cannot execute certain
+    actions.
 
     Args:
         ship_symbol (str):

@@ -8,10 +8,8 @@ from typing import (
 from pydantic import BaseModel, Field
 
 from ..models.agent import Agent
-from ..models.remove_mount_remove_mount_201_response_data_transaction import (
-    RemoveMountRemoveMount201ResponseDataTransaction,
-)
 from ..models.ship_cargo import ShipCargo
+from ..models.ship_modification_transaction import ShipModificationTransaction
 from ..models.ship_mount import ShipMount
 from ..types import Unset
 
@@ -21,18 +19,17 @@ T = TypeVar("T", bound="RemoveMountRemoveMount201ResponseData")
 class RemoveMountRemoveMount201ResponseData(BaseModel):
     """
     Attributes:
-        agent (Agent):
-        mounts (List['ShipMount']):
-        cargo (ShipCargo):
-        transaction (RemoveMountRemoveMount201ResponseDataTransaction):
+        agent (Agent): Agent details.
+        mounts (List['ShipMount']): List of installed mounts after the removal of the selected mount.
+        cargo (ShipCargo): Ship cargo details.
+        transaction (ShipModificationTransaction): Result of a transaction for a ship modification, such as installing a
+            mount or a module.
     """
 
     agent: "Agent" = Field(alias="agent")
     mounts: List["ShipMount"] = Field(alias="mounts")
     cargo: "ShipCargo" = Field(alias="cargo")
-    transaction: "RemoveMountRemoveMount201ResponseDataTransaction" = Field(
-        alias="transaction"
-    )
+    transaction: "ShipModificationTransaction" = Field(alias="transaction")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

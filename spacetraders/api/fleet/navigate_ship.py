@@ -70,14 +70,14 @@ def sync_detailed(
 ) -> Response[NavigateShipResponse200]:
     """Navigate Ship
 
-     Navigate to a target destination. The destination must be located within the same system as the
-    ship. Navigating will consume the necessary fuel and supplies from the ship's manifest, and will pay
-    out crew wages from the agent's account.
+     Navigate to a target destination. The ship must be in orbit to use this function. The destination
+    waypoint must be within the same system as the ship's current location. Navigating will consume the
+    necessary fuel from the ship's manifest based on the distance to the target waypoint.
 
     The returned response will detail the route information including the expected time of arrival. Most
     ship actions are unavailable until the ship has arrived at it's destination.
 
-    To travel between systems, see the ship's warp or jump actions.
+    To travel between systems, see the ship's Warp or Jump actions.
 
     Args:
         ship_symbol (str):
@@ -140,14 +140,14 @@ async def asyncio_detailed(
 ) -> Response[NavigateShipResponse200]:
     """Navigate Ship
 
-     Navigate to a target destination. The destination must be located within the same system as the
-    ship. Navigating will consume the necessary fuel and supplies from the ship's manifest, and will pay
-    out crew wages from the agent's account.
+     Navigate to a target destination. The ship must be in orbit to use this function. The destination
+    waypoint must be within the same system as the ship's current location. Navigating will consume the
+    necessary fuel from the ship's manifest based on the distance to the target waypoint.
 
     The returned response will detail the route information including the expected time of arrival. Most
     ship actions are unavailable until the ship has arrived at it's destination.
 
-    To travel between systems, see the ship's warp or jump actions.
+    To travel between systems, see the ship's Warp or Jump actions.
 
     Args:
         ship_symbol (str):

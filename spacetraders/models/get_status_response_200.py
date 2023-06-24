@@ -24,12 +24,11 @@ T = TypeVar("T", bound="GetStatusResponse200")
 
 
 class GetStatusResponse200(BaseModel):
-    """OK
-
+    """
     Attributes:
         status (str): The current status of the game server.
         version (str): The current version of the API.
-        reset_date (str): The date and time when the game server was last reset.
+        reset_date (str): The date when the game server was last reset.
         description (str):
         stats (GetStatusResponse200Stats):
         leaderboards (GetStatusResponse200Leaderboards):

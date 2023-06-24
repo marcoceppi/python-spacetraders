@@ -64,8 +64,12 @@ def sync_detailed(
 ) -> Response[OrbitShipOrbitShip200Response]:
     """Orbit Ship
 
-     Attempt to move your ship into orbit at it's current location. The request will only succeed if your
+     Attempt to move your ship into orbit at its current location. The request will only succeed if your
     ship is capable of moving into orbit at the time of the request.
+
+    Orbiting ships are able to do actions that require the ship to be above surface such as navigating
+    or extracting, but cannot access elements in their current waypoint, such as the market or a
+    shipyard.
 
     The endpoint is idempotent - successive calls will succeed even if the ship is already in orbit.
 
@@ -125,8 +129,12 @@ async def asyncio_detailed(
 ) -> Response[OrbitShipOrbitShip200Response]:
     """Orbit Ship
 
-     Attempt to move your ship into orbit at it's current location. The request will only succeed if your
+     Attempt to move your ship into orbit at its current location. The request will only succeed if your
     ship is capable of moving into orbit at the time of the request.
+
+    Orbiting ships are able to do actions that require the ship to be above surface such as navigating
+    or extracting, but cannot access elements in their current waypoint, such as the market or a
+    shipyard.
 
     The endpoint is idempotent - successive calls will succeed even if the ship is already in orbit.
 

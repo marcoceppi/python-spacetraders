@@ -29,7 +29,7 @@ class ScannedShip(BaseModel):
         engine (ScannedShipEngine): The engine of the ship.
         frame (Union[Unset, ScannedShipFrame]): The frame of the ship.
         reactor (Union[Unset, ScannedShipReactor]): The reactor of the ship.
-        mounts (Union[Unset, List['ScannedShipMountsItem']]):
+        mounts (Union[Unset, List['ScannedShipMountsItem']]): List of mounts installed in the ship.
     """
 
     symbol: str = Field(alias="symbol")

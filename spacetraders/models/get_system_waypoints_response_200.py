@@ -18,7 +18,7 @@ class GetSystemWaypointsResponse200(BaseModel):
     """
     Attributes:
         data (List['Waypoint']):
-        meta (Meta):
+        meta (Meta): Meta details for pagination.
     """
 
     data: List["Waypoint"] = Field(alias="data")

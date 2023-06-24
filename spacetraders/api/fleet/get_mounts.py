@@ -64,7 +64,7 @@ def sync_detailed(
 ) -> Response[GetMountsGetMounts200Response]:
     """Get Mounts
 
-     Get the mounts on a ship.
+     Get the mounts installed on a ship.
 
     Args:
         ship_symbol (str):
@@ -122,7 +122,7 @@ async def asyncio_detailed(
 ) -> Response[GetMountsGetMounts200Response]:
     """Get Mounts
 
-     Get the mounts on a ship.
+     Get the mounts installed on a ship.
 
     Args:
         ship_symbol (str):

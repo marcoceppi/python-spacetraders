@@ -20,7 +20,8 @@ class ShipFuel(BaseModel):
     Attributes:
         current (int): The current amount of fuel in the ship's tanks.
         capacity (int): The maximum amount of fuel the ship's tanks can hold.
-        consumed (Union[Unset, ShipFuelConsumed]):
+        consumed (Union[Unset, ShipFuelConsumed]): An object that only shows up when an action has consumed fuel in the
+            process. Shows the fuel consumption data.
     """
 
     current: int = Field(alias="current")

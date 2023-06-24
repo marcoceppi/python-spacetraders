@@ -14,10 +14,11 @@ T = TypeVar("T", bound="ShipyardTransaction")
 
 
 class ShipyardTransaction(BaseModel):
-    """
+    """Results of a transaction with a shipyard.
+
     Attributes:
         waypoint_symbol (str): The symbol of the waypoint where the transaction took place.
-        ship_symbol (str): The symbol of the ship that was purchased.
+        ship_symbol (str): The symbol of the ship that was the subject of the transaction.
         price (int): The price of the transaction.
         agent_symbol (str): The symbol of the agent that made the transaction.
         timestamp (datetime.datetime): The timestamp of the transaction.

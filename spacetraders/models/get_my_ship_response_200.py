@@ -16,7 +16,7 @@ T = TypeVar("T", bound="GetMyShipResponse200")
 class GetMyShipResponse200(BaseModel):
     """
     Attributes:
-        data (Ship): A ship
+        data (Ship): Ship details.
     """
 
     data: "Ship" = Field(alias="data")

@@ -19,10 +19,11 @@ class ShipReactor(BaseModel):
     """The reactor of the ship. The reactor is responsible for powering the ship's systems and weapons.
 
     Attributes:
-        symbol (ShipReactorSymbol):
-        name (str):
-        description (str):
-        power_output (int):
+        symbol (ShipReactorSymbol): Symbol of the reactor.
+        name (str): Name of the reactor.
+        description (str): Description of the reactor.
+        power_output (int): The amount of power provided by this reactor. The more power a reactor provides to the ship,
+            the lower the cooldown it gets when using a module or mount that taxes the ship's power.
         requirements (ShipRequirements): The requirements for installation on a ship
         condition (Union[Unset, int]): Condition is a range of 0 to 100 where 0 is completely worn out and 100 is brand
             new.

@@ -16,7 +16,7 @@ class ScannedShipEngine(BaseModel):
     """The engine of the ship.
 
     Attributes:
-        symbol (str):
+        symbol (str): The symbol of the engine.
     """
 
     symbol: str = Field(alias="symbol")

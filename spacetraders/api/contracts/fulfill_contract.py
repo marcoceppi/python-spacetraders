@@ -64,7 +64,7 @@ def sync_detailed(
 ) -> Response[FulfillContractResponse200]:
     """Fulfill Contract
 
-     Fulfill a contract
+     Fulfill a contract. Can only be used on contracts that have all of their delivery terms fulfilled.
 
     Args:
         contract_id (str):
@@ -122,7 +122,7 @@ async def asyncio_detailed(
 ) -> Response[FulfillContractResponse200]:
     """Fulfill Contract
 
-     Fulfill a contract
+     Fulfill a contract. Can only be used on contracts that have all of their delivery terms fulfilled.
 
     Args:
         contract_id (str):

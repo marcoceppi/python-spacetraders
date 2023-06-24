@@ -16,7 +16,7 @@ T = TypeVar("T", bound="GetFactionResponse200")
 class GetFactionResponse200(BaseModel):
     """
     Attributes:
-        data (Faction):
+        data (Faction): Faction details.
     """
 
     data: "Faction" = Field(alias="data")
