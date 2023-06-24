@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "spacetraders"
-version = "0.6.0"
+version = "0.7.0"
 description = "Python API for Space Traders"
 authors = ["Marco Ceppi <marco@ceppi.net>"]
 license = "Apache-2.0"
