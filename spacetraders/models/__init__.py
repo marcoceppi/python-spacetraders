@@ -41,6 +41,8 @@ from .faction_trait import FactionTrait
 from .faction_trait_symbol import FactionTraitSymbol
 from .fulfill_contract_response_200 import FulfillContractResponse200
 from .fulfill_contract_response_200_data import FulfillContractResponse200Data
+from .get_agent_response_200 import GetAgentResponse200
+from .get_agents_response_200 import GetAgentsResponse200
 from .get_contract_response_200 import GetContractResponse200
 from .get_contracts_response_200 import GetContractsResponse200
 from .get_faction_response_200 import GetFactionResponse200
@@ -245,6 +247,8 @@ __all__ = (
     "FactionTraitSymbol",
     "FulfillContractResponse200",
     "FulfillContractResponse200Data",
+    "GetAgentResponse200",
+    "GetAgentsResponse200",
     "GetContractResponse200",
     "GetContractsResponse200",
     "GetFactionResponse200",

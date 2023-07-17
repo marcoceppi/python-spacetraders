@@ -3,11 +3,12 @@ from typing import (
     Dict,
     List,
     TypeVar,
+    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import Unset
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Agent")
 
@@ -16,19 +17,21 @@ class Agent(BaseModel):
     """Agent details.
 
     Attributes:
-        account_id (str): Account ID that is tied to this agent.
         symbol (str): Symbol of the agent.
         headquarters (str): The headquarters of the agent.
         credits_ (int): The number of credits the agent has available. Credits can be negative if funds have been
             overdrawn.
         starting_faction (str): The faction the agent started with.
+        account_id (Union[Unset, str]): Account ID that is tied to this agent. Only included on your own agent.
+        ship_count (Union[Unset, int]): How many ships are owned by the agent.
     """
 
-    account_id: str = Field(alias="accountId")
     symbol: str = Field(alias="symbol")
     headquarters: str = Field(alias="headquarters")
     credits_: int = Field(alias="credits")
     starting_faction: str = Field(alias="startingFaction")
+    account_id: Union[Unset, str] = Field(UNSET, alias="accountId")
+    ship_count: Union[Unset, int] = Field(UNSET, alias="shipCount")
     additional_properties: Dict[str, Any] = {}
 
     class Config:
