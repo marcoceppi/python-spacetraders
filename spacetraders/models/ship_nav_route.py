@@ -20,6 +20,7 @@ class ShipNavRoute(BaseModel):
     Attributes:
         destination (ShipNavRouteWaypoint): The destination or departure of a ships nav route.
         departure (ShipNavRouteWaypoint): The destination or departure of a ships nav route.
+        origin (ShipNavRouteWaypoint): The destination or departure of a ships nav route.
         departure_time (datetime.datetime): The date time of the ship's departure.
         arrival (datetime.datetime): The date time of the ship's arrival. If the ship is in-transit, this is the
             expected time of arrival.
@@ -27,6 +28,7 @@ class ShipNavRoute(BaseModel):
 
     destination: "ShipNavRouteWaypoint" = Field(alias="destination")
     departure: "ShipNavRouteWaypoint" = Field(alias="departure")
+    origin: "ShipNavRouteWaypoint" = Field(alias="origin")
     departure_time: datetime.datetime = Field(alias="departureTime")
     arrival: datetime.datetime = Field(alias="arrival")
     additional_properties: Dict[str, Any] = {}

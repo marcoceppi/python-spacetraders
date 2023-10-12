@@ -6,8 +6,10 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.extract_resources_json_body import ExtractResourcesJsonBody
-from ...models.extract_resources_response_201 import ExtractResourcesResponse201
+from ...models.extract_resources_with_survey_response_201 import (
+    ExtractResourcesWithSurveyResponse201,
+)
+from ...models.survey import Survey
 from ...types import ApiError, Error, Response
 
 
@@ -15,9 +17,9 @@ def _get_kwargs(
     ship_symbol: str,
     *,
     _client: AuthenticatedClient,
-    json_body: ExtractResourcesJsonBody,
+    json_body: Survey,
 ) -> Dict[str, Any]:
-    url = "{}/my/ships/{shipSymbol}/extract".format(
+    url = "{}/my/ships/{shipSymbol}/extract/survey".format(
         _client.base_url, shipSymbol=ship_symbol
     )
 
@@ -39,9 +41,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Client, response: httpx.Response
-) -> Optional[ExtractResourcesResponse201]:
+) -> Optional[ExtractResourcesWithSurveyResponse201]:
     if response.status_code == HTTPStatus.CREATED:
-        response_201 = ExtractResourcesResponse201(**response.json())
+        response_201 = ExtractResourcesWithSurveyResponse201(**response.json())
 
         return response_201
     if client.raise_on_unexpected_status:
@@ -52,7 +54,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Client, response: httpx.Response
-) -> Response[ExtractResourcesResponse201]:
+) -> Response[ExtractResourcesWithSurveyResponse201]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -66,32 +68,30 @@ def sync_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    **json_body: ExtractResourcesJsonBody,
-) -> Response[ExtractResourcesResponse201]:
-    """Extract Resources
+    **json_body: Survey,
+) -> Response[ExtractResourcesWithSurveyResponse201]:
+    """Extract Resources with Survey
 
-     Extract resources from a waypoint that can be extracted, such as asteroid fields, into your ship.
-    Send an optional survey as the payload to target specific yields.
+     Use a survey when extracting resources from a waypoint. This endpoint requires a survey as the
+    payload, which allows your ship to extract specific yields.
 
-    The ship must be in orbit to be able to extract and must have mining equipments installed that can
-    extract goods, such as the `Gas Siphon` mount for gas-based goods or `Mining Laser` mount for ore-
-    based goods.
-
-    The survey property is now deprecated. See the `extract/survey` endpoint for more details.
+    Send the full survey object as the payload which will be validated according to the signature. If
+    the signature is invalid, or any properties of the survey are changed, the request will fail.
 
     Args:
         ship_symbol (str):
-        json_body (ExtractResourcesJsonBody):
+        json_body (Survey): A resource survey of a waypoint, detailing a specific extraction
+            location and the types of resources that can be found there.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ExtractResourcesResponse201]
+        Response[ExtractResourcesWithSurveyResponse201]
     """
 
-    json_body = ExtractResourcesJsonBody.parse_obj(json_body)
+    json_body = Survey.parse_obj(json_body)
 
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,
@@ -136,32 +136,30 @@ async def asyncio_detailed(
     *,
     _client: AuthenticatedClient,
     raise_on_error: Optional[bool] = None,
-    **json_body: ExtractResourcesJsonBody,
-) -> Response[ExtractResourcesResponse201]:
-    """Extract Resources
+    **json_body: Survey,
+) -> Response[ExtractResourcesWithSurveyResponse201]:
+    """Extract Resources with Survey
 
-     Extract resources from a waypoint that can be extracted, such as asteroid fields, into your ship.
-    Send an optional survey as the payload to target specific yields.
+     Use a survey when extracting resources from a waypoint. This endpoint requires a survey as the
+    payload, which allows your ship to extract specific yields.
 
-    The ship must be in orbit to be able to extract and must have mining equipments installed that can
-    extract goods, such as the `Gas Siphon` mount for gas-based goods or `Mining Laser` mount for ore-
-    based goods.
-
-    The survey property is now deprecated. See the `extract/survey` endpoint for more details.
+    Send the full survey object as the payload which will be validated according to the signature. If
+    the signature is invalid, or any properties of the survey are changed, the request will fail.
 
     Args:
         ship_symbol (str):
-        json_body (ExtractResourcesJsonBody):
+        json_body (Survey): A resource survey of a waypoint, detailing a specific extraction
+            location and the types of resources that can be found there.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[ExtractResourcesResponse201]
+        Response[ExtractResourcesWithSurveyResponse201]
     """
 
-    json_body = ExtractResourcesJsonBody.parse_obj(json_body)
+    json_body = Survey.parse_obj(json_body)
 
     kwargs = _get_kwargs(
         ship_symbol=ship_symbol,

@@ -33,6 +33,12 @@ from .dock_ship_dock_ship_200_response_data import DockShipDockShip200ResponseDa
 from .extract_resources_json_body import ExtractResourcesJsonBody
 from .extract_resources_response_201 import ExtractResourcesResponse201
 from .extract_resources_response_201_data import ExtractResourcesResponse201Data
+from .extract_resources_with_survey_response_201 import (
+    ExtractResourcesWithSurveyResponse201,
+)
+from .extract_resources_with_survey_response_201_data import (
+    ExtractResourcesWithSurveyResponse201Data,
+)
 from .extraction import Extraction
 from .extraction_yield import ExtractionYield
 from .faction import Faction
@@ -181,6 +187,7 @@ from .ship_role import ShipRole
 from .ship_type import ShipType
 from .shipyard import Shipyard
 from .shipyard_ship import ShipyardShip
+from .shipyard_ship_crew import ShipyardShipCrew
 from .shipyard_ship_types_item import ShipyardShipTypesItem
 from .shipyard_transaction import ShipyardTransaction
 from .survey import Survey
@@ -241,6 +248,8 @@ __all__ = (
     "ExtractResourcesJsonBody",
     "ExtractResourcesResponse201",
     "ExtractResourcesResponse201Data",
+    "ExtractResourcesWithSurveyResponse201",
+    "ExtractResourcesWithSurveyResponse201Data",
     "Faction",
     "FactionSymbols",
     "FactionTrait",
@@ -361,6 +370,7 @@ __all__ = (
     "ShipType",
     "Shipyard",
     "ShipyardShip",
+    "ShipyardShipCrew",
     "ShipyardShipTypesItem",
     "ShipyardTransaction",
     "Survey",

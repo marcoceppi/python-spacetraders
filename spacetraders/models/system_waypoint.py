@@ -3,12 +3,14 @@ from typing import (
     Dict,
     List,
     TypeVar,
+    Union,
 )
 
 from pydantic import BaseModel, Field
 
+from ..models.waypoint_orbital import WaypointOrbital
 from ..models.waypoint_type import WaypointType
-from ..types import Unset
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="SystemWaypoint")
 
@@ -18,14 +20,21 @@ class SystemWaypoint(BaseModel):
     Attributes:
         symbol (str): The symbol of the waypoint.
         type (WaypointType): The type of waypoint.
-        x (int): Position in the universe in the x axis.
-        y (int): Position in the universe in the y axis.
+        x (int): Relative position of the waypoint on the system's x axis. This is not an absolute position in the
+            universe.
+        y (int): Relative position of the waypoint on the system's y axis. This is not an absolute position in the
+            universe.
+        orbitals (List['WaypointOrbital']): Waypoints that orbit this waypoint.
+        orbits (Union[Unset, str]): The symbol of the parent waypoint, if this waypoint is in orbit around another
+            waypoint. Otherwise this value is undefined.
     """
 
     symbol: str = Field(alias="symbol")
     type: WaypointType = Field(alias="type")
     x: int = Field(alias="x")
     y: int = Field(alias="y")
+    orbitals: List["WaypointOrbital"] = Field(alias="orbitals")
+    orbits: Union[Unset, str] = Field(UNSET, alias="orbits")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

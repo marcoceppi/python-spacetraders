@@ -14,6 +14,7 @@ from ..models.ship_module import ShipModule
 from ..models.ship_mount import ShipMount
 from ..models.ship_reactor import ShipReactor
 from ..models.ship_type import ShipType
+from ..models.shipyard_ship_crew import ShipyardShipCrew
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ShipyardShip")
@@ -33,6 +34,7 @@ class ShipyardShip(BaseModel):
         engine (ShipEngine): The engine determines how quickly a ship travels between waypoints.
         modules (List['ShipModule']):
         mounts (List['ShipMount']):
+        crew (ShipyardShipCrew):
         type (Union[Unset, ShipType]): Type of ship
     """
 
@@ -44,6 +46,7 @@ class ShipyardShip(BaseModel):
     engine: "ShipEngine" = Field(alias="engine")
     modules: List["ShipModule"] = Field(alias="modules")
     mounts: List["ShipMount"] = Field(alias="mounts")
+    crew: "ShipyardShipCrew" = Field(alias="crew")
     type: Union[Unset, ShipType] = Field(UNSET, alias="type")
     additional_properties: Dict[str, Any] = {}
 

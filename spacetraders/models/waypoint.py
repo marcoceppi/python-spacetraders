@@ -25,10 +25,14 @@ class Waypoint(BaseModel):
         symbol (str): Symbol fo the waypoint.
         type (WaypointType): The type of waypoint.
         system_symbol (str): The symbol of the system this waypoint belongs to.
-        x (int): Position in the universe in the x axis.
-        y (int): Position in the universe in the Y axis.
+        x (int): Relative position of the waypoint on the system's x axis. This is not an absolute position in the
+            universe.
+        y (int): Relative position of the waypoint on the system's y axis. This is not an absolute position in the
+            universe.
         orbitals (List['WaypointOrbital']): Waypoints that orbit this waypoint.
         traits (List['WaypointTrait']): The traits of the waypoint.
+        orbits (Union[Unset, str]): The symbol of the parent waypoint, if this waypoint is in orbit around another
+            waypoint. Otherwise this value is undefined.
         faction (Union[Unset, WaypointFaction]): The faction that controls the waypoint.
         chart (Union[Unset, Chart]): The chart of a system or waypoint, which makes the location visible to other
             agents.
@@ -41,6 +45,7 @@ class Waypoint(BaseModel):
     y: int = Field(alias="y")
     orbitals: List["WaypointOrbital"] = Field(alias="orbitals")
     traits: List["WaypointTrait"] = Field(alias="traits")
+    orbits: Union[Unset, str] = Field(UNSET, alias="orbits")
     faction: Union[Unset, "WaypointFaction"] = Field(UNSET, alias="faction")
     chart: Union[Unset, "Chart"] = Field(UNSET, alias="chart")
     additional_properties: Dict[str, Any] = {}

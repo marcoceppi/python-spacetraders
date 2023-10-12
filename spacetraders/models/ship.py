@@ -7,6 +7,7 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
+from ..models.cooldown import Cooldown
 from ..models.ship_cargo import ShipCargo
 from ..models.ship_crew import ShipCrew
 from ..models.ship_engine import ShipEngine
@@ -36,6 +37,7 @@ class Ship(BaseModel):
         reactor (ShipReactor): The reactor of the ship. The reactor is responsible for powering the ship's systems and
             weapons.
         engine (ShipEngine): The engine determines how quickly a ship travels between waypoints.
+        cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
         modules (List['ShipModule']): Modules installed in this ship.
         mounts (List['ShipMount']): Mounts installed in this ship.
         cargo (ShipCargo): Ship cargo details.
@@ -50,6 +52,7 @@ class Ship(BaseModel):
     frame: "ShipFrame" = Field(alias="frame")
     reactor: "ShipReactor" = Field(alias="reactor")
     engine: "ShipEngine" = Field(alias="engine")
+    cooldown: "Cooldown" = Field(alias="cooldown")
     modules: List["ShipModule"] = Field(alias="modules")
     mounts: List["ShipMount"] = Field(alias="mounts")
     cargo: "ShipCargo" = Field(alias="cargo")
