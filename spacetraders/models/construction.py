@@ -7,33 +7,24 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
-from ..models.system_faction import SystemFaction
-from ..models.system_type import SystemType
-from ..models.system_waypoint import SystemWaypoint
+from ..models.construction_material import ConstructionMaterial
 from ..types import Unset
 
-T = TypeVar("T", bound="System")
+T = TypeVar("T", bound="Construction")
 
 
-class System(BaseModel):
-    """
+class Construction(BaseModel):
+    """The construction details of a waypoint.
+
     Attributes:
-        symbol (str): The symbol of the system.
-        sector_symbol (str): The symbol of the sector.
-        type (SystemType): The type of system.
-        x (int): Relative position of the system in the sector in the x axis.
-        y (int): Relative position of the system in the sector in the y axis.
-        waypoints (List['SystemWaypoint']): Waypoints in this system.
-        factions (List['SystemFaction']): Factions that control this system.
+        symbol (str): The symbol of the waypoint.
+        materials (List['ConstructionMaterial']): The materials required to construct the waypoint.
+        is_complete (bool): Whether the waypoint has been constructed.
     """
 
     symbol: str = Field(alias="symbol")
-    sector_symbol: str = Field(alias="sectorSymbol")
-    type: SystemType = Field(alias="type")
-    x: int = Field(alias="x")
-    y: int = Field(alias="y")
-    waypoints: List["SystemWaypoint"] = Field(alias="waypoints")
-    factions: List["SystemFaction"] = Field(alias="factions")
+    materials: List["ConstructionMaterial"] = Field(alias="materials")
+    is_complete: bool = Field(alias="isComplete")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

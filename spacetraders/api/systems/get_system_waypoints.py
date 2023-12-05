@@ -1,12 +1,14 @@
 import json
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.get_system_waypoints_response_200 import GetSystemWaypointsResponse200
+from ...models.waypoint_trait_symbol import WaypointTraitSymbol
+from ...models.waypoint_type import WaypointType
 from ...types import UNSET, ApiError, Error, Response, Unset
 
 
@@ -16,6 +18,8 @@ def _get_kwargs(
     _client: AuthenticatedClient,
     page: Union[Unset, None, int] = 1,
     limit: Union[Unset, None, int] = 10,
+    type: Union[Unset, None, WaypointType] = UNSET,
+    traits: Union[List[WaypointTraitSymbol], None, Unset, WaypointTraitSymbol] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/systems/{systemSymbol}/waypoints".format(
         _client.base_url, systemSymbol=system_symbol
@@ -28,6 +32,34 @@ def _get_kwargs(
     params["page"] = page
 
     params["limit"] = limit
+
+    json_type: Union[Unset, None, str] = UNSET
+    if not isinstance(type, Unset):
+        json_type = type.value if type else None
+
+    params["type"] = json_type
+
+    json_traits: Union[List[str], None, Unset, str]
+    if isinstance(traits, Unset):
+        json_traits = UNSET
+    elif traits is None:
+        json_traits = None
+
+    elif isinstance(traits, WaypointTraitSymbol):
+        json_traits = UNSET
+        if not isinstance(traits, Unset):
+            json_traits = traits.value
+
+    else:
+        json_traits = UNSET
+        if not isinstance(traits, Unset):
+            json_traits = []
+            for traits_type_1_item_data in traits:
+                traits_type_1_item = traits_type_1_item_data.value
+
+                json_traits.append(traits_type_1_item)
+
+    params["traits"] = json_traits
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -73,6 +105,8 @@ def sync_detailed(
     raise_on_error: Optional[bool] = None,
     page: Union[Unset, None, int] = 1,
     limit: Union[Unset, None, int] = 10,
+    type: Union[Unset, None, WaypointType] = UNSET,
+    traits: Union[List[WaypointTraitSymbol], None, Unset, WaypointTraitSymbol] = UNSET,
 ) -> Response[GetSystemWaypointsResponse200]:
     """List Waypoints in System
 
@@ -84,6 +118,8 @@ def sync_detailed(
         system_symbol (str):
         page (Union[Unset, None, int]):  Default: 1.
         limit (Union[Unset, None, int]):  Default: 10.
+        type (Union[Unset, None, WaypointType]): The type of waypoint.
+        traits (Union[List[WaypointTraitSymbol], None, Unset, WaypointTraitSymbol]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -98,6 +134,8 @@ def sync_detailed(
         _client=_client,
         page=page,
         limit=limit,
+        type=type,
+        traits=traits,
     )
 
     response = httpx.request(
@@ -139,6 +177,8 @@ async def asyncio_detailed(
     raise_on_error: Optional[bool] = None,
     page: Union[Unset, None, int] = 1,
     limit: Union[Unset, None, int] = 10,
+    type: Union[Unset, None, WaypointType] = UNSET,
+    traits: Union[List[WaypointTraitSymbol], None, Unset, WaypointTraitSymbol] = UNSET,
 ) -> Response[GetSystemWaypointsResponse200]:
     """List Waypoints in System
 
@@ -150,6 +190,8 @@ async def asyncio_detailed(
         system_symbol (str):
         page (Union[Unset, None, int]):  Default: 1.
         limit (Union[Unset, None, int]):  Default: 10.
+        type (Union[Unset, None, WaypointType]): The type of waypoint.
+        traits (Union[List[WaypointTraitSymbol], None, Unset, WaypointTraitSymbol]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -164,6 +206,8 @@ async def asyncio_detailed(
         _client=_client,
         page=page,
         limit=limit,
+        type=type,
+        traits=traits,
     )
 
     async with httpx.AsyncClient(verify=_client.verify_ssl) as c:

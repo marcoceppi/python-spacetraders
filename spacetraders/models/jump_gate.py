@@ -3,13 +3,11 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..models.connected_system import ConnectedSystem
-from ..types import UNSET, Unset
+from ..types import Unset
 
 T = TypeVar("T", bound="JumpGate")
 
@@ -17,15 +15,10 @@ T = TypeVar("T", bound="JumpGate")
 class JumpGate(BaseModel):
     """
     Attributes:
-        jump_range (float): The maximum jump range of the gate.
-        connected_systems (List['ConnectedSystem']): The systems within range of the gate that have a corresponding
-            gate.
-        faction_symbol (Union[Unset, str]): The symbol of the faction that owns the gate.
+        connections (List[str]): All the gates that are connected to this waypoint.
     """
 
-    jump_range: float = Field(alias="jumpRange")
-    connected_systems: List["ConnectedSystem"] = Field(alias="connectedSystems")
-    faction_symbol: Union[Unset, str] = Field(UNSET, alias="factionSymbol")
+    connections: List[str] = Field(alias="connections")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

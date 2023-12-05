@@ -7,6 +7,7 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
+from ..models.trade_symbol import TradeSymbol
 from ..types import Unset
 
 T = TypeVar("T", bound="ShipCargoItem")
@@ -16,13 +17,13 @@ class ShipCargoItem(BaseModel):
     """The type of cargo item and the number of units.
 
     Attributes:
-        symbol (str): The unique identifier of the cargo item type.
+        symbol (TradeSymbol): The good's symbol.
         name (str): The name of the cargo item type.
         description (str): The description of the cargo item type.
         units (int): The number of units of the cargo item.
     """
 
-    symbol: str = Field(alias="symbol")
+    symbol: TradeSymbol = Field(alias="symbol")
     name: str = Field(alias="name")
     description: str = Field(alias="description")
     units: int = Field(alias="units")

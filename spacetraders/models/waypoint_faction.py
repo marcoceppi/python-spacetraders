@@ -7,7 +7,7 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
-from ..models.faction_symbols import FactionSymbols
+from ..models.faction_symbol import FactionSymbol
 from ..types import Unset
 
 T = TypeVar("T", bound="WaypointFaction")
@@ -17,10 +17,10 @@ class WaypointFaction(BaseModel):
     """The faction that controls the waypoint.
 
     Attributes:
-        symbol (FactionSymbols): The symbol of the faction.
+        symbol (FactionSymbol): The symbol of the faction.
     """
 
-    symbol: FactionSymbols = Field(alias="symbol")
+    symbol: FactionSymbol = Field(alias="symbol")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

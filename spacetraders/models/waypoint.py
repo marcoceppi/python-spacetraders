@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 
 from ..models.chart import Chart
 from ..models.waypoint_faction import WaypointFaction
+from ..models.waypoint_modifier import WaypointModifier
 from ..models.waypoint_orbital import WaypointOrbital
 from ..models.waypoint_trait import WaypointTrait
 from ..models.waypoint_type import WaypointType
@@ -31,9 +32,11 @@ class Waypoint(BaseModel):
             universe.
         orbitals (List['WaypointOrbital']): Waypoints that orbit this waypoint.
         traits (List['WaypointTrait']): The traits of the waypoint.
+        is_under_construction (bool): True if the waypoint is under construction.
         orbits (Union[Unset, str]): The symbol of the parent waypoint, if this waypoint is in orbit around another
             waypoint. Otherwise this value is undefined.
         faction (Union[Unset, WaypointFaction]): The faction that controls the waypoint.
+        modifiers (Union[Unset, List['WaypointModifier']]): The modifiers of the waypoint.
         chart (Union[Unset, Chart]): The chart of a system or waypoint, which makes the location visible to other
             agents.
     """
@@ -45,8 +48,10 @@ class Waypoint(BaseModel):
     y: int = Field(alias="y")
     orbitals: List["WaypointOrbital"] = Field(alias="orbitals")
     traits: List["WaypointTrait"] = Field(alias="traits")
+    is_under_construction: bool = Field(alias="isUnderConstruction")
     orbits: Union[Unset, str] = Field(UNSET, alias="orbits")
     faction: Union[Unset, "WaypointFaction"] = Field(UNSET, alias="faction")
+    modifiers: Union[Unset, List["WaypointModifier"]] = Field(UNSET, alias="modifiers")
     chart: Union[Unset, "Chart"] = Field(UNSET, alias="chart")
     additional_properties: Dict[str, Any] = {}
 

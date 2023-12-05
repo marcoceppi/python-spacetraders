@@ -8,6 +8,7 @@ from typing import (
 
 from pydantic import BaseModel, Field
 
+from ..models.activity_level import ActivityLevel
 from ..models.ship_engine import ShipEngine
 from ..models.ship_frame import ShipFrame
 from ..models.ship_module import ShipModule
@@ -15,6 +16,7 @@ from ..models.ship_mount import ShipMount
 from ..models.ship_reactor import ShipReactor
 from ..models.ship_type import ShipType
 from ..models.shipyard_ship_crew import ShipyardShipCrew
+from ..models.supply_level import SupplyLevel
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ShipyardShip")
@@ -25,6 +27,7 @@ class ShipyardShip(BaseModel):
     Attributes:
         name (str):
         description (str):
+        supply (SupplyLevel): The supply level of a trade good.
         purchase_price (int):
         frame (ShipFrame): The frame of the ship. The frame determines the number of modules and mounting points of the
             ship, as well as base fuel capacity. As the condition of the frame takes more wear, the ship will become more
@@ -36,10 +39,15 @@ class ShipyardShip(BaseModel):
         mounts (List['ShipMount']):
         crew (ShipyardShipCrew):
         type (Union[Unset, ShipType]): Type of ship
+        activity (Union[Unset, ActivityLevel]): The activity level of a trade good. If the good is an import, this
+            represents how strong consumption is. If the good is an export, this represents how strong the production is for
+            the good. When activity is strong, consumption or production is near maximum capacity. When activity is weak,
+            consumption or production is near minimum capacity.
     """
 
     name: str = Field(alias="name")
     description: str = Field(alias="description")
+    supply: SupplyLevel = Field(alias="supply")
     purchase_price: int = Field(alias="purchasePrice")
     frame: "ShipFrame" = Field(alias="frame")
     reactor: "ShipReactor" = Field(alias="reactor")
@@ -48,6 +56,7 @@ class ShipyardShip(BaseModel):
     mounts: List["ShipMount"] = Field(alias="mounts")
     crew: "ShipyardShipCrew" = Field(alias="crew")
     type: Union[Unset, ShipType] = Field(UNSET, alias="type")
+    activity: Union[Unset, ActivityLevel] = Field(UNSET, alias="activity")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

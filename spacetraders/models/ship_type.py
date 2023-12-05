@@ -12,6 +12,8 @@ class ShipType(str, Enum):
     SHIP_ORE_HOUND = "SHIP_ORE_HOUND"
     SHIP_PROBE = "SHIP_PROBE"
     SHIP_REFINING_FREIGHTER = "SHIP_REFINING_FREIGHTER"
+    SHIP_SIPHON_DRONE = "SHIP_SIPHON_DRONE"
+    SHIP_SURVEYOR = "SHIP_SURVEYOR"
 
     def __str__(self) -> str:
         return str(self.value)

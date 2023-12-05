@@ -3,28 +3,25 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..models.supply_construction_response_200_data import (
+    SupplyConstructionResponse200Data,
+)
+from ..types import Unset
 
-T = TypeVar("T", bound="RefuelShipJsonBody")
+T = TypeVar("T", bound="SupplyConstructionResponse200")
 
 
-class RefuelShipJsonBody(BaseModel):
+class SupplyConstructionResponse200(BaseModel):
     """
     Attributes:
-        units (Union[Unset, int]): The amount of fuel to fill in the ship's tanks. When not specified, the ship will be
-            refueled to its maximum fuel capacity. If the amount specified is greater than the ship's remaining capacity,
-            the ship will only be refueled to its maximum fuel capacity. The amount specified is not in market units but in
-            ship fuel units. Example: 100.
-        from_cargo (Union[Unset, bool]): Wether to use the FUEL thats in your cargo or not. Default: false
+        data (SupplyConstructionResponse200Data):
     """
 
-    units: Union[Unset, int] = Field(UNSET, alias="units")
-    from_cargo: Union[Unset, bool] = Field(UNSET, alias="fromCargo")
+    data: "SupplyConstructionResponse200Data" = Field(alias="data")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

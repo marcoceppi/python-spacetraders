@@ -15,10 +15,10 @@ T = TypeVar("T", bound="JumpShipJsonBody")
 class JumpShipJsonBody(BaseModel):
     """
     Attributes:
-        system_symbol (str): The system symbol to jump to.
+        waypoint_symbol (str): The symbol of the waypoint to jump to. The destination must be a connected waypoint.
     """
 
-    system_symbol: str = Field(alias="systemSymbol")
+    waypoint_symbol: str = Field(alias="waypointSymbol")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

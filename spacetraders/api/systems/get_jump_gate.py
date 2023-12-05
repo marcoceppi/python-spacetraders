@@ -68,8 +68,7 @@ def sync_detailed(
 
      Get jump gate details for a waypoint. Requires a waypoint of type `JUMP_GATE` to use.
 
-    The response will return all systems that are have a Jump Gate in range of this Jump Gate. Those
-    systems can be jumped to from this Jump Gate.
+    Waypoints connected to this jump gate can be
 
     Args:
         system_symbol (str):
@@ -132,8 +131,7 @@ async def asyncio_detailed(
 
      Get jump gate details for a waypoint. Requires a waypoint of type `JUMP_GATE` to use.
 
-    The response will return all systems that are have a Jump Gate in range of this Jump Gate. Those
-    systems can be jumped to from this Jump Gate.
+    Waypoints connected to this jump gate can be
 
     Args:
         system_symbol (str):

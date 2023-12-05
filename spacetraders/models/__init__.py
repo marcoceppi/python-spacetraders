@@ -2,9 +2,11 @@
 
 from .accept_contract_response_200 import AcceptContractResponse200
 from .accept_contract_response_200_data import AcceptContractResponse200Data
+from .activity_level import ActivityLevel
 from .agent import Agent
 from .chart import Chart
-from .connected_system import ConnectedSystem
+from .construction import Construction
+from .construction_material import ConstructionMaterial
 from .contract import Contract
 from .contract_deliver_good import ContractDeliverGood
 from .contract_payment import ContractPayment
@@ -42,13 +44,14 @@ from .extract_resources_with_survey_response_201_data import (
 from .extraction import Extraction
 from .extraction_yield import ExtractionYield
 from .faction import Faction
-from .faction_symbols import FactionSymbols
+from .faction_symbol import FactionSymbol
 from .faction_trait import FactionTrait
 from .faction_trait_symbol import FactionTraitSymbol
 from .fulfill_contract_response_200 import FulfillContractResponse200
 from .fulfill_contract_response_200_data import FulfillContractResponse200Data
 from .get_agent_response_200 import GetAgentResponse200
 from .get_agents_response_200 import GetAgentsResponse200
+from .get_construction_response_200 import GetConstructionResponse200
 from .get_contract_response_200 import GetContractResponse200
 from .get_contracts_response_200 import GetContractsResponse200
 from .get_faction_response_200 import GetFactionResponse200
@@ -97,7 +100,7 @@ from .jump_ship_response_200 import JumpShipResponse200
 from .jump_ship_response_200_data import JumpShipResponse200Data
 from .market import Market
 from .market_trade_good import MarketTradeGood
-from .market_trade_good_supply import MarketTradeGoodSupply
+from .market_trade_good_type import MarketTradeGoodType
 from .market_transaction import MarketTransaction
 from .market_transaction_type import MarketTransactionType
 from .meta import Meta
@@ -190,6 +193,14 @@ from .shipyard_ship import ShipyardShip
 from .shipyard_ship_crew import ShipyardShipCrew
 from .shipyard_ship_types_item import ShipyardShipTypesItem
 from .shipyard_transaction import ShipyardTransaction
+from .siphon import Siphon
+from .siphon_resources_response_201 import SiphonResourcesResponse201
+from .siphon_resources_response_201_data import SiphonResourcesResponse201Data
+from .siphon_yield import SiphonYield
+from .supply_construction_json_body import SupplyConstructionJsonBody
+from .supply_construction_response_200 import SupplyConstructionResponse200
+from .supply_construction_response_200_data import SupplyConstructionResponse200Data
+from .supply_level import SupplyLevel
 from .survey import Survey
 from .survey_deposit import SurveyDeposit
 from .survey_size import SurveySize
@@ -211,6 +222,8 @@ from .warp_ship_response_200 import WarpShipResponse200
 from .warp_ship_response_200_data import WarpShipResponse200Data
 from .waypoint import Waypoint
 from .waypoint_faction import WaypointFaction
+from .waypoint_modifier import WaypointModifier
+from .waypoint_modifier_symbol import WaypointModifierSymbol
 from .waypoint_orbital import WaypointOrbital
 from .waypoint_trait import WaypointTrait
 from .waypoint_trait_symbol import WaypointTraitSymbol
@@ -219,9 +232,11 @@ from .waypoint_type import WaypointType
 __all__ = (
     "AcceptContractResponse200",
     "AcceptContractResponse200Data",
+    "ActivityLevel",
     "Agent",
     "Chart",
-    "ConnectedSystem",
+    "Construction",
+    "ConstructionMaterial",
     "Contract",
     "ContractDeliverGood",
     "ContractPayment",
@@ -251,13 +266,14 @@ __all__ = (
     "ExtractResourcesWithSurveyResponse201",
     "ExtractResourcesWithSurveyResponse201Data",
     "Faction",
-    "FactionSymbols",
+    "FactionSymbol",
     "FactionTrait",
     "FactionTraitSymbol",
     "FulfillContractResponse200",
     "FulfillContractResponse200Data",
     "GetAgentResponse200",
     "GetAgentsResponse200",
+    "GetConstructionResponse200",
     "GetContractResponse200",
     "GetContractsResponse200",
     "GetFactionResponse200",
@@ -296,7 +312,7 @@ __all__ = (
     "JumpShipResponse200Data",
     "Market",
     "MarketTradeGood",
-    "MarketTradeGoodSupply",
+    "MarketTradeGoodType",
     "MarketTransaction",
     "MarketTransactionType",
     "Meta",
@@ -373,6 +389,14 @@ __all__ = (
     "ShipyardShipCrew",
     "ShipyardShipTypesItem",
     "ShipyardTransaction",
+    "Siphon",
+    "SiphonResourcesResponse201",
+    "SiphonResourcesResponse201Data",
+    "SiphonYield",
+    "SupplyConstructionJsonBody",
+    "SupplyConstructionResponse200",
+    "SupplyConstructionResponse200Data",
+    "SupplyLevel",
     "Survey",
     "SurveyDeposit",
     "SurveySize",
@@ -390,6 +414,8 @@ __all__ = (
     "WarpShipResponse200Data",
     "Waypoint",
     "WaypointFaction",
+    "WaypointModifier",
+    "WaypointModifierSymbol",
     "WaypointOrbital",
     "WaypointTrait",
     "WaypointTraitSymbol",

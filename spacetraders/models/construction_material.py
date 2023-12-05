@@ -3,28 +3,28 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..models.trade_symbol import TradeSymbol
+from ..types import Unset
 
-T = TypeVar("T", bound="RefuelShipJsonBody")
+T = TypeVar("T", bound="ConstructionMaterial")
 
 
-class RefuelShipJsonBody(BaseModel):
-    """
+class ConstructionMaterial(BaseModel):
+    """The details of the required construction materials for a given waypoint under construction.
+
     Attributes:
-        units (Union[Unset, int]): The amount of fuel to fill in the ship's tanks. When not specified, the ship will be
-            refueled to its maximum fuel capacity. If the amount specified is greater than the ship's remaining capacity,
-            the ship will only be refueled to its maximum fuel capacity. The amount specified is not in market units but in
-            ship fuel units. Example: 100.
-        from_cargo (Union[Unset, bool]): Wether to use the FUEL thats in your cargo or not. Default: false
+        trade_symbol (TradeSymbol): The good's symbol.
+        required (int): The number of units required.
+        fulfilled (int): The number of units fulfilled toward the required amount.
     """
 
-    units: Union[Unset, int] = Field(UNSET, alias="units")
-    from_cargo: Union[Unset, bool] = Field(UNSET, alias="fromCargo")
+    trade_symbol: TradeSymbol = Field(alias="tradeSymbol")
+    required: int = Field(alias="required")
+    fulfilled: int = Field(alias="fulfilled")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

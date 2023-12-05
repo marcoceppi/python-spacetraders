@@ -3,28 +3,23 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..types import UNSET, Unset
+from ..models.siphon_resources_response_201_data import SiphonResourcesResponse201Data
+from ..types import Unset
 
-T = TypeVar("T", bound="RefuelShipJsonBody")
+T = TypeVar("T", bound="SiphonResourcesResponse201")
 
 
-class RefuelShipJsonBody(BaseModel):
+class SiphonResourcesResponse201(BaseModel):
     """
     Attributes:
-        units (Union[Unset, int]): The amount of fuel to fill in the ship's tanks. When not specified, the ship will be
-            refueled to its maximum fuel capacity. If the amount specified is greater than the ship's remaining capacity,
-            the ship will only be refueled to its maximum fuel capacity. The amount specified is not in market units but in
-            ship fuel units. Example: 100.
-        from_cargo (Union[Unset, bool]): Wether to use the FUEL thats in your cargo or not. Default: false
+        data (SiphonResourcesResponse201Data):
     """
 
-    units: Union[Unset, int] = Field(UNSET, alias="units")
-    from_cargo: Union[Unset, bool] = Field(UNSET, alias="fromCargo")
+    data: "SiphonResourcesResponse201Data" = Field(alias="data")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

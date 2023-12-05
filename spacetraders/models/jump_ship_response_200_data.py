@@ -8,6 +8,7 @@ from typing import (
 from pydantic import BaseModel, Field
 
 from ..models.cooldown import Cooldown
+from ..models.market_transaction import MarketTransaction
 from ..models.ship_nav import ShipNav
 from ..types import Unset
 
@@ -17,12 +18,14 @@ T = TypeVar("T", bound="JumpShipResponse200Data")
 class JumpShipResponse200Data(BaseModel):
     """
     Attributes:
-        cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
         nav (ShipNav): The navigation information of the ship.
+        cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
+        transaction (MarketTransaction): Result of a transaction with a market.
     """
 
-    cooldown: "Cooldown" = Field(alias="cooldown")
     nav: "ShipNav" = Field(alias="nav")
+    cooldown: "Cooldown" = Field(alias="cooldown")
+    transaction: "MarketTransaction" = Field(alias="transaction")
     additional_properties: Dict[str, Any] = {}
 
     class Config:

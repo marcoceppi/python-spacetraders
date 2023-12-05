@@ -19,7 +19,7 @@ class ScannedSystem(BaseModel):
     Attributes:
         symbol (str): Symbol of the system.
         sector_symbol (str): Symbol of the system's sector.
-        type (SystemType): The type of waypoint.
+        type (SystemType): The type of system.
         x (int): Position in the universe in the x axis.
         y (int): Position in the universe in the y axis.
         distance (int): The system's distance from the scanning ship.

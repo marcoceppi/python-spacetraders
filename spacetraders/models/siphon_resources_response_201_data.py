@@ -3,36 +3,29 @@ from typing import (
     Dict,
     List,
     TypeVar,
-    Union,
 )
 
 from pydantic import BaseModel, Field
 
-from ..models.system_type import SystemType
-from ..types import UNSET, Unset
+from ..models.cooldown import Cooldown
+from ..models.ship_cargo import ShipCargo
+from ..models.siphon import Siphon
+from ..types import Unset
 
-T = TypeVar("T", bound="ConnectedSystem")
+T = TypeVar("T", bound="SiphonResourcesResponse201Data")
 
 
-class ConnectedSystem(BaseModel):
+class SiphonResourcesResponse201Data(BaseModel):
     """
     Attributes:
-        symbol (str): The symbol of the system.
-        sector_symbol (str): The sector of this system.
-        type (SystemType): The type of waypoint.
-        x (int): Position in the universe in the x axis.
-        y (int): Position in the universe in the y axis.
-        distance (int): The distance of this system to the connected Jump Gate.
-        faction_symbol (Union[Unset, str]): The symbol of the faction that owns the connected jump gate in the system.
+        cooldown (Cooldown): A cooldown is a period of time in which a ship cannot perform certain actions.
+        siphon (Siphon): Siphon details.
+        cargo (ShipCargo): Ship cargo details.
     """
 
-    symbol: str = Field(alias="symbol")
-    sector_symbol: str = Field(alias="sectorSymbol")
-    type: SystemType = Field(alias="type")
-    x: int = Field(alias="x")
-    y: int = Field(alias="y")
-    distance: int = Field(alias="distance")
-    faction_symbol: Union[Unset, str] = Field(UNSET, alias="factionSymbol")
+    cooldown: "Cooldown" = Field(alias="cooldown")
+    siphon: "Siphon" = Field(alias="siphon")
+    cargo: "ShipCargo" = Field(alias="cargo")
     additional_properties: Dict[str, Any] = {}
 
     class Config:
